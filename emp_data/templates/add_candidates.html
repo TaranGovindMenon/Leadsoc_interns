@@ -1,0 +1,105 @@
+{% extends 'basic.html' %}
+{% block body %}
+    <center>
+        <div>
+            <h2 class="bg-primary text-white">Customer Requirements</h2>
+        </div>
+    </center>
+    <table class="table">
+        <thead class="badge-info text-white">
+            <tr>
+                <th>Requirement ID</th>
+                <th>Customers</th>
+                <th>Customer Requirement ID</th>
+                <th>Required Skills</th>
+                <th>Job Description</th>
+                <th>Required Experience</th>
+                <th>Open Positions</th>
+                <th>Remaining Position</th>
+                <th>Position Status</th>
+                <th>Sales Incharge</th>
+                <th>Candidate List</th>
+                <th>BU Head</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for customer_requirement in customer_requirements %}
+            <tr>
+                <!--<td>{{customer_requirement.Requirement_Id}}</td>-->
+                <td>{{forloop.counter}}</td>
+                <td>{{customer_requirement.customers}}</td>
+                <td>{{customer_requirement.Customer_Requirement_id}}</td>
+                <td>{{customer_requirement.Required_skills}}</td>
+                <td><button class="btn-info btn-sm" onclick="location.href='/job_description'">See Details</button>
+                </td>
+                <td>{{customer_requirement.Required_Experience}}</td>
+                <td>{{customer_requirement.Open_positions}}</td>
+                <td>{{customer_requirement.Open_positions}}</td>
+                <td>{{customer_requirement.Position_Status}}</td>
+                <!--<td>{{customer_requirement.Candidate_status}}</td>-->
+                <td>{{customer_requirement.Sales_Incharge}}</td>
+                <!--<td>{{customer_requirement.Candidate_List}}</td>-->
+
+                <td>
+                    <button class="btn-info btn-sm" onclick="location.href='/showemp/{{employee.eFname}}'">see
+                        list</button>
+
+                    <button class="btn-success btn-sm" onclick="location.href='/emp'">Add
+                        Employee</button>
+                </td>
+                <td>Raghu</td>
+                <td>
+                    <button class="btn-danger btn-sm"
+                        onclick="location.href='/deleteEmp/{{employee.eFname}}'">Delete</button>
+                    <button class="btn-success btn-sm"
+                        onclick="location.href='/editemp/{{employee.eFname}}'">Update</button>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!DOCTYPE html>
+    <html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <title>Employee System</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static '/styles.css' %}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+
+    </head>
+
+    <div>
+        <div class="booking-form3">
+            <h3 style="color: bisque;padding-top: 5%;">Add Employee Details</h3>
+
+            <form method="POST" action="/add_candidate" class="forma">
+                {% csrf_token %}
+
+                <div class="form-group" style="color: bisque;padding-top: 5%;">
+                    <label for="candidate_name">Employee Name</label>
+                    <input type="text" class="form-control" id="candidate_name" name="candidate_name" placeholder="Enter employee name">
+                  </div><br>
+
+
+                  <div class="form-group" style="color: bisque;padding-top: 5%;">
+                    <label for="interview_status">Select status</label>
+                    <select name="interview_status" id="interview_status">
+                        <option values="Selected">selected</option>
+                        <option values="Rejected">Rejected</option>
+                    </select>
+                  </div>
+                  <br><br>
+                <button type="submit" class="btn-success">Add</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
