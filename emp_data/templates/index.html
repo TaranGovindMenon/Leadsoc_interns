@@ -1,0 +1,56 @@
+{% extends 'basic.html' %}
+{% block body %}
+<div>
+    <div class="container">
+        <h3 style="color: rgb(219, 167, 104);padding-top: 5%;">Add Customer Details</h3>
+    <form action="/comp" method="POST" >
+      {% csrf_token %}
+      <!--
+      <div class="form-group form-input">
+        <label class="form-label">Company Name:</label>
+        <div>{{form.cName}}</div>
+        <<input type="text" value="{{form.eFname}}" />
+      </div>
+
+      <div class="form-group form-input">
+        <label class="form-label">Company Email:</label>
+        <div>{{form.cEmail}}</div>
+        <input type="text" value="{{form.eLname}}" />
+      </div>
+
+      <div class="form-group form-input">
+        <label class="form-label">Logo:</label>
+        <div>{{form.cLogo}}</div>
+      </div>
+
+      <div class="form-group form-input">
+        <label class="form-label">Company Website:</label>
+        <div>{{form.cUrl}}</div>
+        <input type="text" value="{{form.eEmail}}" />
+      </div>-->
+
+      <div class="form-group">
+        <label for="cName">Customer Name:</label>
+        <input type="text" class="form-control" id="cName" name="cName" placeholder="Enter Customer name">
+        <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+      </div>
+      <div class="form-group">
+        <label for="cEmail">Customer Email:</label>
+        <input type="text" class="form-control" id="cEmail" name="cEmail" placeholder="Enter Customer email">
+        <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+      </div>
+      <!--<div class="form-group">
+        <label for="cLogo">Customer Logo:</label>
+        <input type="text" class="form-control" id="cLogo" name="cLogo" placeholder="upload Cusoter logo">
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>-->
+      <div class="form-group">
+        <label for="cUrl">Customer Website:</label>
+        <input type="text" class="form-control" id="cUrl" name="cUrl" placeholder="Enter Customer url">
+        <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+      </div>
+      <button type="submit" class="btn-success">Submit</button>
+    </form>
+    </div>
+  </div>
+{% endblock %}

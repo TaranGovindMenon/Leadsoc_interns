@@ -1,1 +1,1 @@
-# Leadsoc_interns
+# employee-Company-management-Sytem-using-Django

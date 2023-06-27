@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<head>
+    <title>
+        leadsoc project
+    </title>
+
+    
+</head>
+<body>
+<hr/>
+<select>
+    <option selected disabled="true">select customer</option>
+    {% for cust in companies %}
+    <option>{cust.cName}</option>
+    {% endfor %}
+</select>
+</body>

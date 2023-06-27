@@ -1,0 +1,267 @@
+{% extends 'basic.html' %}
+{% block body %}
+<body>
+
+    <center>
+        <div>
+            <h3 class="bg-primary text-white">Applied Candidate List</h3>
+
+        </div>
+    </center>
+    <table class="table">
+        <thead class="badge-info text-white">
+            <tr>
+                <th>No.</th>
+                <th>Candidate name</th>
+                <!-- <th>Candidate Lname</th> -->
+                <!-- <th>Candidate Skills</th> -->
+                <th>Customer</th>
+                <!-- <th>Join date</th> -->
+                <th>Remarks from BU</th>
+                <th>Remarks from TA</th>
+                <th>Remarks from Sales</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for values in form %}
+            <tr>
+                <!--<td>{{customer_requirement.Requirement_Id}}</td>-->
+                <td>{{forloop.counter}}</td>
+                <td>{{values.eFname}} {{values.eLname}}</td>
+                <!-- <td></td> -->
+                <!-- <td>{{values.eskills}}</td> -->
+                <td>{{values.refer_Customer}}</td>
+                <td> 
+                    <button type="button" class="btn-sm btn-info" data-toggle="modal" data-target="#BURemarksModal{{values.eFname}}">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="BURemarksModal{{values.eFname}}" tabindex="-1" role="dialog" aria-labelledby="BURemarksModalLabel{{val.eFname}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="BURemarksModalLabel{{values.eFname}}">Remarks from BU</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{values.bu_remarks}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--For the edit button-->
+                    <button type="button" class="btn-sm btn-success" data-toggle="modal" data-target="#BURemarksEdit{{values.eFname}}">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <!-- Modal form -->
+                    <div class="modal" id="BURemarksEdit{{values.eFname}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Update BU remarks</h1>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">&times;</button>
+                                </div>
+
+                            <div class="modal-body"> 
+                                    <!-- <nav class="navbar bg-body-tertiary"> -->
+                                    <div class="container-fluid">
+                                        <h6>Employee Name : {{values.eFname}} {{values.eLname}}</h6>
+                                        <form action="/update_remarks/BU{{values.eFname}}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="Job_Description">Edit BU remarks:</label>
+                                                <textarea name="BU_remark_text" id="BU_remark_text" cols="50" rows="10" >{{values.bu_remarks}}</textarea>
+                                            </div>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        </form> 
+                                    </div>
+                            </div>
+                        </div>
+                    </div> 
+                </td>
+
+                <td>
+                    <button type="button" class="btn-sm btn-info" data-toggle="modal" data-target="#TARemarksModal{{values.eFname}}">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="TARemarksModal{{values.eFname}}" tabindex="-1" role="dialog" aria-labelledby="TARemarksModalLabel{{val.eFname}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="TARemarksModalLabel{{values.eFname}}">Remarks from TA</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{values.ta_remarks}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--For the edit button-->
+                    <button type="button" class="btn-sm btn-success" data-toggle="modal" data-target="#TARemarksEdit{{values.eFname}}">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <!-- Modal form -->
+                    <div class="modal" id="TARemarksEdit{{values.eFname}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Update TA remarks</h1>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">&times;</button>
+                                </div>
+
+                            <div class="modal-body"> 
+                                    <!-- <nav class="navbar bg-body-tertiary"> -->
+                                    <div class="container-fluid">
+                                        <h6>Employee Name : {{values.eFname}} {{values.eLname}}</h6>
+                                        <form action="/update_remarks/TA{{values.eFname}}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="Job_Description">Edit TA remarks:</label>
+                                                <textarea name="TA_remark_text" id="TA_remark_text" cols="50" rows="10" >{{values.ta_remarks}}</textarea>
+                                            </div>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        </form> 
+                                    </div>
+                            </div>
+                        </div>
+                    </div> 
+                </td>
+
+                <td>
+                    <button type="button" class="btn-sm btn-info" data-toggle="modal" data-target="#SLRemarksModal{{values.eFname}}">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="SLRemarksModal{{values.eFname}}" tabindex="-1" role="dialog" aria-labelledby="SLRemarksModalLabel{{val.eFname}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="SLRemarksModalLabel{{values.eFname}}">Remarks from Sales</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>{{values.sales_remarks}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--For the edit button-->
+                    <button type="button" class="btn-sm btn-success" data-toggle="modal" data-target="#SLRemarksEdit{{values.eFname}}">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <!-- Modal form -->
+                    <div class="modal" id="SLRemarksEdit{{values.eFname}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Update Sales remarks</h1>
+                                    <button type="button" class="close" data-dismiss="modal"
+                                        aria-label="Close">&times;</button>
+                                </div>
+
+                            <div class="modal-body"> 
+                                    <!-- <nav class="navbar bg-body-tertiary"> -->
+                                    <div class="container-fluid">
+                                        <h6>Employee Name : {{values.eFname}} {{values.eLname}}</h6>
+                                        <form action="/update_remarks/SL{{values.eFname}}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                <label for="Job_Description">Edit Sales remarks:</label>
+                                                <textarea name="SL_remark_text" id="SL_remark_text" cols="50" rows="10" >{{values.sales_remarks}}</textarea>
+                                            </div>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        </form> 
+                                    </div>
+                            </div>
+                        </div>
+                    </div> 
+                </td>
+                <!-- <td>{{values.estatus}}</td> -->
+                <!-- <td>{{candidate_list.refer_Customer}}</td> -->
+                <td>
+                    {{values.empstatus}}
+                </td>
+                <td>
+                      {% if position > 0 %}
+                      {% if values.empstatus == 'Selected' %} 
+                      <div class="dropdown">
+                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                          Select/Reject
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
+                          <a class="dropdown-item" href="/selection_status/SL{{values.eFname}}/{{Customer_Requirement_id}}">Selected</a>
+                          <a class="dropdown-item" href="/selection_status/RJ{{values.eFname}}/{{Customer_Requirement_id}}">Rejected</a>
+                        </div>
+                      </div>
+                      {% elif values.empstatus == 'Rejected' %}
+                      <div class="dropdown">
+                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                          Select/Reject
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
+                          <a class="dropdown-item" href="/selection_status/SL{{values.eFname}}/{{Customer_Requirement_id}}">Selected</a>
+                          <a class="dropdown-item" href="/selection_status/RJ{{values.eFname}}/{{Customer_Requirement_id}}">Rejected</a>
+                        </div>
+                      </div>
+                      {% else %}
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Select/Reject
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="/selection_status/SL{{values.eFname}}/{{Customer_Requirement_id}}">Selected</a>
+                          <a class="dropdown-item" href="/selection_status/RJ{{values.eFname}}/{{Customer_Requirement_id}}">Rejected</a>
+                        </div>
+                      </div>
+                      {% endif %}
+                      {% else %}
+                      <div class="dropdown">
+                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                          Select/Reject
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
+                          <a class="dropdown-item" href="/selection_status/SL{{values.eFname}}/{{Customer_Requirement_id}}">Selected</a>
+                          <a class="dropdown-item" href="/selection_status/RJ{{values.eFname}}/{{Customer_Requirement_id}}">Rejected</a>
+                        </div>
+                      </div>
+                    {% endif %}
+                    <!--Delete button-->
+                    <button class="btn-danger btn-sm" onclick="location.href='/delete_Emp_Customer/{{values.eFname}}/{{Customer_Requirement_id}}'">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</body>
+{% endblock %}

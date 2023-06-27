@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<meta charset="UTF-8" content="width=device-width,initial-scale=1.0"/>
+        <title>{% block title %}Employee System{% endblock %}</title>
+        {% load static %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+            integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.6/css/buttons.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+            integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        
+            <script>
+                $(document).ready(function () {
+                    $('#example').DataTable({
+                        dom: 'Bfrtip',
+                        buttons: [
+                            'copyHtml5',
+                            'excelHtml5',
+                            'csvHtml5',
+                            'pdfHtml5'
+                        ]
+                    });
+                });
+            </script>
+
+
+  {% if user.is_authenticated %}
+  
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+    <!--<a class="navbar-brand" href="#">Navbar</a>-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynav"
+       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mynav">
+        
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link active" onclick="location.href='/'">Home</a>
+            </li>
+            <!--<li class="nav-item">
+        <a class="nav-link" onclick="location.href='/comp'">Add Customer</a>
+      </li>-->
+              <!--<li class="nav-item">
+                      <a class="nav-link" onclick="location.href='/comp'">Add Customer</a>
+                    </li>-->
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manage Employees</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" onclick="location.href='/showemp'">List Employees</a>
+                  <a class="dropdown-item" onclick="location.href='/emp'">Add Employees</a>
+                  <a class="dropdown-item" onclick="location.href='/simple_upload'">Upload Employee excel file</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manage Customers</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" onclick="location.href='/show'">List Customers</a>
+                  <a class="dropdown-item" onclick="location.href='/comp'">Add Customer</a>
+                  <a class="dropdown-item" onclick="location.href='/customer_data_upload'">Upload customer excel file</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Manage Customer Requirements</a>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" onclick="location.href='/add_cust_requirements'">Add Customer Requirements</a>
+                  <a class="dropdown-item" onclick="location.href='/show_cust_requirements'">List Customer Requirements</a>
+                  <a class="dropdown-item" onclick="location.href='/simple_upload'">Upload Customer Requirements Excel File</a>
+                  <a class="dropdown-item" onclick="location.href='/showEmpToCustomer'">Show Emp mapped to specific customer</a>
+                </div>
+              </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link active" onclick="location.href='/PasswordChangeView'">
+            <span class="btn btn-outline-info" text-align="right">Reset Password</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link disabled" href="{% url 'logout' %}"><span class="btn btn-outline-info"
+              text-align="right">LogOut</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link active" onclick="location.href='admin/'">
+            <span class="btn btn-outline-info" text-align="right">Go to Admin</span></a>
+        </li>
+        </ul>
+    </div>
+  </nav>
+
+
+  <h5 style="color:rgba(41, 47, 43, 0.627);">Hi {{ user.username }}!</h5>
+  <h3 style="color: rgb(45, 45, 32);">Welcome to the LeadSoc Employee Management System</h3>
+
+
+  <!--
+  <div>
+    <button class="btn-warning btn-lg" style="padding-right: 19%;"type="button" onclick="location.href='/comp'">Add Company</button><br><br>
+    <button class="btn-primary btn-lg" style="padding-right: 17%;" onclick="location.href='/emp'">Add Employees</button><br><br>
+    <button class="btn-danger btn-lg" onclick="location.href='/showemp'">Manage Employees</button><br><br>
+    <button class="btn-success btn-lg" onclick="location.href='/show'">Manage Companies</button><br>
+    </div> -->
+
+  {% else %}
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+
+  <div style="padding-bottom: 20%;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">LeadSoc Employee Management system</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+
+
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i>User
+              Login</a>
+          </li>
+          <li class="nav-item active">
+
+            <a class="nav-link" onclick="location.href='/admin'"><i class="fa fa-sign-in" aria-hidden="true"></i>Admin
+              Login</a>
+
+          </li>
+
+
+        </ul>
+      </div>
+    </nav>
+
+    <br></br>
+    <h2 style="color: rgb(28, 25, 20);font-family: sans-serif;text-align: center;padding-bottom: 5%;">Please Login to
+      LeadSoc Employee
+      Management System</h1>
+      <!--<h2 style="color: rgb(28, 25, 20);font-family: sans-serif;text-align: center;padding-bottom: 5%;">You are not
+        Logged In</h2>-->
+      <!--<a href="{% url 'login' %}"><button class="btn-warning btn-lg" style="margin-left: 32%;">Login</button></a>-->
+  </div>
+
+
+  {% endif %}
+
+  <!--<footer class="bg-dark text-light ">
+  <p class="text-center py-3">
+    Copyright 2023 | All Rights Reserved
+  </p>
+</footer>-->

@@ -1,0 +1,89 @@
+{% extends 'basic.html' %}
+  <!--{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static '/styles.css' %}">-->
+{% block body %}
+  <div>
+    <div class="container">
+      <h3 style="color: rgba(16, 4, 33, 0.926);padding-top: 5%;">Add Customer Requirements</h3>
+      <form action="/add_cust_requirements" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="customers">Select Customer</label>
+          <select name="customers" id="customers">
+            {% for val in customerlist %}
+            {% if val != 'No Customer' %}
+            <option value="{{val}}">{{val}}</option>
+            {% endif %}
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="Customer_Requirement_id">Customer Requirement Id:</label>
+          <input type="text" class="form-control" id="Customer_Requirement_id" name="Customer_Requirement_id"
+            placeholder="enter customer Requirement id">
+        </div>
+        <div class="form-group">
+          <label for="Required_skills">Required Skills:</label>
+          <input type="text" class="form-control" id="Required_skills" name="Required_skills"
+            placeholder="Enter skills">
+        </div>
+        <div class="form-group">
+          <label for="Job_Description">Job Description:</label>
+          <!--<input type="text-area" class="form-control" id="Job_Description" name="Job_Description"
+            placeholder="Enter Job Description">-->
+          <textarea id="Job_Description" style="width:500px; height:150px;" class="form-control" name="Job_Description"
+            placeholder="Enter Job Description"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="Required_Experience">Required Experience:</label>
+          <input type="number" class="form-control" id="Required_Experience" name="Required_Experience"
+            placeholder="enter required experience">
+        </div>
+        <div class="form-group">
+          <label for="Open_positions">Open positions:</label>
+          <input type="number" class="form-control" id="Open_positions" name="Open_positions"
+            placeholder="Enter opened positions">
+        </div>
+        <div class="form-group">
+          <label for="remain_positions">Remaining positions:</label>
+          <input type="number" class="form-control" id="remain_positions" name="remain_positions"
+            placeholder="enter Remained positions">
+        </div>
+        <div class="form-group">
+          <label for="Position_Status">Position Status:</label>
+          <input type="text" class="form-control" id="Position_Status" name="Position_Status"
+            placeholder="Enter position status active or not">
+        </div>
+        <div class="form-group">
+          <label for="Sales_Incharge">Sales Incharge</label>
+          <select name="Sales_Incharge" id="Sales_Incharge">
+            {% for val in saleslist %}
+            <option value="{{val}}">{{val}}</option>
+            {% endfor %}
+          </select>
+        </div>
+    <!--<div class="form-group">
+          <label for="bu_head">BU Head:</label>
+          <input type="text" class="form-control" id="bu_head" name="bu_head" placeholder="Enter BU Head">
+        </div>-->
+
+    <div class="form-group">
+      <label for="Bu_head">Select BU HEAD</label>
+      <select name="Bu_head" id="Bu_head">
+        {% for val in bulist %}
+            <option value="{{val}}">{{val}}</option>
+            {% endfor %}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="Bu_remarks">Add Bu Remarks</label>
+      <input type="text" class="form-control" id="Bu_remarks" name="Bu_remarks"
+            placeholder="Enter remarks bu BU">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+  </div>
+  </div>
+{% endblock %}
