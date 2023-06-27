@@ -52,6 +52,7 @@ class Employee(models.Model):
     def __str__(self):
         return str(self.eFname)
          
+
 class Emp_Experience(models.Model):
     emp_mobile=models.CharField(max_length=15,null=True)
     refer_customer=models.CharField(max_length=100,null=True)
@@ -61,6 +62,7 @@ class Emp_Experience(models.Model):
         
 
 class Customer_Requirements(models.Model):
+
     customers = models.ForeignKey(Customer, on_delete = models.CASCADE)
     Customer_Requirement_id = models.IntegerField(primary_key=True)
     Required_skills = models.TextField()
@@ -99,14 +101,41 @@ class addEmpToCustomer(models.Model):
     empstatus = models.CharField(max_length=100,null=True, default='')
     comp_name = models.CharField(max_length=100,null=True)
     added_date = models.DateField(null=True)
-    bu_remarks = models.CharField(max_length=1000,null=True, default="")
-    ta_remarks = models.CharField(max_length=1000,null=True, default="")
-    sales_remarks = models.CharField(max_length=1000,null=True, default="")
+    #empremarks = models.CharField(max_length=1000,null=True, default="")
+    # ta_remarks = models.CharField(max_length=1000,null=True, default="")
+    # sales_remarks = models.CharField(max_length=1000,null=True, default="")
     class Meta:
         db_table = "addemptocustomer"
 
     def __str__(self):
         return str(self.eFname)
+
+
+class empRemarks(models.Model): 
+    eFname = models.CharField(max_length=100,null=True)
+    remark_date = models.DateField(null=True)
+    remarks = models.CharField(max_length=1000,null=True, default="")
+    cname = models.CharField(max_length=100,null=True)
+    class Meta:
+        db_table = "empRemarks"
+        
+    def __str__(self):
+        return str(self.eFname)
+    
+
+
+class Bu_Remarks(models.Model):
+    eFname = models.CharField(max_length=100,null=True)
+    cust_id = models.IntegerField()
+    remark_date = models.DateField(null=True)
+    remarks = models.CharField(max_length=1000,null=True, default="")
+    class Meta:
+        db_table = "Bu_remarks"
+        
+    def __str__(self):
+        return str(self.eFname)
+
+
 
 class Employee_Details(models.Model):
     pass

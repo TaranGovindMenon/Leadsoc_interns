@@ -36,7 +36,6 @@
         <th>Status</th>
         <th>LeadSoc Joining Date</th>
         <th>Customer Start Date</th>
-
         <th>Action</th>
       </tr>
     </thead>
@@ -56,7 +55,9 @@
         <td>{{employee.customer_start_date}}</td>
 
         <td>
+
           <button class="btn-danger btn-sm" onclick="location.href='/deleteEmp/{{employee.ePhone}}'"><i
+
               class="fa-solid fa-trash fa-beat"></i></button>
           <button class="btn-success btn-sm" data-toggle="modal" data-target="#modalForm{{employee.ePhone}}"><i
                 class="fa-solid fa-pen-to-square fa-beat"></i></button>
@@ -103,6 +104,7 @@
           </div>
         </div>
       </div>
+
               <div class="modal" id="modalForm{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-scrollable">
@@ -146,12 +148,14 @@
                                                     value="{{employee.eEmail}}">
                                             </div>
                                             <div class="form-group">
+
                                               <label for="eRole">Update Role</label>
                                               <select name="eRole" id="eRole">
                                                 {% for val in rolelist %}
                                                 <option value="{{val}}">{{val}}</option>
                                                 {% endfor %}
                                               </select>
+
                                             </div>
                                             <div class="form-group">
                                                 <label for="estatus">Update Status:</label>
@@ -160,12 +164,16 @@
                                                     placeholder="Enter Status"
                                                     value="{{employee.estatus}}">
                                             </div>
+
                                             <!-- <div class="form-group">
+
                                               <label for="customer_start_date">Update Customer Start Date:</label>
                                                 <input type="date" class="form-control" id="customer_start_date"
                                                     name="customer_start_date" value="{{employee.customer_start_date}}">
                                                     
+
                                             </div> -->
+
                                     </div>
                                     <!-- <div class="form-group">
                                         <label for="Sales_Incharge">Sales Incharge</label>

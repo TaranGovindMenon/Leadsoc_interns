@@ -60,8 +60,12 @@ admin.site.register(models.SalesIncharge)
     
 admin.site.register(models.Role)
 
+
 @admin.register(models.Emp_Experience)
 class Emp_ExperienceAdmin(ImportExportModelAdmin):
     list_display=('emp_mobile','refer_customer','customer_start_date','customer_end_date')
+
+admin.site.register(models.Bu_Remarks)
+
 
 
