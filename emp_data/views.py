@@ -3,7 +3,7 @@ from pkgutil import get_data
 import queue
 import quopri
 from django.shortcuts import render,redirect,get_object_or_404
-from emp_data.models import Customer,Employee,Customer_Requirements
+from emp_data.models import Customer,Employee,Customer_Requirements, Bu_Remarks, empRemarks
 from .resources import EmployeeResource
 from emp_data.forms import CustomerForm,EmployeeForm, addEmpToCustomerForm,loginForm,UploadFileForm,Customer_RequirementForm
 from django.contrib import messages
@@ -309,14 +309,17 @@ def show_cust_requirements(request):
 
 def Buremarks(request, cust_id):
     if request.method == 'POST':
-        current_user = request.user.username
+
+        current_user = request.user.username.title()
         remark_text = request.POST.get('BU_remark_text', '')
         today = date.today()
-        new_remark = Bu_Remarks(eFname = current_user, remarks=remark_text, remark_date=today, cust_id=cust_id)
+        emp = Employee.objects.get(eFname = current_user)
+        new_remark = Bu_Remarks(refer_emp = emp, remarks=remark_text, remark_date=today, cust_id=cust_id)
+        new_remark.save()
         # model_instance = Customer_Requirements.objects.get(Customer_Requirement_id=cust_id)
         # model_instance.Bu_remarks = request.POST.get('BU_remark_text', '')
         # model_instance.save()
-        new_remark.save()
+        
         return redirect('/show_cust_requirements')
 
 
@@ -455,21 +458,25 @@ def showEmpToCustomer(request, cust_name,Customer_Requirement_id):
     emp_data = addEmpToCustomer.objects.filter(refer_Customer__cName=cust_name)
     req_instance=Customer_Requirements.objects.get(pk=Customer_Requirement_id)
     position=req_instance.remain_positions
-    empremarks = empRemarks.objects.filter(cname=cust_name)
-    return render(request, "showEmpToCustomer.html", {'form':emp_data,'Customer_Requirement_id':Customer_Requirement_id,'position':position,'remarks':empremarks})
+    #empremarks = empRemarks.objects.all()
+    #return HttpResponse(empremarks.remark_date)
+    return render(request, "showEmpToCustomer.html", {'form':emp_data,'Customer_Requirement_id':Customer_Requirement_id,'position':position,
+    'cust_name': cust_name})
 
-def update_remarks(request, eFname):
+
+def emp_remarks(request, eFname):
     if request.method == 'POST':
-        model_instance = addEmpToCustomer.objects.get(eFname=eFname[2:])
-        cname = model_instance.comp_name
-        if eFname[:2] == 'BU':
-            model_instance.bu_remarks = request.POST.get('BU_remark_text', '')
-        elif eFname[:2] == 'TA':
-            model_instance.ta_remarks = request.POST.get('TA_remark_text', '')
-        elif eFname[:2] == 'SL':
-            model_instance.sales_remarks = request.POST.get('SL_remark_text', '')
-        model_instance.save()
-    return redirect(f'/showEmpToCustomer/{cname}')
+        emp = addEmpToCustomer.objects.get(eFname=eFname)
+        
+        # cname = model_instance.comp_name
+        # if eFname[:2] == 'BU':
+        #     model_instance.bu_remarks = request.POST.get('BU_remark_text', '')
+        # elif eFname[:2] == 'TA':
+        #     model_instance.ta_remarks = request.POST.get('TA_remark_text', '')
+        # elif eFname[:2] == 'SL':
+        #     model_instance.sales_remarks = request.POST.get('SL_remark_text', '')
+        # model_instance.save()
+    #return redirect(f'/showEmpToCustomer/{cname}')
 
 
 
