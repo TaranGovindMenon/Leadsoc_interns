@@ -31,13 +31,16 @@
         <tr>
             <div>
             <!--<td>{{customer_requirement.Requirement_Id}}</td>-->
-            <td>{{val.Requirement_Id}}</td>
+
+            <td>{{forloop.counter}}</td>
+
             <td>{{val.customers}}</td>
             <td>{{val.Customer_Requirement_id}}</td>
             <td>{{val.Required_skills}}</td>
             <td>
                 <button type="button" class="btn-sm" data-toggle="modal" data-target="#jobDescriptionModal{{val.Customer_Requirement_id}}">
-                    <i class="fa-solid fa-info fa-fade"></i>
+                    {{ val.Job_Description|truncatewords:5 }}
+
                 </button>
                 <!-- Modal -->
                 <div class="modal fade" id="jobDescriptionModal{{val.Customer_Requirement_id}}" tabindex="-1" role="dialog" aria-labelledby="jobDescriptionModalLabel{{val.Customer_Requirement_id}}" aria-hidden="true">
@@ -58,10 +61,13 @@
                         </div>
                     </div>
                 </div>
-            </td>
-            
-            
-            
+                
+                </td>
+
+
+
+
+
             
             
             
@@ -86,7 +92,8 @@
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="BURemarksModalLabel{{val.Customer_Requirement_id}}">Remarks from BU: {{val.customers}}</h5>
+                         <h5 class="modal-title" id="BURemarksModalLabel{{val.Customer_Requirement_id}}">Remarks from BU: {{val.customers}}</h5>
+
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -153,10 +160,11 @@
                 <!-- Button trigger modal -->
 
                 <button type="button" class="btn-warning btn-sm"
-                    onclick="location.href='/show_candidate/{{val.customers}}'">
+                    onclick="location.href='/show_candidate/{{val.customers}}/{{val.Customer_Requirement_id}}'">
                     <i class="fa-sharp fa-regular fa-plus"></i>
                 </button>
-                <button type="button" class="btn-info btn-sm" onclick="location.href='/showEmpToCustomer/{{val.customers}}'">
+                <button type="button" class="btn-info btn-sm" onclick="location.href='/showEmpToCustomer/{{val.customers}}/{{val.Customer_Requirement_id}}'">
+
                         <i class="fa-regular fa-eye"></i>
                 </button>
 

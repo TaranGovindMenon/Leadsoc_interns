@@ -43,18 +43,19 @@ urlpatterns = [
     path("home",views.home),
     
    # customer requirements details
-    path("show_cust_requirements", views.show_cust_requirements, name='show_cust_requirements'),
+    path("show_cust_requirements", views.show_cust_requirements),#, name='show_cust_requirements'),
     path("Buremarks/<int:cust_id>", views.Buremarks),
-    #path('sample_view', views.sample_view),
+
     path("save_emp_details", views.save_emp_details, name="save_emp_details"),
     path('add_cust_requirements',views.add_cust_requirements),
     path('job_description',views.job_description),  
     path('add_candidate',views.add_candidate),
-    path('show_candidate/<str:customers>',views.show_candidate),
-    path('savedvalues/<str:customer_name>',views.savedvalues),
-    path('showEmpToCustomer/<str:cust_name>',views.showEmpToCustomer),
+    path('show_candidate/<str:customers>/<int:Customer_Requirement_id>',views.show_candidate),
+    path('savedvalues/<str:customer_name>/<int:Customer_Requirement_id>',views.savedvalues),
+    path('showEmpToCustomer/<str:cust_name>/<int:Customer_Requirement_id>',views.showEmpToCustomer),
     path('update_remarks/<str:eFname>', views.update_remarks),
-    path('selection_status/<str:status>', views.selection_status),
+    path('selection_status/<str:status>/<int:Customer_Requirement_id>', views.selection_status),
+
     # path('addempcustomer',views.addempcustomer),
     path('checkbox',views.checkbox),
     path('dropDownCustomer',views.dropDownCustomer),
@@ -75,9 +76,12 @@ urlpatterns = [
     path('deleteEmp/<str:eFname>', views.deleteEmp),
     # path('editemp/<str:eFname>', views.editemp), 
     path('updateEmp/<str:ePhone>', views.updateEmp),
-    
+
+    path('showexperienceform/<str:ePhone>',views.showexperienceform),
+    path('addexperience/<str:ePhone>',views.addexperience),
     # employee deleted from customer
-    path('delete_Emp_Customer/<str:eFname>', views.delete_Emp_Customer),
+    path('delete_Emp_Customer/<str:eFname>/<int:Customer_Requirement_id>', views.delete_Emp_Customer),
+
 
     #Homepage path
     path('', TemplateView.as_view(template_name='home.html'), name='home'),

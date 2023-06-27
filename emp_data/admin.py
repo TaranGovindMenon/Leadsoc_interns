@@ -16,7 +16,7 @@ class CustomerAdmin(ImportExportModelAdmin):
 
 @admin.register(models.Employee)
 class EmployeeAdmin(ImportExportModelAdmin):
-    list_display = ('eFname','eLname','refer_Customer','eEmail','ePhone','eExperience','eskills','eRole','eMP_Type','estatus','leadsoc_joining_date','customer_start_date','remarks')
+    list_display = ('eFname','eLname','refer_Customer','eEmail','ePhone','eExperience','eskills','eRole','eMP_Type','estatus','leadsoc_joining_date','customer_start_date')
     search_fields = ['eFname','eLname','eEmail','ePhone','eMP_Type','eRole','estatus','eskills']
 
     filter_horizontal = ()
@@ -25,7 +25,7 @@ class EmployeeAdmin(ImportExportModelAdmin):
 
 @admin.register(models.Customer_Requirements)
 class Customer_RequirementsAdmin(ImportExportModelAdmin):
-    list_display = ('Requirement_Id','customers','Customer_Requirement_id','Required_skills','Job_Description','Required_Experience','Open_positions','remain_positions','Position_Status','Sales_Incharge','Bu_head')
+    list_display = ('customers','Customer_Requirement_id','Required_skills','Job_Description','Required_Experience','Open_positions','remain_positions','Position_Status','Sales_Incharge','Bu_head')
     search_fields = ['Position_Status','Required_skills']
 
     filter_horizontal = ()
@@ -59,6 +59,13 @@ admin.site.register(models.Buhead)
 admin.site.register(models.SalesIncharge)
     
 admin.site.register(models.Role)
+
+
+@admin.register(models.Emp_Experience)
+class Emp_ExperienceAdmin(ImportExportModelAdmin):
+    list_display=('emp_mobile','refer_customer','customer_start_date','customer_end_date')
+
 admin.site.register(models.Bu_Remarks)
+
 
 
