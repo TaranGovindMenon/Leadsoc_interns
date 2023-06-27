@@ -1,0 +1,60 @@
+<!--<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+{% load static %}
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-lg-5 m-auto">
+            <div class="card mt-5 bg-dark">
+                <div class="card=titl text-center mt-3">
+                    <img src="{% static 'images/admin_image.png' %}" width="150" height="150">
+                </div>
+                <div class="card-body">
+                    <form method="post" action="/admin_login">
+                        {%csrf_token%}
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user fa-1x"></i>
+                                </span>
+                            </div>
+                            <input type="text" name="username" class="form-control py-4">
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>-->
+
+<!--{% extends 'base.html' %}-->
+{% load static %}
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static '/styles.css' %}">
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<h2 style="color: White;">Admin Login</h2>
+<form method="post" class="form">
+  {% csrf_token %}
+  <div style="color: rgb(239, 245, 220);">
+  {{ form.as_p }}</div> <br>
+  <button class="btn-success btn-badge" type="submit">Login</button>
+</form>
+{% endblock %}
