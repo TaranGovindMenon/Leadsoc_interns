@@ -67,5 +67,5 @@ class Emp_ExperienceAdmin(ImportExportModelAdmin):
 
 admin.site.register(models.Bu_Remarks)
 
-
+admin.site.register(models.empRemarks)
 
