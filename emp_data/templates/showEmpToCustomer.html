@@ -37,25 +37,25 @@
                 <td>{{values.refer_Customer}}</td>
                 <td> 
 
-                    <button type="button" class="btn-sm btn-info" data-toggle="modal" data-target="#BURemarksModal{{val.Customer_Requirement_id}}">
+                    <button type="button" class="btn-sm btn-info" data-toggle="modal" data-target="#BURemarksModal{{values.eFname}}">
                         <i class="fa-regular fa-eye"></i>
                     </button>
                     <!-- Modal -->
-                    <div class="modal fade" id="BURemarksModal{{val.Customer_Requirement_id}}" tabindex="-1" role="dialog" aria-labelledby="BURemarksModalLabel{{val.Customer_Requirement_id}}" aria-hidden="true">
+                    <div class="modal fade" id="BURemarksModal{{values.eFname}}" tabindex="-1" role="dialog" aria-labelledby="BURemarksModalLabel{{values.eFname}}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-scrollable" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="BURemarksModalLabel{{val.Customer_Requirement_id}}">Remarks from BU: {{val.customers}}</h5>
+                                    <h5 class="modal-title" id="BURemarksModalLabel{{values.eFname}}">Remarks from BU: {{val.customers}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
                                 {% for remark in remarks reversed%}
-                                    {% if remark.cust_id == val.Customer_Requirement_id %}
+                                    {% if remark.cust_id == values.eFname %}
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="card-title">{{remark.eFname}}</h5>
+                                                <h5 class="card-title">{{remark.refer_addemp.eFname}}</h5>
                                                 <h6 class="card-subtitle mb-2 text-body-secondary">Created on {{remark.remark_date}}</h6>
                                             </div>
                                             <div class="card-body">
@@ -75,11 +75,11 @@
 
     
                     <!--For the edit button-->
-                    <button type="button" class="btn-sm btn-success" data-toggle="modal" data-target="#BURemarksEdit{{val.Customer_Requirement_id}}">
+                    <button type="button" class="btn-sm btn-success" data-toggle="modal" data-target="#BURemarksEdit{{values.eFname}}">
                         <i class="fa-regular fa-pen-to-square"></i>
                     </button>
                     <!-- Modal form -->
-                    <div class="modal" id="BURemarksEdit{{val.Customer_Requirement_id}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                    <div class="modal" id="BURemarksEdit{{values.eFname}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
@@ -92,7 +92,7 @@
                             <div class="modal-body"> 
                                     <!-- <nav class="navbar bg-body-tertiary"> -->
                                     <div class="container-fluid">
-                                        <form action="/Buremarks/{{val.Customer_Requirement_id}}" method="POST">
+                                        <form action="/Buremarks/{{values.eFname}}" method="POST">
                                             {% csrf_token %}
                                             <div class="form-group">
                                                 <label for="Job_Description">Edit BU remarks:</label>

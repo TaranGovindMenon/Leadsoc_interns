@@ -112,7 +112,7 @@ class addEmpToCustomer(models.Model):
 
 
 class empRemarks(models.Model): 
-    eFname = models.CharField(max_length=100,null=True)
+    refer_addemp = models.ForeignKey(addEmpToCustomer, on_delete = models.CASCADE)
     remark_date = models.DateField(null=True)
     remarks = models.CharField(max_length=1000,null=True, default="")
     cname = models.CharField(max_length=100,null=True)
@@ -120,12 +120,12 @@ class empRemarks(models.Model):
         db_table = "empRemarks"
         
     def __str__(self):
-        return str(self.eFname)
+        return str(self.refer_addemp.eFname)
+    
     
 
-
 class Bu_Remarks(models.Model):
-    eFname = models.CharField(max_length=100,null=True)
+    refer_emp = models.ForeignKey(Employee, on_delete = models.CASCADE)
     cust_id = models.IntegerField()
     remark_date = models.DateField(null=True)
     remarks = models.CharField(max_length=1000,null=True, default="")
@@ -133,7 +133,7 @@ class Bu_Remarks(models.Model):
         db_table = "Bu_remarks"
         
     def __str__(self):
-        return str(self.eFname)
+        return str(self.cust_id)
 
 
 
