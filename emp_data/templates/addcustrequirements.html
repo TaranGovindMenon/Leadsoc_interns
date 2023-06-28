@@ -45,8 +45,8 @@
             placeholder="Enter opened positions">
         </div>
         <div class="form-group">
-          <label for="remain_positions">Remaining positions:</label>
-          <input type="number" class="form-control" id="remain_positions" name="remain_positions"
+          <label for="remain_positions"></label>
+          <input type="hidden" class="form-control" id="remain_positions" name="remain_positions"
             placeholder="enter Remained positions">
         </div>
         <div class="form-group">
@@ -82,9 +82,18 @@
             placeholder="Enter remarks bu BU">
     </div>
 
+    <script>
+      window.onload=function(){
+        var one=document.getElementById('Open_positions'),
+            two= document.getElementById('remain_positions');
+        one.addEventListener('input',function () {
+        two.value=one.value;
+        }) ;
+      };
+    </script>
 
     <button type="submit" class="btn btn-primary">Submit</button>
-
+    
     </form>
   </div>
   </div>
