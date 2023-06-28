@@ -54,6 +54,7 @@ urlpatterns = [
     path('savedvalues/<str:customer_name>/<int:Customer_Requirement_id>',views.savedvalues),
     path('showEmpToCustomer/<str:cust_name>/<int:Customer_Requirement_id>',views.showEmpToCustomer),
     path('emp_remarks/<str:eFname>', views.emp_remarks),
+
     path('selection_status/<str:status>/<int:Customer_Requirement_id>', views.selection_status),
 
     # path('addempcustomer',views.addempcustomer),
