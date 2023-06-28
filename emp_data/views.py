@@ -239,11 +239,7 @@ def update_cust_requirements(request,Customer_Requirement_id):
         form=Customer_RequirementForm(request.POST,instance=model_instance)
         if form.is_valid():
             form.save()
-    return redirect('/show_cust_requirements')   
-
-    
-
-
+    return redirect('/show_cust_requirements')    
 
 def show(request):
     if not request.user.is_authenticated:
@@ -499,6 +495,7 @@ def showEmpToCustomer(request, cust_name,Customer_Requirement_id):
     'cust_name': cust_name})
 
 
+
 def emp_remarks(request, eFname):
     if request.method == 'POST':
         emp = addEmpToCustomer.objects.get(eFname=eFname)
@@ -512,7 +509,6 @@ def emp_remarks(request, eFname):
         #     model_instance.sales_remarks = request.POST.get('SL_remark_text', '')
         # model_instance.save()
     #return redirect(f'/showEmpToCustomer/{cname}')
-
 
 
 def selection_status(request, status,Customer_Requirement_id): 
@@ -720,7 +716,7 @@ def simple_upload(request):
         
         imported_data = dataset.load(new_employee.read(), format='xlsx')
         for data in imported_data:
-            print(data[1])
+            #print(data[1])
             value = Employee(
                 data[0],
                 data[1],
@@ -733,8 +729,7 @@ def simple_upload(request):
                 data[8],
                 data[9],
                 data[10],
-                data[11],
-                data[12]
+                data[11]
                 )
             value.save()
         return redirect("/showemp")

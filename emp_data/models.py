@@ -137,6 +137,7 @@ class Bu_Remarks(models.Model):
 
 
 
+
 class Employee_Details(models.Model):
     pass
 

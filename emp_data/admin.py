@@ -26,7 +26,8 @@ class EmployeeAdmin(ImportExportModelAdmin):
 @admin.register(models.Customer_Requirements)
 class Customer_RequirementsAdmin(ImportExportModelAdmin):
     list_display = ('customers','Customer_Requirement_id','Required_skills','Job_Description','Required_Experience','Open_positions','remain_positions','Position_Status','Sales_Incharge','Bu_head')
-    search_fields = ['Position_Status','Required_skills']
+    search_fields = ['Position_Status','Required_skills','Sales_Incharge']
+
 
     filter_horizontal = ()
     list_filter = ()
@@ -68,4 +69,5 @@ class Emp_ExperienceAdmin(ImportExportModelAdmin):
 admin.site.register(models.Bu_Remarks)
 
 admin.site.register(models.empRemarks)
+
 
