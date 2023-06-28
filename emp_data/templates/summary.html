@@ -1,0 +1,44 @@
+{% extends 'basic.html' %}
+{% block body %}
+<center>
+    <div>
+        <h2 class="bg-primary text-white">Summary</h2>
+    </div>
+</center>
+
+<table class="table">
+    <thead class="badge-info text-white">
+        <tr>
+            <td>Bu Head</td>
+            {% for emp in employees %}
+                {% if emp.eRole.role_name == "Sales Incharge" %}
+                    <td>{{ emp.eFname }}</td>
+                {% endif %}
+            {% endfor %}
+        </tr>        
+        
+    </thead>
+    
+    <tbody>
+        {% for emp in employees %}
+            {% if emp.eRole.role_name == "Bu Head" %}
+                <tr>
+                    <td>{{ emp.eFname }}</td>
+                    {% for emp2 in employees %}
+                        {% if emp2.eRole.role_name == "Sales Incharge" %}
+                            <td>
+                                {% for val in values%}
+                                    {% if emp2.eFname == val.sales_incharge and emp.eFname == val.bu_head.Bu_head_name%}
+                                        {{val.cust_no}}
+                                    {% endif %}  
+                                {% endfor %} 
+                            </td>      
+                        {% endif %}  
+                    {% endfor %}    
+                </tr>
+            {% endif %}   
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

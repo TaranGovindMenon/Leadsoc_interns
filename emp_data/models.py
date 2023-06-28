@@ -135,6 +135,15 @@ class Bu_Remarks(models.Model):
     def __str__(self):
         return str(self.cust_id)
 
+class Summary(models.Model):
+    bu_head = models.ForeignKey(Buhead, on_delete = models.CASCADE)
+    sales_incharge = models.CharField(max_length=100) 
+    cust_no = models.IntegerField(default=1)
+    class Meta:
+        db_table = "Summary"
+        
+    def __str__(self):
+        return str(self.bu_head)
 
 
 class Employee_Details(models.Model):

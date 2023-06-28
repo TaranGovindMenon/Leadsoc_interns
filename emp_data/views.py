@@ -322,7 +322,11 @@ def Buremarks(request, cust_id):
         
         return redirect('/show_cust_requirements')
 
-
+def summary(request): 
+    emps = Employee.objects.all()
+    summary = Summary.objects.all()
+    # return HttpResponse(summary)
+    return render(request, 'summary.html', {'employees': emps, 'values': summary})
 # def sample_view(request):
 #     current_user = request.user
 #     return HttpResponse(current_user.username)

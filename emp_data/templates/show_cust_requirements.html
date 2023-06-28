@@ -5,6 +5,9 @@
         <h2 class="bg-primary text-white">Customer Requirements</h2>
     </div>
 </center>
+<button onclick="location.href='/summary'" type="button" class="btn btn-success">
+    Show summary
+</button>
 
 <table class="table">
     <thead class="badge-info text-white">
@@ -25,9 +28,8 @@
             <th>Actions</th>
         </tr>
     </thead>
-{% for val in customer_requirements %}
     <tbody>
-        
+    {% for val in customer_requirements %}
         <tr>
             <div>
             <!--<td>{{customer_requirement.Requirement_Id}}</td>-->
@@ -92,7 +94,7 @@
                     <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                         <h5 class="modal-title" id="BURemarksModalLabel{{val.Customer_Requirement_id}}">Remarks from BU: {{val.customers}}</h5>
+                         <h5 class="modal-title" id="BURemarksModalLabel{{val.Customer_Requirement_id}}">Remarks for: {{val.customers}}</h5>
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -131,7 +133,7 @@
                     <div class="modal-dialog modal-dialog-scrollable">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Update BU remarks</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Update remarks</h1>
                                 <button type="button" class="close" data-dismiss="modal"
                                     aria-label="Close">&times;</button>
                             </div>
@@ -142,7 +144,7 @@
                                     <form action="/Buremarks/{{val.Customer_Requirement_id}}" method="POST">
                                         {% csrf_token %}
                                         <div class="form-group">
-                                            <label for="Job_Description">Edit BU remarks:</label>
+                                            <label for="Job_Description">Edit remarks:</label>
                                             <textarea name="BU_remark_text" id="BU_remark_text" cols="50" rows="10" ></textarea>
                                         </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
@@ -244,9 +246,9 @@
                         class="fa-solid fa-pen-to-square"></i></button>
             </td>
         </tr>
-        
+    {% endfor %}
     </tbody>
-{% endfor %}
+
 </table>
 
 {% endblock %}
