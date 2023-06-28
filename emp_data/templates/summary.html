@@ -1,0 +1,27 @@
+{% extends 'basic.html' %}
+{% block extra %}
+Summary of customers
+{% endblock%}
+{% block body %}
+<div class="container-fluid">
+    <table class="table table-bordered table-hover" id="example">
+    <thead>
+        <th></th>
+        {% for val in saleslist %}
+        <th>{{val}}</th>
+        {% endfor %}
+        <th>Total Customers</th>
+    </thead>
+    <tbody>
+            {% for values in final %}
+            <tr>
+            {% for val in values %}
+            <td>{{val}}</td>
+            {% endfor %}
+        </tr>
+            {% endfor %}
+        
+    </tbody>
+</table>  
+</div>
+{% endblock %}

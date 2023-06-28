@@ -245,29 +245,37 @@
                 <td>
 
                       {% if position > 0 %}
-                      {% if values.empstatus == 'Selected' %} 
+                      {% if values.empstatus != 'Selected' %} 
                       <div class="dropdown">
-                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Select/Reject
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
                           <a class="dropdown-item" href="/selection_status/SL{{values.eFname}}/{{Customer_Requirement_id}}">Selected</a>
                           <a class="dropdown-item" href="/selection_status/RJ{{values.eFname}}/{{Customer_Requirement_id}}">Rejected</a>
-                        </div>
-                      </div>
-                      {% elif values.empstatus == 'Rejected' %}
-                      <div class="dropdown">
-                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
-                          Select/Reject
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
-                          <a class="dropdown-item" href="/selection_status/SL{{values.eFname}}/{{Customer_Requirement_id}}">Selected</a>
-                          <a class="dropdown-item" href="/selection_status/RJ{{values.eFname}}/{{Customer_Requirement_id}}">Rejected</a>
+                          <a  class="dropdown-item" href="/selection_status/BU{{values.eFname}}/{{Customer_Requirement_id}}">Shorlisted by BU</a>
+                          <a  class="dropdown-item" href="/selection_status/CL{{values.eFname}}/{{Customer_Requirement_id}}">Shortlisted by Client</a>
+                          <a  class="dropdown-item" href="/selection_status/OP{{values.eFname}}/{{Customer_Requirement_id}}">Onboarding Progress</a>
+                          <a  class="dropdown-item" href="/selection_status/OB{{values.eFname}}/{{Customer_Requirement_id}}">Onboarded</a>
                         </div>
                       </div>
                       {% else %}
-
-                    <div class="dropdown">
+                      <div class="dropdown">
+                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                          Select/Reject
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
+                          <a class="dropdown-item" href="/selection_status/SL{{values.eFname}}/{{Customer_Requirement_id}}">Selected</a>
+                          <a class="dropdown-item" href="/selection_status/RJ{{values.eFname}}/{{Customer_Requirement_id}}">Rejected</a>
+                          <a  class="dropdown-item" href="/selection_status/BU{{values.eFname}}/{{Customer_Requirement_id}}">Shorlisted by BU</a>
+                          <a  class="dropdown-item" href="/selection_status/CL{{values.eFname}}/{{Customer_Requirement_id}}">Shortlisted by Client</a>
+                          <a  class="dropdown-item" href="/selection_status/OP{{values.eFname}}/{{Customer_Requirement_id}}">Onboarding Progress</a>
+                          <a  class="dropdown-item" href="/selection_status/OB{{values.eFname}}/{{Customer_Requirement_id}}">Onboarded</a>
+                        </div>
+                      </div>
+                      {% endif %}
+                      {% else %}
+                      <div class="dropdown">
                         <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Select/Reject
                         </button>
@@ -275,17 +283,10 @@
 
                           <a class="dropdown-item" href="/selection_status/SL{{values.eFname}}/{{Customer_Requirement_id}}">Selected</a>
                           <a class="dropdown-item" href="/selection_status/RJ{{values.eFname}}/{{Customer_Requirement_id}}">Rejected</a>
-                        </div>
-                      </div>
-                      {% endif %}
-                      {% else %}
-                      <div class="dropdown">
-                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
-                          Select/Reject
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
-                          <a class="dropdown-item" href="/selection_status/SL{{values.eFname}}/{{Customer_Requirement_id}}">Selected</a>
-                          <a class="dropdown-item" href="/selection_status/RJ{{values.eFname}}/{{Customer_Requirement_id}}">Rejected</a>
+                          <a  class="dropdown-item" href="/selection_status/BU{{values.eFname}}/{{Customer_Requirement_id}}">Shorlisted by BU</a>
+                          <a  class="dropdown-item" href="/selection_status/CL{{values.eFname}}/{{Customer_Requirement_id}}">Shortlisted by Client</a>
+                          <a  class="dropdown-item" href="/selection_status/OP{{values.eFname}}/{{Customer_Requirement_id}}">Onboarding Progress</a>
+                          <a  class="dropdown-item" href="/selection_status/OB{{values.eFname}}/{{Customer_Requirement_id}}">Onboarded</a>
                         </div>
                       </div>
                     {% endif %}

@@ -115,13 +115,13 @@ def emp(request):
             # return HttpResponse('Bu Head')
             instance=Buhead(Bu_head_name=emp_name)
             instance.save()
-            return redirect(f'/showexperienceform/{ePhone}')
+            return redirect(f'/showemp')
 
         if erole=='Sales Incharge':
             # return HttpResponse('Sales Incharge')
             instance=SalesIncharge(incharge_name=emp_name)
             instance.save()
-            return redirect(f'/showexperienceform/{ePhone}')
+            return redirect(f'/showemp')
 
         # return redirect('/showemp')
         else:
@@ -141,16 +141,16 @@ def emp(request):
         return render(request, 'addemp.html',{'zipped_lists': list1,'rolelist':rolelist,'status':['Free','Deployed']})
 
 
-def showexperienceform(request,ePhone):
-    instance=Employee.objects.get(pk=ePhone)
-    first_name=instance.eFname
-    last_name=instance.eLname
-    name=first_name + " " + last_name
-    custom=Customer.objects.all()
-    customerlist=[]
-    for item in custom:
-        customerlist.append(item.cName)
-    return render(request,'experience.html',{'ePhone':ePhone,'name':name,'customerlist':customerlist})
+# def showexperienceform(request,ePhone):
+#     instance=Employee.objects.get(pk=ePhone)
+#     first_name=instance.eFname
+#     last_name=instance.eLname
+#     name=first_name + " " + last_name
+#     custom=Customer.objects.all()
+#     customerlist=[]
+#     for item in custom:
+#         customerlist.append(item.cName)
+#     return render(request,'experience.html',{'ePhone':ePhone,'name':name,'customerlist':customerlist})
 
 
 def addexperience(request,ePhone):
@@ -317,6 +317,41 @@ def Buremarks(request, cust_id):
         # model_instance.save()
         
         return redirect('/show_cust_requirements')
+
+import numpy as np
+
+def summary(request):
+    first=Buhead.objects.all()
+    second=SalesIncharge.objects.all()
+    saleslist=[]
+    bulist=[]
+    for val in first:
+        bulist.append(val.Bu_head_name)
+    for val in second:
+        saleslist.append(val.incharge_name)
+    final=[]
+    for val in bulist:
+        firstarray=[]
+        for newval in saleslist:
+            customercount=len(Customer_Requirements.objects.filter(Bu_head=str(val),Sales_Incharge=str(newval)))
+            firstarray.append(customercount)
+        firstarray.append(sum(firstarray))
+        firstarray.insert(0,val)
+        final.append(firstarray)
+    length=len(saleslist)
+    context={'final':final,
+             'saleslist':saleslist,
+             'length':length}
+    return render(request,'summary.html',context)
+        
+
+
+
+
+
+
+
+
 
 
 # def sample_view(request):
@@ -496,6 +531,18 @@ def selection_status(request, status,Customer_Requirement_id):
         #return HttpResponse('something else in it')
     # else: 
     #     return HttpResponse('none')
+    elif status[:2]=='BU':
+        model_instance.empstatus='Shortlisted by BU'
+        model_instance.save()
+    elif status[:2]=='CL':
+        model_instance.empstatus='Shortlisted by Client'
+        model_instance.save()
+    elif status[:2]=='OP':
+        model_instance.empstatus='Onboarding Progress'
+        model_instance.save()
+    elif status[:2]=='OB':
+        model_instance.empstatus='Onboarded'
+        model_instance.save()
     return redirect(f'/showEmpToCustomer/{cname}/{Customer_Requirement_id}')
 
 
