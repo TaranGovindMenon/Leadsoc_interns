@@ -24,11 +24,12 @@
 
     <center>
         <div>
-            <h3 class="bg-primary text-white">Candidate List</h3>
+            <h3 class="bg-info text-white">Candidate List</h3>
 
         </div>
     </center>
-    <form action="/savedvalues/{{customer_name}}" method="POST" class="form-inline">
+    <form action="/savedvalues/{{customer_name}}/{{Customer_Requirement_id}}" method="POST" class="form-inline">
+
         {% csrf_token %}
         
     <table class="table">

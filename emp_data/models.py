@@ -45,7 +45,6 @@ class Employee(models.Model):
     estatus = models.CharField(max_length=100,null=True) # either free or deployed
     leadsoc_joining_date = models.DateField(null=True)
     customer_start_date = models.DateField(null=True)
-    remarks = models.CharField(max_length=30,null=True) # about employee
 
     class Meta:
         db_table = "employee"
@@ -53,10 +52,17 @@ class Employee(models.Model):
     def __str__(self):
         return str(self.eFname)
          
+
+class Emp_Experience(models.Model):
+    emp_mobile=models.CharField(max_length=15,null=True)
+    refer_customer=models.CharField(max_length=100,null=True)
+    customer_start_date=models.DateField(null=True)
+    customer_end_date=models.DateField(null=True)
+
         
 
 class Customer_Requirements(models.Model):
-    Requirement_Id = models.IntegerField(unique=True)
+
     customers = models.ForeignKey(Customer, on_delete = models.CASCADE)
     Customer_Requirement_id = models.IntegerField(primary_key=True)
     Required_skills = models.TextField()
@@ -104,6 +110,7 @@ class addEmpToCustomer(models.Model):
     def __str__(self):
         return str(self.eFname)
 
+
 class empRemarks(models.Model): 
     eFname = models.CharField(max_length=100,null=True)
     remark_date = models.DateField(null=True)
@@ -127,6 +134,7 @@ class Bu_Remarks(models.Model):
         
     def __str__(self):
         return str(self.eFname)
+
 
 
 class Employee_Details(models.Model):

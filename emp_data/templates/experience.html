@@ -1,0 +1,123 @@
+{% extends 'basic.html' %}
+{% block body %}
+<!-- <script>
+    var counter = 1;
+
+    function addCustomerEntry() {
+        var container = document.getElementById('customerEntries');
+        var entryDiv = document.createElement('div');
+
+        entryDiv.innerHTML = `
+        <label>Refer Customer:</label>
+        <input type="text" name="refer_customer${counter}" required>
+        
+        <label>Start Date:</label>
+        <input type="date" name="customer_start_date${counter}" required>
+        
+        <label>End Date:</label>
+        <input type="date" name="customer_end_date${counter}" required>
+      `;
+
+        container.appendChild(entryDiv);
+        counter++;
+    }
+</script>
+</head>
+
+<body>
+    <h6>Employee : {{name}}</h6>
+    <h6>Add Customers</h6>
+
+    <form action="/addexperience/{{ePhone}}" method="post">
+        {% csrf_token %}
+
+        <input type="hidden" name="emp_mobile" value="{{ emp_mobile }}">
+
+        <div id="customerEntries">
+            <div>
+                <div class="form-group">
+                    <label>Refer Customer:</label>
+                    <input type="text" name="refer_customer" required>
+                </div>
+                <div class="form-group">
+                    <label>Start Date:</label>
+                    <input type="date" name="customer_start_date" required>
+                </div>
+                <div class="form-group">
+                    <label>End Date:</label>
+                    <input type="date" name="customer_end_date" required>
+                </div>
+
+                <input type="hidden" name="emp_mobile" value="{{ePhone}}">
+
+            </div>
+        </div>
+
+        <button type="button" onclick="addCustomerEntry()" class="btn btn-success">Add More Customers</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form> -->
+    <form id="myForm" method="POST" action="/addexperience/{{ePhone}}">
+        {% csrf_token %}
+        <div id="formFieldsContainer">
+          <div class="form-group">
+            <label for="id_refer_customer_0">Select Customer</label>
+          <select name="refer_customer[]" id="refer_customer_0">
+            {% for val in customerlist %}
+            <option value="{{val}}">{{val}}</option>
+            {% endfor %}
+          </select>
+          </div>
+          <div class="form-group">
+            <label for="id_customer_start_date_0">Customer Start Date:</label>
+            <input type="date" name="customer_start_date[]" id="id_customer_start_date_0">
+          </div>
+          <div class="form-group">
+            <label for="id_customer_end_date_0">Customer End Date:</label>
+            <input type="date" name="customer_end_date[]" id="id_customer_end_date_0">
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <button type="button" id="addFormFieldsBtn">Add More</button>
+        </div>
+        
+        <input type="hidden" name="num_entries" id="num_entries" value="0">
+        <input type="submit" value="Submit">
+      </form>
+      
+      <script>
+        var formFieldsContainer = document.getElementById('formFieldsContainer');
+        var addFormFieldsBtn = document.getElementById('addFormFieldsBtn');
+        var counter = 1;
+        var numEntriesInput = document.getElementById('num_entries');
+      
+        addFormFieldsBtn.addEventListener('click', function() {
+          var newFormFields = `
+          <div class="form-group">
+            <label for="id_refer_customer_${counter}">Select Customer</label>
+          <select name="refer_customer[]" id="refer_customer_${counter}">
+            {% for val in customerlist %}
+            <option value="{{val}}">{{val}}</option>
+            {% endfor %}
+          </select>
+          </div>
+            <div class="form-group">
+              <label for="id_customer_start_date_${counter}">Customer Start Date:</label>
+              <input type="date" name="customer_start_date[]" id="id_customer_start_date_${counter}">
+            </div>
+            <div class="form-group">
+              <label for="id_customer_end_date_${counter}">Customer End Date:</label>
+              <input type="date" name="customer_end_date[]" id="id_customer_end_date_${counter}">
+            </div>
+          `;
+          formFieldsContainer.insertAdjacentHTML('beforeend', newFormFields);
+          counter++;
+          numEntriesInput.value = counter; // Update the num_entries input value
+        });
+      </script>
+      <div class="form-group">
+        <button type="button" id="submitbutton"><a href="/showemp">Skip</a></button>
+      </div>
+      
+
+{% endblock %}

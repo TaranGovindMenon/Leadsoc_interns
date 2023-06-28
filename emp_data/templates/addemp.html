@@ -137,7 +137,11 @@
         </div>
         <div class="form-group">
           <label for="estatus">Employee status:</label>
-          <input type="text" class="form-control" id="estatus" name="estatus" placeholder="Free or Deployed">
+          <select name="estatus" id="estatus">
+            {% for val in status %}
+            <option value="{{val}}">{{val}}</option>
+            {% endfor %}
+          </select>
         </div>
         <div class="form-group">
           <label for="leadsoc_joining_date">Joining Date to LeadSoc:</label>
@@ -147,12 +151,9 @@
           <label for="customer_start_date">Customer Start Date:</label>
           <input type="date" class="form-control" id="customer_start_date" name="customer_start_date" placeholder="enter customer deployed date">
         </div>
-        <div class="form-group">
-          <label for="remarks">Remarks:</label>
-          <input type="text" class="form-control" id="remarks" name="remarks" placeholder="enter remarks of employee">
-        </div>
-        
-        <button type="submit" class="btn btn-success">Submit</button><br><br><br>
+
+        <button type="submit" class="btn btn-success">Proceed To add Employee's Experience Details</button><br><br><br>
+
       
       </form>
   </div></div>

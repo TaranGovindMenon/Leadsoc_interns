@@ -8,8 +8,7 @@
       buttons: [
         'copyHtml5',
         'excelHtml5',
-        'csvHtml5',
-        'pdfHtml5'
+        'csvHtml5'
       ]
     });
   });
@@ -18,21 +17,21 @@
 {% block body %}
 <center>
   <div>
-    <h2 class="bg-primary text-white">List of Employees</h2>
+    <h2 class="bg-info text-white">List of Employees</h2>
   </div>
 </center>
 
 <div class="container-fluid">
   <table class="table table-bordered table-hover" id="example">
-    <thead class="bg-danger text-white">
+    <thead class="bg-info text-white">
       <tr>
         <th>Serial No.</th>
-        <th>FirstName</th>
-        <th>LastName</th>
+        <th>First Name</th>
+        <th>Last Name</th>
         <th>Customer</th>
         <th>Email</th>
         <th>Phone</th>
-        <th>Designation</th>
+        <th>Role</th>
         <th>Status</th>
         <th>LeadSoc Joining Date</th>
         <th>Customer Start Date</th>
@@ -55,12 +54,56 @@
         <td>{{employee.customer_start_date}}</td>
 
         <td>
-          <button class="btn-danger btn-sm" onclick="location.href='/deleteEmp/{{employee.eFname}}'"><i
+
+          <button class="btn-danger btn-sm" onclick="location.href='/deleteEmp/{{employee.ePhone}}'"><i
+
               class="fa-solid fa-trash fa-beat"></i></button>
           <button class="btn-success btn-sm" data-toggle="modal" data-target="#modalForm{{employee.ePhone}}"><i
                 class="fa-solid fa-pen-to-square fa-beat"></i></button>
           <!-- <button class="btn-success btn-sm" onclick="location.href='/editemp/{{employee.eFname}}'"><i
               class="fa-solid fa-pen-to-square"></i></button> -->
+          <button class="btn-info btn-sm data" data-toggle="modal" data-target="#modalTable{{employee.ePhone}}">
+            <i class="fa-solid fa-eye fa-beat"></i>
+          </button>
+          <div class="modal" id="modalTable{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5>Experience</h5>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              <h5>Employee Name: {{employee.eFname}}  {{employee.eLname}} </h5>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Serial Number</th>
+                    <th>Company</th>
+                    <th>Customer Start Date</th>
+                    <th>Customer End Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for val in experiencelist %}
+                  {% if val.emp_mobile == employee.ePhone %}
+                  <tr>
+                  <td>{{forloop.counter}}</td>
+                  <td>{{val.refer_customer}}</td>
+                  <td>{{val.customer_start_date}}</td>
+                  <td>{{val.customer_end_date}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+                
+              </table>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
               <div class="modal" id="modalForm{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                         aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-scrollable">
@@ -104,10 +147,14 @@
                                                     value="{{employee.eEmail}}">
                                             </div>
                                             <div class="form-group">
-                                                <label for="eRole">Update E Role :</label>
-                                                <input type="text" class="form-control" id="eRole"
-                                                    name="eRole" placeholder="Enter E Role"
-                                                    value="{{employee.eRole}}">
+
+                                              <label for="eRole">Update Role</label>
+                                              <select name="eRole" id="eRole">
+                                                {% for val in rolelist %}
+                                                <option value="{{val}}">{{val}}</option>
+                                                {% endfor %}
+                                              </select>
+
                                             </div>
                                             <div class="form-group">
                                                 <label for="estatus">Update Status:</label>
@@ -116,12 +163,16 @@
                                                     placeholder="Enter Status"
                                                     value="{{employee.estatus}}">
                                             </div>
-                                            <div class="form-group">
+
+                                            <!-- <div class="form-group">
+
                                               <label for="customer_start_date">Update Customer Start Date:</label>
                                                 <input type="date" class="form-control" id="customer_start_date"
                                                     name="customer_start_date" value="{{employee.customer_start_date}}">
                                                     
-                                            </div>
+
+                                            </div> -->
+
                                     </div>
                                     <!-- <div class="form-group">
                                         <label for="Sales_Incharge">Sales Incharge</label>
