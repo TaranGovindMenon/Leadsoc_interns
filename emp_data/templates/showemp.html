@@ -57,115 +57,108 @@
         <td>
 
           <button class="btn-danger btn-sm" onclick="location.href='/deleteEmp/{{employee.ePhone}}'"><i
-
               class="fa-solid fa-trash fa-beat"></i></button>
           <button class="btn-success btn-sm" data-toggle="modal" data-target="#modalForm{{employee.ePhone}}"><i
-                class="fa-solid fa-pen-to-square fa-beat"></i></button>
+              class="fa-solid fa-pen-to-square fa-beat"></i></button>
           <!-- <button class="btn-success btn-sm" onclick="location.href='/editemp/{{employee.eFname}}'"><i
               class="fa-solid fa-pen-to-square"></i></button> -->
           <button class="btn-info btn-sm data" data-toggle="modal" data-target="#modalTable{{employee.ePhone}}">
             <i class="fa-solid fa-eye fa-beat"></i>
           </button>
-          <div class="modal" id="modalTable{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-          aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5>Experience</h5>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-              <h5>Employee Name: {{employee.eFname}}  {{employee.eLname}} </h5>
-              <table class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Serial Number</th>
-                    <th>Company</th>
-                    <th>Customer Start Date</th>
-                    <th>Customer End Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for val in experiencelist %}
-                  {% if val.emp_mobile == employee.ePhone %}
-                  <tr>
-                  <td>{{forloop.counter}}</td>
-                  <td>{{val.refer_customer}}</td>
-                  <td>{{val.customer_start_date}}</td>
-                  <td>{{val.customer_end_date}}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-                </tbody>
-                
-              </table>
-            </div>
+          <button class="btn-sm" data-toggle="modal" data-target="#modalExpereince{{employee.ePhone}}">
+            <i class="fa-solid fa-user fa-beat" style="color: #e6db43;"></i>
+          </button>
+          <div class="modal" id="modalTable{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5>Experience</h5>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <h5>Employee Name: {{employee.eFname}} {{employee.eLname}} </h5>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Company</th>
+                        <th>Customer Start Date</th>
+                        <th>Customer End Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for val in experiencelist %}
+                      {% if val.emp_mobile == employee.ePhone %}
+                      <tr>
+                        <td>{{val.refer_customer}}</td>
+                        <td>{{val.customer_start_date}}</td>
+                        <td>{{val.customer_end_date}}</td>
+                      </tr>
+                      {% endif %}
+                      {% endfor %}
+                    </tbody>
 
+                  </table>
+                </div>
+
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-              <div class="modal" id="modalForm{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Enter the new details</h1>
-                                    <button type="button" class="close" data-dismiss="modal"
-                                        aria-label="Close">&times;</button>
-                                </div>
+          <div class="modal" id="modalForm{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Enter the new details</h1>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
 
-                            <div class="modal-body">
-                                    <!-- <nav class="navbar bg-body-tertiary"> -->
-                                    <div class="container-fluid">
-                                        <form action="/updateEmp/{{employee.ePhone}}"
-                                            method="POST">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <label for="Required_skills">Update First Name :</label>
-                                                <input type="text" class="form-control" id="eFname" 
-                                                    name="eFname" placeholder="Enter First Name"
-                                                    value="{{employee.eFname}}">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="eLname">Update Last Name:</label>
-                                                <input type="text" class="form-control" id="eLname"
-                                                    name="eLname" placeholder="Enter Last Name"
-                                                    value="{{employee.eLname}}">
-                                            </div>
-                                            <div class="form-group">
-                                              <label for="refer_Customer">Customer</label>
-                                              <select name="refer_Customer" id="refer_Customer">
-                                                {% for val in customerlist %}
-                                                <option value="{{val}}">{{val}}</option>
-                                                {% endfor %}
-                                              </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="eEmail">Update Email Id :</label>
-                                                <input type="email" class="form-control" id="eEmail"
-                                                    name="eEmail" placeholder="Enter opened positions"
-                                                    value="{{employee.eEmail}}">
-                                            </div>
-                                            <div class="form-group">
+                <div class="modal-body">
+                  <!-- <nav class="navbar bg-body-tertiary"> -->
+                  <div class="container-fluid">
+                    <form action="/updateEmp/{{employee.ePhone}}" method="POST">
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <label for="Required_skills">Update First Name :</label>
+                        <input type="text" class="form-control" id="eFname" name="eFname" placeholder="Enter First Name"
+                          value="{{employee.eFname}}">
+                      </div>
+                      <div class="form-group">
+                        <label for="eLname">Update Last Name:</label>
+                        <input type="text" class="form-control" id="eLname" name="eLname" placeholder="Enter Last Name"
+                          value="{{employee.eLname}}">
+                      </div>
+                      <div class="form-group">
+                        <label for="refer_Customer">Customer</label>
+                        <select name="refer_Customer" id="refer_Customer">
+                          {% for val in customerlist %}
+                          <option value="{{val}}">{{val}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label for="eEmail">Update Email Id :</label>
+                        <input type="email" class="form-control" id="eEmail" name="eEmail"
+                          placeholder="Enter opened positions" value="{{employee.eEmail}}">
+                      </div>
+                      <div class="form-group">
 
-                                              <label for="eRole">Update Role</label>
-                                              <select name="eRole" id="eRole">
-                                                {% for val in rolelist %}
-                                                <option value="{{val}}">{{val}}</option>
-                                                {% endfor %}
-                                              </select>
+                        <label for="eRole">Update Role</label>
+                        <select name="eRole" id="eRole">
+                          {% for val in rolelist %}
+                          <option value="{{val}}">{{val}}</option>
+                          {% endfor %}
+                        </select>
 
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="estatus">Update Status:</label>
-                                                <input type="text" class="form-control" id="estatus"
-                                                    name="estatus"
-                                                    placeholder="Enter Status"
-                                                    value="{{employee.estatus}}">
-                                            </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="estatus">Update Status:</label>
+                        <input type="text" class="form-control" id="estatus" name="estatus" placeholder="Enter Status"
+                          value="{{employee.estatus}}">
+                      </div>
 
-                                            <!-- <div class="form-group">
+                      <!-- <div class="form-group">
 
                                               <label for="customer_start_date">Update Customer Start Date:</label>
                                                 <input type="date" class="form-control" id="customer_start_date"
@@ -174,8 +167,8 @@
 
                                             </div> -->
 
-                                    </div>
-                                    <!-- <div class="form-group">
+                  </div>
+                  <!-- <div class="form-group">
                                         <label for="Sales_Incharge">Sales Incharge</label>
                                         <select name="Sales_Incharge" id="Sales_Incharge">
                                           {% for val in saleslist %}
@@ -183,13 +176,89 @@
                                           {% endfor %}
                                         </select>
                                       </div> -->
-                                    <button type="submit" class="btn btn-primary">Update</button>
-                                    </form>
-                                </div>
-                            </div>
+                  <button type="submit" class="btn btn-primary">Update</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="modal" id="modalExpereince{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h3>Employee Name : {{employee.eFname}} {{employee.eLname}}</h3>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <h5>Add Experience</h5>
+                  <div class="container-fluid">
+                    <form id="myForm" method="POST" action="/addexperience/{{employee.ePhone}}">
+                      {% csrf_token %}
+                      <div id="formFieldsContainer">
+                        <div class="form-group">
+                          <label for="id_refer_customer_0">Select Customer</label>
+                        <select name="refer_customer[]" id="refer_customer_0">
+                          {% for val in customerlist %}
+                          <option value="{{val}}">{{val}}</option>
+                          {% endfor %}
+                        </select>
                         </div>
-                    </div>
-                
+                        <div class="form-group">
+                          <label for="id_customer_start_date_0">Customer Start Date:</label>
+                          <input type="date" name="customer_start_date[]" id="id_customer_start_date_0">
+                        </div>
+                        <div class="form-group">
+                          <label for="id_customer_end_date_0">Customer End Date:</label>
+                          <input type="date" name="customer_end_date[]" id="id_customer_end_date_0">
+                        </div>
+                      </div>
+                    
+                      <div class="form-group">
+                        <button type="button" id="addFormFieldsBtn">Add More</button>
+                      </div>
+                      
+                      <input type="hidden" name="num_entries" id="num_entries" value="0">
+                      <input type="submit" value="Submit">
+                    </form>
+                    
+                    <script>
+                      var formFieldsContainer = document.getElementById('formFieldsContainer');
+                      var addFormFieldsBtn = document.getElementById('addFormFieldsBtn');
+                      var counter = 1;
+                      var numEntriesInput = document.getElementById('num_entries');
+                    
+                      addFormFieldsBtn.addEventListener('click', function() {
+                        var newFormFields = `
+                        <div class="form-group">
+                          <label for="id_refer_customer_${counter}">Select Customer</label>
+                        <select name="refer_customer[]" id="refer_customer_${counter}">
+                          {% for val in customerlist %}
+                          <option value="{{val}}">{{val}}</option>
+                          {% endfor %}
+                        </select>
+                        </div>
+                          <div class="form-group">
+                            <label for="id_customer_start_date_${counter}">Customer Start Date:</label>
+                            <input type="date" name="customer_start_date[]" id="id_customer_start_date_${counter}">
+                          </div>
+                          <div class="form-group">
+                            <label for="id_customer_end_date_${counter}">Customer End Date:</label>
+                            <input type="date" name="customer_end_date[]" id="id_customer_end_date_${counter}">
+                          </div>
+                        `;
+                        formFieldsContainer.insertAdjacentHTML('beforeend', newFormFields);
+                        counter++;
+                        numEntriesInput.value = counter; // Update the num_entries input value
+                      });
+                    </script> 
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
         </td>
       </tr>
