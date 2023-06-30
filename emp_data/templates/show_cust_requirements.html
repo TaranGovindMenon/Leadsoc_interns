@@ -7,8 +7,8 @@
       dom: 'Bfrtip',
       buttons: [
         'copyHtml5',
-        'excelHtml5'
-        
+        'excelHtml5',
+        'csvHtml5'
       ]
     });
   });
@@ -20,7 +20,9 @@
         <h2 class="bg-info text-white">Customer Requirements</h2>
     </div>
 </center>
-<table class="table">
+<button class="btn-sm" onclick="location.href='/summary'">Summary</button>
+<div class="container-fluid">
+<table class="table table-bordered table-hover" id="example">
     <thead class="badge-info text-white">
         <tr>
             <tr>
