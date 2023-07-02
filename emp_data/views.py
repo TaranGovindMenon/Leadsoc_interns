@@ -301,7 +301,9 @@ def show_cust_requirements(request):
         customer_requirements = Customer_Requirements.objects.all()
         saleslist=SalesIncharge.objects.all()
         all_remarks = Bu_Remarks.objects.all()
-        return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'saleslist':saleslist,'remarks':all_remarks})
+        sales_incharge = SalesIncharge.objects.all()
+        bu_head = Buhead.objects.all()
+        return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'saleslist':saleslist,'remarks':all_remarks, 'sales_incharge': sales_incharge, 'bu_head': bu_head})
 
 def Buremarks(request, cust_id):
     if request.method == 'POST':
@@ -318,7 +320,26 @@ def Buremarks(request, cust_id):
         
         return redirect('/show_cust_requirements')
 
-import numpy as np
+def cust_req_dropdown(request, ref): 
+    if ref[:1] == 'P':
+        cust = Customer_Requirements.objects.get(pk=ref[2:3])
+        if ref[1:2] == 'A': 
+            cust.Position_Status = 'Active'
+        elif ref[1:2] == 'H': 
+            cust.Position_Status = 'Hold'
+        elif ref[1:2] == 'I': 
+            cust.Position_Status = 'Inactive'
+    elif ref[:1] == 'S':
+        cust = Customer_Requirements.objects.get(pk=ref[1:2])
+        sales_inch = SalesIncharge.objects.get(incharge_name=ref[2:])
+        cust.Sales_Incharge = sales_inch
+    elif ref[:1] == 'B': 
+        cust = Customer_Requirements.objects.get(pk=ref[1:2])
+        bu_head = Buhead.objects.get(Bu_head_name=ref[2:])
+        cust.Bu_head = bu_head
+    cust.save()
+    return redirect('/show_cust_requirements')
+    
 
 def summary(request):
     first=Buhead.objects.all()
