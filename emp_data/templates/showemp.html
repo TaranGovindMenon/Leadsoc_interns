@@ -8,7 +8,8 @@
       buttons: [
         'copyHtml5',
         'excelHtml5',
-        'csvHtml5'
+        'csvHtml5',
+        'pdfHtml5'
       ]
     });
   });
@@ -25,13 +26,13 @@
   <table class="table table-bordered table-hover" id="example">
     <thead class="bg-info text-white">
       <tr>
-        <th>Serial No.</th>
-        <th>First Name</th>
-        <th>Last Name</th>
+        <th>Employee ID.</th>
+        <th>FirstName</th>
+        <th>LastName</th>
         <th>Customer</th>
         <th>Email</th>
         <th>Phone</th>
-        <th>Role</th>
+        <th>Designation</th>
         <th>Status</th>
         <th>LeadSoc Joining Date</th>
         <th>Customer Start Date</th>
@@ -42,7 +43,7 @@
     <tbody>
       {% for employee in employees %}
       <tr>
-        <td>{{forloop.counter}}</td>
+        <td>{{employee.e_id}}</td>
         <td>{{employee.eFname}}</td>
         <td>{{employee.eLname}}</td>
         <td>{{employee.refer_Customer}}</td>
@@ -64,9 +65,10 @@
           <button class="btn-info btn-sm data" data-toggle="modal" data-target="#modalTable{{employee.ePhone}}">
             <i class="fa-solid fa-eye fa-beat"></i>
           </button>
-          <button class="btn-sm" data-toggle="modal" data-target="#modalExpereince{{employee.ePhone}}">
+          <button class="btn-sm" onclick="location.href='/experience/{{employee.ePhone}}'">
             <i class="fa-solid fa-user fa-beat" style="color: #e6db43;"></i>
           </button>
+
           <div class="modal" id="modalTable{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false"
             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -152,9 +154,12 @@
 
                       </div>
                       <div class="form-group">
-                        <label for="estatus">Update Status:</label>
-                        <input type="text" class="form-control" id="estatus" name="estatus" placeholder="Enter Status"
-                          value="{{employee.estatus}}">
+                        <label for="estatus">Update status:</label>
+                        <select name="estatus" id="estatus">
+                          {% for val in statuslist %}
+                          <option value="{{val}}">{{val}}</option>
+                          {% endfor %}
+                        </select>
                       </div>
 
                       <!-- <div class="form-group">
@@ -181,84 +186,6 @@
               </div>
             </div>
           </div>
-
-
-          <div class="modal" id="modalExpereince{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false"
-            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h3>Employee Name : {{employee.eFname}} {{employee.eLname}}</h3>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-                </div>
-                <div class="modal-body">
-                  <h5>Add Experience</h5>
-                  <div class="container-fluid">
-                    <form id="myForm" method="POST" action="/addexperience/{{employee.ePhone}}">
-                      {% csrf_token %}
-                      <div id="formFieldsContainer">
-                        <div class="form-group">
-                          <label for="id_refer_customer_0">Select Customer</label>
-                        <select name="refer_customer[]" id="refer_customer_0">
-                          {% for val in customerlist %}
-                          <option value="{{val}}">{{val}}</option>
-                          {% endfor %}
-                        </select>
-                        </div>
-                        <div class="form-group">
-                          <label for="id_customer_start_date_0">Customer Start Date:</label>
-                          <input type="date" name="customer_start_date[]" id="id_customer_start_date_0">
-                        </div>
-                        <div class="form-group">
-                          <label for="id_customer_end_date_0">Customer End Date:</label>
-                          <input type="date" name="customer_end_date[]" id="id_customer_end_date_0">
-                        </div>
-                      </div>
-                    
-                      <div class="form-group">
-                        <button type="button" id="addFormFieldsBtn">Add More</button>
-                      </div>
-                      
-                      <input type="hidden" name="num_entries" id="num_entries" value="0">
-                      <input type="submit" value="Submit">
-                    </form>
-                    
-                    <script>
-                      var formFieldsContainer = document.getElementById('formFieldsContainer');
-                      var addFormFieldsBtn = document.getElementById('addFormFieldsBtn');
-                      var counter = 1;
-                      var numEntriesInput = document.getElementById('num_entries');
-                    
-                      addFormFieldsBtn.addEventListener('click', function() {
-                        var newFormFields = `
-                        <div class="form-group">
-                          <label for="id_refer_customer_${counter}">Select Customer</label>
-                        <select name="refer_customer[]" id="refer_customer_${counter}">
-                          {% for val in customerlist %}
-                          <option value="{{val}}">{{val}}</option>
-                          {% endfor %}
-                        </select>
-                        </div>
-                          <div class="form-group">
-                            <label for="id_customer_start_date_${counter}">Customer Start Date:</label>
-                            <input type="date" name="customer_start_date[]" id="id_customer_start_date_${counter}">
-                          </div>
-                          <div class="form-group">
-                            <label for="id_customer_end_date_${counter}">Customer End Date:</label>
-                            <input type="date" name="customer_end_date[]" id="id_customer_end_date_${counter}">
-                          </div>
-                        `;
-                        formFieldsContainer.insertAdjacentHTML('beforeend', newFormFields);
-                        counter++;
-                        numEntriesInput.value = counter; // Update the num_entries input value
-                      });
-                    </script> 
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </td>
       </tr>
       {% endfor %}

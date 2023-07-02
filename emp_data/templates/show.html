@@ -20,7 +20,7 @@
 
     <tbody>
       {% for customer in companies %}
-      {% if customer.cName != 'No Customer' %}
+      {% if customer.cName != 'Not Assigned' %}
       <tr>
         <!--<td>{{customer.id}}</td>-->
         <td style="text-align: center">{{forloop.counter}}</td>

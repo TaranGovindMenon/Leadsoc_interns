@@ -138,19 +138,20 @@ def emp(request):
             rolelist.append(item.role_name)
 
 
-        return render(request, 'addemp.html',{'zipped_lists': list1,'rolelist':rolelist,'status':['Free','Deployed']})
+        return render(request, 'addemp.html',{'zipped_lists': list1,'rolelist':rolelist,'status':['Free','Deployed','Support Team']})
 
 
-# def showexperienceform(request,ePhone):
-#     instance=Employee.objects.get(pk=ePhone)
-#     first_name=instance.eFname
-#     last_name=instance.eLname
-#     name=first_name + " " + last_name
-#     custom=Customer.objects.all()
-#     customerlist=[]
-#     for item in custom:
-#         customerlist.append(item.cName)
-#     return render(request,'experience.html',{'ePhone':ePhone,'name':name,'customerlist':customerlist})
+def experience(request,ePhone):
+    instance=Employee.objects.get(pk=ePhone)
+    first_name=instance.eFname
+    last_name=instance.eLname
+    name=first_name + " " + last_name
+    custom=Customer.objects.all()
+    customerlist=[]
+    for item in custom:
+        customerlist.append(item.cName)
+    return render(request,'experience.html',{'ePhone':ePhone,'name':name,'customerlist':customerlist})
+
 
 
 def addexperience(request,ePhone):
@@ -564,6 +565,9 @@ def selection_status(request, status,Customer_Requirement_id):
     elif status[:2]=='OB':
         model_instance.empstatus='Onboarded'
         model_instance.save()
+    elif status[:2]=='RR':
+        model_instance.empstatus='Resume Rejected'
+        model_instance.save()
     return redirect(f'/showEmpToCustomer/{cname}/{Customer_Requirement_id}')
 
 
@@ -646,7 +650,7 @@ def showemp(request):
     customerlist=Customer.objects.all()
     experiencelist=Emp_Experience.objects.all()
     rolelist=Role.objects.all()
-    return render(request, "showemp.html", {'employees':employees,'customerlist':customerlist,'experiencelist':experiencelist,'rolelist':rolelist})
+    return render(request, "showemp.html", {'employees':employees,'customerlist':customerlist,'experiencelist':experiencelist,'rolelist':rolelist,'statuslist':['Free','Deployed','Support Team']})
 
 # To delete employee details
 def deleteEmp(request, eFname):
@@ -688,8 +692,7 @@ def updateEmp(request, ePhone):
             Bu_instance=Buhead(Bu_head_name=employee.eFname)
             Bu_instance.save()
             employee.eRole=newval
-        else:
-            pass
+        employee.eRole=newval
         employee.estatus=request.POST['estatus']
         employee.save()
 
@@ -750,7 +753,8 @@ def simple_upload(request):
                 data[8],
                 data[9],
                 data[10],
-                data[11]
+                data[11],
+                data[12],
                 )
             value.save()
         return redirect("/showemp")

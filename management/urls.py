@@ -79,7 +79,7 @@ urlpatterns = [
     # path('editemp/<str:eFname>', views.editemp), 
     path('updateEmp/<str:ePhone>', views.updateEmp),
 
-    # path('showexperienceform/<str:ePhone>',views.showexperienceform),
+    path('experience/<str:ePhone>',views.experience),
     path('addexperience/<str:ePhone>',views.addexperience),
     # employee deleted from customer
     path('delete_Emp_Customer/<str:eFname>/<int:Customer_Requirement_id>', views.delete_Emp_Customer),
