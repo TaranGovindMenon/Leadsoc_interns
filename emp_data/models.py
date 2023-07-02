@@ -33,6 +33,7 @@ class Role(models.Model):
     
 
 class Employee(models.Model):
+    e_id=models.CharField(max_length=5,unique=True)
     eFname = models.CharField(max_length=50,null=True)
     eLname = models.CharField(max_length=50,null=True)
     refer_Customer = models.ForeignKey(Customer, on_delete = models.CASCADE)

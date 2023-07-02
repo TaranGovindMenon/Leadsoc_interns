@@ -11,7 +11,7 @@
           <label for="customers">Select Customer</label>
           <select name="customers" id="customers">
             {% for val in customerlist %}
-            {% if val != 'No Customer' %}
+            {% if val != 'Not Assigned' %}
             <option value="{{val}}">{{val}}</option>
             {% endif %}
             {% endfor %}
