@@ -56,7 +56,7 @@
 
         <td>
 
-          <button class="btn-danger btn-sm" onclick="location.href='/deleteEmp/{{employee.ePhone}}'"><i
+          <button class="btn-danger btn-sm" onclick="location.href='/deleteEmp/{{employee.e_id}}'"><i
               class="fa-solid fa-trash fa-beat"></i></button>
           <button class="btn-success btn-sm" data-toggle="modal" data-target="#modalForm{{employee.ePhone}}"><i
               class="fa-solid fa-pen-to-square fa-beat"></i></button>
@@ -65,7 +65,7 @@
           <button class="btn-info btn-sm data" data-toggle="modal" data-target="#modalTable{{employee.ePhone}}">
             <i class="fa-solid fa-eye fa-beat"></i>
           </button>
-          <button class="btn-sm" onclick="location.href='/experience/{{employee.ePhone}}'">
+          <button class="btn-sm" onclick="location.href='/experience/{{employee.e_id}}'">
             <i class="fa-solid fa-user fa-beat" style="color: #e6db43;"></i>
           </button>
 
@@ -89,7 +89,7 @@
                     </thead>
                     <tbody>
                       {% for val in experiencelist %}
-                      {% if val.emp_mobile == employee.ePhone %}
+                      {% if val.e_id == employee.e_id %}
                       <tr>
                         <td>{{val.refer_customer}}</td>
                         <td>{{val.customer_start_date}}</td>
@@ -118,7 +118,7 @@
                 <div class="modal-body">
                   <!-- <nav class="navbar bg-body-tertiary"> -->
                   <div class="container-fluid">
-                    <form action="/updateEmp/{{employee.ePhone}}" method="POST">
+                    <form action="/updateEmp/{{employee.e_id}}" method="POST">
                       {% csrf_token %}
                       <div class="form-group">
                         <label for="Required_skills">Update First Name :</label>

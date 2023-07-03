@@ -13,17 +13,16 @@ class Customer(models.Model):
     def __str__(self):
         return str(self.cName)
     
-class Buhead(models.Model):
-    Bu_head_name=models.CharField(max_length=100,primary_key=True)
+# class Buhead(models.Model): #Just has the names.. can use employee model to sort it 
+#     Bu_head_name=models.CharField(max_length=100,primary_key=True)
+#     def __str__(self):
+#         return self.Bu_head_name
 
-    def __str__(self):
-        return self.Bu_head_name
+# class SalesIncharge(models.Model):
+#     incharge_name=models.CharField(max_length=100,primary_key=True)
 
-class SalesIncharge(models.Model):
-    incharge_name=models.CharField(max_length=100,primary_key=True)
-
-    def __str__(self):
-        return self.incharge_name
+#     def __str__(self):
+#         return self.incharge_name
 
 class Role(models.Model):
     role_name=models.CharField(max_length=100,primary_key=True)
@@ -33,12 +32,12 @@ class Role(models.Model):
     
 
 class Employee(models.Model):
-    e_id=models.CharField(max_length=5,unique=True)
+    e_id=models.CharField(max_length=100,primary_key=True)
     eFname = models.CharField(max_length=50,null=True)
     eLname = models.CharField(max_length=50,null=True)
     refer_Customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
     eEmail = models.EmailField(max_length=200,null=True)
-    ePhone = models.CharField(max_length=50,primary_key=True)
+    ePhone = models.CharField(max_length=50,unique=True)
     eExperience = models.IntegerField(default=0,null=True)
     eskills = models.CharField(max_length=100,null=True)
     eRole = models.ForeignKey(Role,on_delete=models.CASCADE) # designation
@@ -55,7 +54,8 @@ class Employee(models.Model):
          
 
 class Emp_Experience(models.Model):
-    emp_mobile=models.CharField(max_length=15,null=True)
+    # e_id=models.CharField(max_length=15,null=True)
+    e_id=models.CharField(max_length=5)
     refer_customer=models.CharField(max_length=100,null=True)
     customer_start_date=models.DateField(null=True)
     customer_end_date=models.DateField(null=True)
@@ -68,13 +68,13 @@ class Customer_Requirements(models.Model):
     Customer_Requirement_id = models.IntegerField(primary_key=True)
     Required_skills = models.TextField()
     Job_Description = models.TextField()
-    Required_Experience = models.IntegerField(default=0)
+    Required_Experience = models.FloatField(default=0)
     Open_positions = models.IntegerField(default=0)
     remain_positions = models.IntegerField(default=0)
     Position_Status = models.CharField(max_length=10) # active or closed        
-    Sales_Incharge = models.ForeignKey(SalesIncharge, on_delete=models.CASCADE)# name of the person
+    Sales_Incharge = models.CharField(max_length=50,null=True)# name of the person
     #Candidate_List = models.CharField(max_length=100,null=True) # need candidate list
-    Bu_head=models.ForeignKey(Buhead,on_delete=models.CASCADE)
+    Bu_head=models.CharField(max_length=50,null=True)
     Bu_remarks = models.CharField(max_length=1000,null=True, default="")
 
     class Meta:
@@ -94,6 +94,7 @@ class CandidateList(models.Model):
         return self.candidate_name
 
 class addEmpToCustomer(models.Model):
+    req_id=models.IntegerField()
     eFname = models.CharField(max_length=100,null=True)
     eLname = models.CharField(max_length=100, null=True)
     eskills = models.CharField(max_length=100,null=True)

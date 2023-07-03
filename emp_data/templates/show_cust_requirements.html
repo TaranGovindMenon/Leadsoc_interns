@@ -271,7 +271,7 @@
                                         <div class="form-group">
                                             <label for="Sales_Incharge">Sales Incharge</label>
                                             <select name="Sales_Incharge" id="Sales_Incharge">
-                                                {% for val in saleslist %}
+                                                {% for val in sales_incharge %}
                                                 <option value="{{val}}">{{val}}</option>
                                                 {% endfor %}
                                             </select>
@@ -304,7 +304,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
                                 {% for value in sales_incharge %}
-                                    <a class="dropdown-item" href="/cust_req_dropdown/S{{val.Customer_Requirement_id}}{{value.incharge_name}}">{{ value.incharge_name }}</a>
+                                    <a class="dropdown-item" href="/cust_req_dropdown/S{{val.Customer_Requirement_id}}{{value.eFname}}">{{ value.eFname }}</a>
                                 {% endfor %}
 
                             </div>
@@ -316,7 +316,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
                                 {% for value in bu_head %}
-                                    <a class="dropdown-item" href="/cust_req_dropdown/B{{val.Customer_Requirement_id}}{{value.Bu_head_name}}">{{ value.Bu_head_name }}</a>
+                                    <a class="dropdown-item" href="/cust_req_dropdown/B{{val.Customer_Requirement_id}}{{value.eFname}}">{{ value.eFname }}</a>
                                 {% endfor %}
 
                             </div>
