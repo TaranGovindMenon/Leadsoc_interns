@@ -110,18 +110,19 @@ def emp(request):
         if (request.POST.get('estatus')=='Free'):
             candidate_instance=CandidateList(candidate_name=emp_name,interview_status='Rejected')
             candidate_instance.save()
+            return redirect(f'/showemp')
+        # if erole=='Bu Head':
+        #     # return HttpResponse('Bu Head')
+        #     instance=Buhead(Bu_head_name=emp_name)
+        #     instance.save()
+        #     return redirect(f'/showemp')
 
-        if erole=='Bu Head':
-            # return HttpResponse('Bu Head')
-            instance=Buhead(Bu_head_name=emp_name)
-            instance.save()
-            return redirect('/showemp')
+        # if erole=='Sales Incharge':
+        #     # return HttpResponse('Sales Incharge')
+        #     instance=SalesIncharge(incharge_name=emp_name)
+        #     instance.save()
+        #     return redirect(f'/showemp')
 
-        if erole=='Sales Incharge':
-            # return HttpResponse('Sales Incharge')
-            instance=SalesIncharge(incharge_name=emp_name)
-            instance.save()
-            return redirect('/showemp')
 
         # return redirect('/showemp')
         else:
@@ -206,17 +207,17 @@ def add_cust_requirements(request):
 
     else:
         list1=Customer.objects.all()
-        list2=Buhead.objects.all()
-        list3=SalesIncharge.objects.all()
+        list2=Employee.objects.filter(eRole='Bu Head')
+        list3=Employee.objects.filter(eRole='Sales Incharge')
         customerlist=[]
         bulist=[]
         saleslist=[]
         for item in list1:
             customerlist.append(item.cName)
         for item in list2:
-            bulist.append(item.Bu_head_name)
+            bulist.append(item.eFname)
         for item in list3:
-            saleslist.append(item.incharge_name)
+            saleslist.append(item.eFname)
         
         return render(request, 'addcustrequirements.html',{'customerlist': customerlist, 'bulist': bulist, 'saleslist' : saleslist})
 
@@ -231,9 +232,9 @@ def update_cust_requirements(request,Customer_Requirement_id):
     model_instance.Open_positions=request.POST['Open_positions']
     model_instance.remain_positions=request.POST['remain_positions']
     model_instance.Position_Status=request.POST['Position_Status']
-    model_instance.Sales_Incharge=SalesIncharge(incharge_name=request.POST['Sales_Incharge'])
+    model_instance.Sales_Incharge=request.POST['Sales_Incharge']
     model_instance.save()
-    return redirect('/show_cust_requirements')
+    return redirect('/show_cust_requirements')  
     
     
     if request.method=='POST':
@@ -300,13 +301,14 @@ def show_cust_requirements(request):
         return redirect('home')
     else :
         customer_requirements = Customer_Requirements.objects.all()
-        saleslist=SalesIncharge.objects.all()
+        #saleslist=SalesIncharge.objects.all()
         all_remarks = Bu_Remarks.objects.all()
-        return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'saleslist':saleslist,'remarks':all_remarks})
+        sales_incharge = Employee.objects.filter(eRole="Bu Head")
+        bu_head = Employee.objects.filter(eRole="Sales Incharge")
+        return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'remarks':all_remarks, 'sales_incharge': sales_incharge, 'bu_head': bu_head})
 
 def Buremarks(request, cust_id):
     if request.method == 'POST':
-
         current_user = request.user.username.title()
         remark_text = request.POST.get('BU_remark_text', '')
         today = date.today()
@@ -319,17 +321,34 @@ def Buremarks(request, cust_id):
         
         return redirect('/show_cust_requirements')
 
-import numpy as np
+def cust_req_dropdown(request, ref): 
+    if ref[:1] == 'P':
+        cust = Customer_Requirements.objects.get(pk=ref[2:3])
+        if ref[1:2] == 'A': 
+            cust.Position_Status = 'Active'
+        elif ref[1:2] == 'H': 
+            cust.Position_Status = 'Hold'
+        elif ref[1:2] == 'I': 
+            cust.Position_Status = 'Inactive'
+    elif ref[:1] == 'S':
+        cust = Customer_Requirements.objects.get(pk=ref[1:2])
+        cust.Sales_Incharge = ref[2:]
+    elif ref[:1] == 'B': 
+        cust = Customer_Requirements.objects.get(pk=ref[1:2])
+        cust.Bu_head = ref[2:]
+    cust.save()
+    return redirect('/show_cust_requirements')
+    
 
 def summary(request):
-    first=Buhead.objects.all()
-    second=SalesIncharge.objects.all()
+    first=Employee.objects.filter(eRole="Bu Head")
+    second=Employee.objects.filter(eRole="Sales Incharge")
     saleslist=[]
     bulist=[]
     for val in first:
-        bulist.append(val.Bu_head_name)
+        bulist.append(val.eFname)
     for val in second:
-        saleslist.append(val.incharge_name)
+        saleslist.append(val.eFname)
     final=[]
     for val in bulist:
         firstarray=[]

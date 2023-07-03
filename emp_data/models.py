@@ -13,17 +13,16 @@ class Customer(models.Model):
     def __str__(self):
         return str(self.cName)
     
-class Buhead(models.Model):
-    Bu_head_name=models.CharField(max_length=100,primary_key=True)
+# class Buhead(models.Model): #Just has the names.. can use employee model to sort it 
+#     Bu_head_name=models.CharField(max_length=100,primary_key=True)
+#     def __str__(self):
+#         return self.Bu_head_name
 
-    def __str__(self):
-        return self.Bu_head_name
+# class SalesIncharge(models.Model):
+#     incharge_name=models.CharField(max_length=100,primary_key=True)
 
-class SalesIncharge(models.Model):
-    incharge_name=models.CharField(max_length=100,primary_key=True)
-
-    def __str__(self):
-        return self.incharge_name
+#     def __str__(self):
+#         return self.incharge_name
 
 class Role(models.Model):
     role_name=models.CharField(max_length=100,primary_key=True)
@@ -73,9 +72,9 @@ class Customer_Requirements(models.Model):
     Open_positions = models.IntegerField(default=0)
     remain_positions = models.IntegerField(default=0)
     Position_Status = models.CharField(max_length=10) # active or closed        
-    Sales_Incharge = models.ForeignKey(SalesIncharge, on_delete=models.CASCADE)# name of the person
+    Sales_Incharge = models.CharField(max_length=50,null=True)# name of the person
     #Candidate_List = models.CharField(max_length=100,null=True) # need candidate list
-    Bu_head=models.ForeignKey(Buhead,on_delete=models.CASCADE)
+    Bu_head=models.CharField(max_length=50,null=True)
     Bu_remarks = models.CharField(max_length=1000,null=True, default="")
 
     class Meta:
