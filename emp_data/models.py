@@ -33,7 +33,7 @@ class Role(models.Model):
     
 
 class Employee(models.Model):
-    e_id=models.CharField(max_length=5,primary_key=True)
+    e_id=models.CharField(max_length=100,primary_key=True)
     eFname = models.CharField(max_length=50,null=True)
     eLname = models.CharField(max_length=50,null=True)
     refer_Customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
@@ -69,7 +69,7 @@ class Customer_Requirements(models.Model):
     Customer_Requirement_id = models.IntegerField(primary_key=True)
     Required_skills = models.TextField()
     Job_Description = models.TextField()
-    Required_Experience = models.IntegerField(default=0)
+    Required_Experience = models.FloatField(default=0)
     Open_positions = models.IntegerField(default=0)
     remain_positions = models.IntegerField(default=0)
     Position_Status = models.CharField(max_length=10) # active or closed        

@@ -115,17 +115,17 @@ def emp(request):
             # return HttpResponse('Bu Head')
             instance=Buhead(Bu_head_name=emp_name)
             instance.save()
-            return redirect(f'/showemp')
+            return redirect('/showemp')
 
         if erole=='Sales Incharge':
             # return HttpResponse('Sales Incharge')
             instance=SalesIncharge(incharge_name=emp_name)
             instance.save()
-            return redirect(f'/showemp')
+            return redirect('/showemp')
 
         # return redirect('/showemp')
         else:
-            return HttpResponse('Mistake')
+            return HttpResponse(form.errors)
     
     else:
         list=Customer.objects.all()
