@@ -33,12 +33,12 @@ class Role(models.Model):
     
 
 class Employee(models.Model):
-    e_id=models.CharField(max_length=5,unique=True)
+    e_id=models.CharField(max_length=5,primary_key=True)
     eFname = models.CharField(max_length=50,null=True)
     eLname = models.CharField(max_length=50,null=True)
     refer_Customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
     eEmail = models.EmailField(max_length=200,null=True)
-    ePhone = models.CharField(max_length=50,primary_key=True)
+    ePhone = models.CharField(max_length=50,unique=True)
     eExperience = models.IntegerField(default=0,null=True)
     eskills = models.CharField(max_length=100,null=True)
     eRole = models.ForeignKey(Role,on_delete=models.CASCADE) # designation
@@ -55,7 +55,8 @@ class Employee(models.Model):
          
 
 class Emp_Experience(models.Model):
-    emp_mobile=models.CharField(max_length=15,null=True)
+    # e_id=models.CharField(max_length=15,null=True)
+    e_id=models.CharField(max_length=5)
     refer_customer=models.CharField(max_length=100,null=True)
     customer_start_date=models.DateField(null=True)
     customer_end_date=models.DateField(null=True)
@@ -94,6 +95,7 @@ class CandidateList(models.Model):
         return self.candidate_name
 
 class addEmpToCustomer(models.Model):
+    req_id=models.IntegerField()
     eFname = models.CharField(max_length=100,null=True)
     eLname = models.CharField(max_length=100, null=True)
     eskills = models.CharField(max_length=100,null=True)

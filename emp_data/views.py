@@ -106,7 +106,7 @@ def emp(request):
         # erole=form.cleaned_data['eRole']
         emp_name=request.POST.get('eFname',False)
         erole=request.POST.get('eRole',False)
-        ePhone=request.POST.get('ePhone',False)
+        # ePhone=request.POST.get('ePhone',False)
         if (request.POST.get('estatus')=='Free'):
             candidate_instance=CandidateList(candidate_name=emp_name,interview_status='Rejected')
             candidate_instance.save()
@@ -141,8 +141,8 @@ def emp(request):
         return render(request, 'addemp.html',{'zipped_lists': list1,'rolelist':rolelist,'status':['Free','Deployed','Support Team']})
 
 
-def experience(request,ePhone):
-    instance=Employee.objects.get(pk=ePhone)
+def experience(request,e_id):
+    instance=Employee.objects.get(pk=e_id)
     first_name=instance.eFname
     last_name=instance.eLname
     name=first_name + " " + last_name
@@ -150,11 +150,11 @@ def experience(request,ePhone):
     customerlist=[]
     for item in custom:
         customerlist.append(item.cName)
-    return render(request,'experience.html',{'ePhone':ePhone,'name':name,'customerlist':customerlist})
+    return render(request,'experience.html',{'e_id':e_id,'name':name,'customerlist':customerlist})
 
 
 
-def addexperience(request,ePhone):
+def addexperience(request,e_id):
     num_entries=len(request.POST.getlist('refer_customer[]'))
     name=request.POST.getlist('refer_customer[]')
     start=request.POST.getlist('customer_start_date[]')
@@ -163,7 +163,7 @@ def addexperience(request,ePhone):
         c_name=name[i]
         s_date=start[i]
         e_date=end[i]
-        instance=Emp_Experience(emp_mobile=ePhone,refer_customer=c_name,customer_start_date=s_date,customer_end_date=e_date)
+        instance=Emp_Experience(e_id=e_id,refer_customer=c_name,customer_start_date=s_date,customer_end_date=e_date)
         instance.save()
     return redirect('/showemp')
 
@@ -469,7 +469,7 @@ def savedvalues(request,customer_name,Customer_Requirement_id):
             newval=Employee.objects.get(eFname=i)
             newval.estatus='Deployed'
             newval.save()
-            final=addEmpToCustomer(eFname=newval.eFname,eLname=newval.eLname,eskills=newval.eskills,refer_Customer=Customer(cName=customer_name),estatus='Deployed', comp_name= customer_name, added_date=today)
+            final=addEmpToCustomer(req_id=Customer_Requirement_id,eFname=newval.eFname,eLname=newval.eLname,eskills=newval.eskills,refer_Customer=Customer(cName=customer_name),estatus='Deployed', comp_name= customer_name, added_date=today)
             final.save()
             newval2=addEmpToCustomer.objects.filter(eFname=i)
             emp1.append(newval2)
@@ -487,7 +487,7 @@ def savedvalues(request,customer_name,Customer_Requirement_id):
 def showEmpToCustomer(request, cust_name,Customer_Requirement_id):  
     if not request.user.is_authenticated:
         return redirect('home')
-    emp_data = addEmpToCustomer.objects.filter(refer_Customer__cName=cust_name)
+    emp_data = addEmpToCustomer.objects.filter(req_id=Customer_Requirement_id)
     req_instance=Customer_Requirements.objects.get(pk=Customer_Requirement_id)
     position=req_instance.remain_positions
     #empremarks = empRemarks.objects.all()
@@ -632,10 +632,10 @@ def showemp(request):
     return render(request, "showemp.html", {'employees':employees,'customerlist':customerlist,'experiencelist':experiencelist,'rolelist':rolelist,'statuslist':['Free','Deployed','Support Team']})
 
 # To delete employee details
-def deleteEmp(request, eFname):
+def deleteEmp(request, e_id):
     if not request.user.is_authenticated:
         return redirect('home')
-    employee = Employee.objects.get(eFname=eFname)
+    employee = Employee.objects.get(pk=e_id)
     employee.delete()
     return redirect("/showemp")
 
@@ -647,10 +647,10 @@ def deleteEmp(request, eFname):
 #     return render(request, "editemployee.html", {'employee':employee})
 
 # To update employee details
-def updateEmp(request, ePhone):
+def updateEmp(request, e_id):
     if not request.user.is_authenticated:
         return redirect('home')
-    employee = Employee.objects.get(ePhone=ePhone)
+    employee = Employee.objects.get(pk=e_id)
     if request.method=='POST':
         ref_name=employee.eFname
 

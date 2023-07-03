@@ -16,7 +16,7 @@ class CustomerAdmin(ImportExportModelAdmin):
 
 @admin.register(models.Employee)
 class EmployeeAdmin(ImportExportModelAdmin):
-    list_display = ('eFname','eLname','refer_Customer','eEmail','ePhone','eExperience','eskills','eRole','eMP_Type','estatus','leadsoc_joining_date','customer_start_date')
+    list_display = ('e_id','eFname','eLname','refer_Customer','eEmail','ePhone','eExperience','eskills','eRole','eMP_Type','estatus','leadsoc_joining_date','customer_start_date')
     search_fields = ['eFname','eLname','eEmail','ePhone','eMP_Type','eRole','estatus','eskills']
 
     filter_horizontal = ()
@@ -43,7 +43,7 @@ class CandidateList(ImportExportModelAdmin):
 
 @admin.register(models.addEmpToCustomer)
 class addEmpToCustomer(ImportExportModelAdmin):
-    list_display = ('eFname','eLname','refer_Customer','eskills')
+    list_display = ('req_id','eFname','eLname','refer_Customer','eskills')
     search_fields = ['eFname','eLname','refer_Customer','eskills']
     filter_horizontal = ()
     list_filter = ()
@@ -64,7 +64,7 @@ admin.site.register(models.Role)
 
 @admin.register(models.Emp_Experience)
 class Emp_ExperienceAdmin(ImportExportModelAdmin):
-    list_display=('emp_mobile','refer_customer','customer_start_date','customer_end_date')
+    list_display=('e_id','refer_customer','customer_start_date','customer_end_date')
 
 admin.site.register(models.Bu_Remarks)
 
