@@ -126,16 +126,16 @@ class empRemarks(models.Model):
     
     
 
-class Bu_Remarks(models.Model):
+class Cust_Remarks(models.Model):
     refer_emp = models.ForeignKey(Employee, on_delete = models.CASCADE)
-    cust_id = models.IntegerField()
+    cust_requirement_id = models.IntegerField()
     remark_date = models.DateField(null=True)
     remarks = models.CharField(max_length=1000,null=True, default="")
     class Meta:
         db_table = "Bu_remarks"
         
     def __str__(self):
-        return str(self.cust_id)
+        return str(self.cust_requirement_id)
 
 
 

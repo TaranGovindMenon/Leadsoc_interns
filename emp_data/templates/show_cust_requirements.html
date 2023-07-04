@@ -103,14 +103,45 @@
 
                 <!--<td><button class="btn-info btn-sm" onclick="location.href='/job_description'">See Details</button>
                 </td>-->
-                <td>{{val.Required_Experience}}</td>
-                <td>{{val.Open_positions}}</td>
-                <td>{{val.remain_positions}}</td>
-                <td>{{val.Position_Status}}</td>
-                <!--<td>{{customer_requirement.Candidate_status}}</td>-->
-                <td>{{val.Sales_Incharge}}</td>
-                <!--<td>{{customer_requirement.Candidate_List}}</td>-->
-                <td>{{val.Bu_head}}</td>
+                    <td>{{val.Required_Experience}}</td>
+                    <td>{{val.Open_positions}}</td>
+                    <td>{{val.remain_positions}}</td>
+                    <td>{{val.Position_Status}}</td>
+                    <!--<td>{{customer_requirement.Candidate_status}}</td>-->
+                    <td>{{val.Sales_Incharge}}</td>
+                    <!--<td>{{customer_requirement.Candidate_List}}</td>-->
+                    <td>{{val.Bu_head}}</td>
+
+                    <td>
+                        <button type="button" class="btn-sm btn-info" data-toggle="modal"
+                            data-target="#BURemarksModal{{val.Customer_Requirement_id}}">
+                            <i class="fa-regular fa-eye"></i>
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="BURemarksModal{{val.Customer_Requirement_id}}" tabindex="-1"
+                            role="dialog" aria-labelledby="BURemarksModalLabel{{val.Customer_Requirement_id}}"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="BURemarksModalLabel{{val.Customer_Requirement_id}}">
+                                            Remarks from BU: {{val.customers}}</h5>
+
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {% for remark in remarks reversed%}
+                                        {% if remark.cust_requirement_id == val.Customer_Requirement_id %}
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title">{{remark.refer_emp}} . {{remark.refer_emp.eRole}}</h5>
+                                                <h6 class="card-subtitle mb-2 text-body-secondary">{{remark.remark_date}}</h6>
+                                            </div>
+                                            <div class="card-body">
+                                                <p>{{remark.remarks}}</p>
+                                            </div>
 
                 <td>
                     <button type="button" class="btn-sm btn-info" data-toggle="modal"
@@ -171,19 +202,20 @@
                                     <button type="button" class="close" data-dismiss="modal"
                                         aria-label="Close">&times;</button>
                                 </div>
-
-                                <div class="modal-body">
-                                    <!-- <nav class="navbar bg-body-tertiary"> -->
-                                    <div class="container-fluid">
-                                        <form action="/Buremarks/{{val.Customer_Requirement_id}}" method="POST">
-                                            {% csrf_token %}
-                                            <div class="form-group">
-                                                <label for="Job_Description">Edit BU remarks:</label>
-                                                <textarea name="BU_remark_text" id="BU_remark_text" cols="50"
-                                                    rows="10"></textarea>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">Add Comment</button>
-                                        </form>
+                           
+                                    <div class="modal-body">
+                                        <!-- <nav class="navbar bg-body-tertiary"> -->
+                                        <div class="container-fluid">
+                                            <form action="/cust_remarks/{{val.Customer_Requirement_id}}" method="POST">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label for="Job_Description">Edit BU remarks:</label>
+                                                    <textarea name="remark_text" id="remark_text" cols="50"
+                                                        rows="10"></textarea>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Add Comment</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
