@@ -218,7 +218,6 @@ def add_cust_requirements(request):
             bulist.append(item.eFname)
         for item in list3:
             saleslist.append(item.eFname)
-        
         return render(request, 'addcustrequirements.html',{'customerlist': customerlist, 'bulist': bulist, 'saleslist' : saleslist})
 
 # To retrieve Customer details
@@ -230,7 +229,7 @@ def update_cust_requirements(request,Customer_Requirement_id):
     model_instance.Job_Description=request.POST['Job_Description']
     model_instance.Required_Experience=request.POST['Required_Experience']
     model_instance.Open_positions=request.POST['Open_positions']
-    model_instance.remain_positions=request.POST['remain_positions']
+    #model_instance.remain_positions=request.POST['remain_positions']
     model_instance.Position_Status=request.POST['Position_Status']
     model_instance.Sales_Incharge=request.POST['Sales_Incharge']
     model_instance.save()
@@ -509,17 +508,23 @@ def showEmpToCustomer(request, cust_name,Customer_Requirement_id):
     emp_data = addEmpToCustomer.objects.filter(req_id=Customer_Requirement_id)
     req_instance=Customer_Requirements.objects.get(pk=Customer_Requirement_id)
     position=req_instance.remain_positions
-    #empremarks = empRemarks.objects.all()
+    empremarks = empRemarks.objects.all()
     #return HttpResponse(empremarks.remark_date)
     return render(request, "showEmpToCustomer.html", {'form':emp_data,'Customer_Requirement_id':Customer_Requirement_id,'position':position,
-    'cust_name': cust_name})
+    'cust_name': cust_name, 'remarks': empremarks})
 
 
 
 def emp_remarks(request, eFname):
     if request.method == 'POST':
+        current_user = request.user.username.title()
         emp = addEmpToCustomer.objects.get(eFname=eFname)
-        
+        remark_text = request.POST.get('remark_text', '')
+        today = date.today()
+        emp = addEmpToCustomer.objects.get(eFname = eFname)
+        new_remark = empRemarks(refer_addemp=emp, remark_date=today, remarks=remark_text, remark_author=current_user)
+        new_remark.save()
+        return redirect(f'/showEmpToCustomer/{emp.comp_name}/{emp.req_id}')
         # cname = model_instance.comp_name
         # if eFname[:2] == 'BU':
         #     model_instance.bu_remarks = request.POST.get('BU_remark_text', '')
