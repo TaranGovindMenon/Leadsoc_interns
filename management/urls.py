@@ -35,7 +35,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("simple_upload",views.simple_upload),
     path("customer_data_upload",views.customer_data_upload),
-    
+    path('requirement_upload',views.customer_requirement_file),
     #path('admin_login/',admin.site.urls),
     #path('admin_login',views.admin_login),
     # user signup path
