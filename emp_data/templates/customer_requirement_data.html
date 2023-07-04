@@ -1,6 +1,6 @@
-{extends 'basic.html'}
+{% extends 'basic.html' %}
 {% block extra %}    
-        <form method="post" action='/customer_requirement_file' enctype="multipart/form-data">
+        <form method="post" action='/requirement_upload' enctype="multipart/form-data">
         {% csrf_token %}
         <input type="file" name="file">
         <button type="submit">Upload</button>

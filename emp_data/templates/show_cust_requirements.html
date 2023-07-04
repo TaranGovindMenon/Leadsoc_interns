@@ -43,6 +43,7 @@
                 <th>Remarks</th>
                 <th>Candidate List</th>
                 <th>Actions</th>
+                <th>Filter options</th>
             </tr>
         </tr>
     </thead>
@@ -218,79 +219,80 @@
                                  aria-label="Close">&times;</button>
                          </div>
 
-                         <div class="modal-body">
-                             <!-- <nav class="navbar bg-body-tertiary"> -->
-                             <div class="container-fluid">
-                                 <h6>Customer : {{val.customers}}</h6>
-                                 <h6>Customer Requirement id : {{val.Customer_Requirement_id}}</h6>
-                                 <form action="/update_cust_requirements/{{val.Customer_Requirement_id}}"
-                                     method="POST">
-                                     {% csrf_token %}
-                                     <div class="form-group">
-                                         <label for="Required_skills">Updated Required Skills:</label>
-                                         <input type="text" class="form-control" id="Required_skills"
-                                             name="Required_skills" value="{{val.Required_skills}}">
-                                     </div>
-                                     <div class="form-group">
-                                         <label for="Job_Description">Updated Job Description:</label>
-                                         <textarea name="Job_Description" id="Job_Description" cols="50"
-                                             rows="20">{{val.Job_Description}}</textarea>
-                                         <!-- <textarea id="Job_Description" style="width:500px; height:150px;" class="form-control" name="Job_Description"
-                                       value="{{customer_requirement.Job_Description}}"></textarea> -->
-                                     </div>
-                                     <div class="form-group">
-                                         <label for="Required_Experience">Updated Required
-                                             Experience:</label>
-                                         <input type="number" class="form-control" id="Required_Experience"
-                                             name="Required_Experience"
-                                             placeholder="enter required experience"
-                                             value="{{val.Required_Experience}}">
-                                     </div>
-                                     <div class="form-group">
-                                         <label for="Open_positions">Updated Open positions:</label>
-                                         <input type="number" class="form-control" id="Open_positions"
-                                             name="Open_positions" placeholder="Enter opened positions"
-                                             value="{{val.Open_positions}}">
-                                     </div>
-                                     <div class="form-group">
-                                         <label for="remain_positions">Updated Remaining positions:</label>
-                                         <input type="number" class="form-control" id="remain_positions"
-                                             name="remain_positions" placeholder="enter Remained positions"
-                                             value="{{val.remain_positions}}">
-                                     </div>
-                                     <div class="form-group">
-                                         <label for="Position_Status">Updated Position Status:</label>
-                                         <input type="text" class="form-control" id="Position_Status"
-                                             name="Position_Status"
-                                             placeholder="Enter position status active or not"
-                                             value="{{val.Position_Status}}">
-                                     </div>
-                             </div>
-                             <div class="form-group">
-                                 <label for="Sales_Incharge">Sales Incharge</label>
-                                 <select name="Sales_Incharge" id="Sales_Incharge">
-                                     {% for val in sales_incharge %}
-                                     <option value="{{val}}">{{val}}</option>
-                                     {% endfor %}
-                                 </select>
-                             </div>
-                             <button type="submit" class="btn btn-primary">Update</button>
-                             </form>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-
-            <div class="dropdown">
-                <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Position status
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
-                    <a class="dropdown-item" href="/cust_req_dropdown/PA{{val.Customer_Requirement_id}}">Active</a>
-                    <a class="dropdown-item" href="/cust_req_dropdown/PH{{val.Customer_Requirement_id}}">Hold</a>
-                    <a class="dropdown-item" href="/cust_req_dropdown/PI{{val.Customer_Requirement_id}}">Inactive</a>
-                </div>
-            </div>
+                                    <div class="modal-body">
+                                        <!-- <nav class="navbar bg-body-tertiary"> -->
+                                        <div class="container-fluid">
+                                            <h6>Customer : {{val.customers}}</h6>
+                                            <h6>Customer Requirement id : {{val.Customer_Requirement_id}}</h6>
+                                            <form action="/update_cust_requirements/{{val.Customer_Requirement_id}}"
+                                                method="POST">
+                                                {% csrf_token %}
+                                                <div class="form-group">
+                                                    <label for="Required_skills">Updated Required Skills:</label>
+                                                    <input type="text" class="form-control" id="Required_skills"
+                                                        name="Required_skills" value="{{val.Required_skills}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Job_Description">Updated Job Description:</label>
+                                                    <textarea name="Job_Description" id="Job_Description" cols="50"
+                                                        rows="20">{{val.Job_Description}}</textarea>
+                                                    <!-- <textarea id="Job_Description" style="width:500px; height:150px;" class="form-control" name="Job_Description"
+                                                  value="{{customer_requirement.Job_Description}}"></textarea> -->
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Required_Experience">Updated Required
+                                                        Experience:</label>
+                                                    <input type="number" class="form-control" id="Required_Experience"
+                                                        name="Required_Experience"
+                                                        placeholder="enter required experience"
+                                                        value="{{val.Required_Experience}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Open_positions">Updated Open positions:</label>
+                                                    <input type="number" class="form-control" id="Open_positions"
+                                                        name="Open_positions" placeholder="Enter opened positions"
+                                                        value="{{val.Open_positions}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="remain_positions">Updated Remaining positions:</label>
+                                                    <input type="number" class="form-control" id="remain_positions"
+                                                        name="remain_positions" placeholder="enter Remained positions"
+                                                        value="{{val.remain_positions}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="Position_Status">Updated Position Status:</label>
+                                                    <input type="text" class="form-control" id="Position_Status"
+                                                        name="Position_Status"
+                                                        placeholder="Enter position status active or not"
+                                                        value="{{val.Position_Status}}">
+                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Sales_Incharge">Sales Incharge</label>
+                                            <select name="Sales_Incharge" id="Sales_Incharge">
+                                                {% for val in sales_incharge %}
+                                                <option value="{{val}}">{{val}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Update</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <td>
+                        
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Position status
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
+                                <a class="dropdown-item" href="/cust_req_dropdown/PA{{val.Customer_Requirement_id}}">Active</a>
+                                <a class="dropdown-item" href="/cust_req_dropdown/PH{{val.Customer_Requirement_id}}">Hold</a>
+                                <a class="dropdown-item" href="/cust_req_dropdown/PI{{val.Customer_Requirement_id}}">Inactive</a>
+                            </div>
+                        </div>
 
             <div class="dropdown">
                 <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
