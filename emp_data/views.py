@@ -229,7 +229,7 @@ def update_cust_requirements(request,Customer_Requirement_id):
     model_instance.Job_Description=request.POST['Job_Description']
     model_instance.Required_Experience=request.POST['Required_Experience']
     model_instance.Open_positions=request.POST['Open_positions']
-    model_instance.remain_positions=request.POST['remain_positions']
+    model_instance.remain_positions=request.POST['Open_positions']
     model_instance.Position_Status=request.POST['Position_Status']
     model_instance.Sales_Incharge=request.POST['Sales_Incharge']
     model_instance.save()
