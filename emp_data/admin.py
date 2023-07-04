@@ -49,15 +49,15 @@ class addEmpToCustomer(ImportExportModelAdmin):
     list_filter = ()
     fieldsets = ()
 
-admin.site.register(models.Buhead)
-# class BuheadAdmin(ImportExportModelAdmin):
-#     list_display=('Bu_head_name',)
-#     search_fields=['Bu_head_name']
-#     filter_horizontal=()
-#     list_filter=()
-#     fieldsets=()
+# admin.site.register(models.Buhead)
+# # class BuheadAdmin(ImportExportModelAdmin):
+# #     list_display=('Bu_head_name',)
+# #     search_fields=['Bu_head_name']
+# #     filter_horizontal=()
+# #     list_filter=()
+# #     fieldsets=()
 
-admin.site.register(models.SalesIncharge)
+# admin.site.register(models.SalesIncharge)
     
 admin.site.register(models.Role)
 

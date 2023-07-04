@@ -678,18 +678,18 @@ def updateEmp(request, e_id):
         employee.refer_Customer=Customer(cName=request.POST['refer_Customer'])
         employee.eEmail=request.POST['eEmail']
         newval=Role(role_name=request.POST['eRole'])
-        if str(employee.eRole)=='Bu Head' and str(newval.role_name)=='Sales Incharge':
-            Bu_instance=Buhead.objects.filter(pk=ref_name)
-            Bu_instance.delete()
-            s_instance=SalesIncharge(incharge_name=employee.eFname)
-            s_instance.save()
-            employee.eRole=newval
-        if str(employee.eRole)=='Sales Incharge' and str(newval.role_name)=='Bu Head':
-            s_instance=SalesIncharge.objects.filter(pk=ref_name)
-            s_instance.delete()
-            Bu_instance=Buhead(Bu_head_name=employee.eFname)
-            Bu_instance.save()
-            employee.eRole=newval
+        # if str(employee.eRole)=='Bu Head' and str(newval.role_name)=='Sales Incharge':
+        #     Bu_instance=Buhead.objects.filter(pk=ref_name)
+        #     Bu_instance.delete()
+        #     s_instance=SalesIncharge(incharge_name=employee.eFname)
+        #     s_instance.save()
+        #     employee.eRole=newval
+        # if str(employee.eRole)=='Sales Incharge' and str(newval.role_name)=='Bu Head':
+        #     s_instance=SalesIncharge.objects.filter(pk=ref_name)
+        #     s_instance.delete()
+        #     Bu_instance=Buhead(Bu_head_name=employee.eFname)
+        #     Bu_instance.save()
+        #     employee.eRole=newval
         employee.eRole=newval
         employee.estatus=request.POST['estatus']
         employee.save()
@@ -816,8 +816,7 @@ def customer_requirement_file(request):
                 data[7],
                 data[8],
                 data[9],
-                data[10],
-                data[11]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+                data[10]                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
                 )
             value.save()
         return redirect("/show_cust_requirements")
