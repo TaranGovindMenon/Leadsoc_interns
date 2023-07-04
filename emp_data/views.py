@@ -306,13 +306,13 @@ def show_cust_requirements(request):
         bu_head = Employee.objects.filter(eRole="Bu Head")
         return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'remarks':all_remarks, 'sales_incharge': sales_incharge, 'bu_head': bu_head})
 
-def Buremarks(request, cust_id):
+def cust_remarks(request, cust_requirement_id):
     if request.method == 'POST':
         current_user = request.user.username.title()
-        remark_text = request.POST.get('BU_remark_text', '')
+        remark_text = request.POST.get('remark_text', '')
         today = date.today()
         emp = Employee.objects.get(eFname = current_user)
-        new_remark = Cust_Remarks(refer_emp = emp, remarks=remark_text, remark_date=today, cust_requirement_id=cust_id)
+        new_remark = Cust_Remarks(refer_emp = emp, remarks=remark_text, remark_date=today, cust_requirement_id=cust_requirement_id)
         new_remark.save()
         # model_instance = Customer_Requirements.objects.get(Customer_Requirement_id=cust_id)
         # model_instance.Bu_remarks = request.POST.get('BU_remark_text', '')

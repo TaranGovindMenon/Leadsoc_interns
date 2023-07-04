@@ -128,12 +128,11 @@
                                     </div>
                                     <div class="modal-body">
                                         {% for remark in remarks reversed%}
-                                        {% if remark.cust_id == val.Customer_Requirement_id %}
+                                        {% if remark.cust_requirement_id == val.Customer_Requirement_id %}
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="card-title">{{remark.refer_emp}}</h5>
-                                                <h6 class="card-subtitle mb-2 text-body-secondary">Created on
-                                                    {{remark.remark_date}}</h6>
+                                                <h5 class="card-title">{{remark.refer_emp}} . {{remark.refer_emp.eRole}}</h5>
+                                                <h6 class="card-subtitle mb-2 text-body-secondary">{{remark.remark_date}}</h6>
                                             </div>
                                             <div class="card-body">
                                                 <p>{{remark.remarks}}</p>
@@ -172,11 +171,11 @@
                                     <div class="modal-body">
                                         <!-- <nav class="navbar bg-body-tertiary"> -->
                                         <div class="container-fluid">
-                                            <form action="/Buremarks/{{val.Customer_Requirement_id}}" method="POST">
+                                            <form action="/cust_remarks/{{val.Customer_Requirement_id}}" method="POST">
                                                 {% csrf_token %}
                                                 <div class="form-group">
                                                     <label for="Job_Description">Edit BU remarks:</label>
-                                                    <textarea name="BU_remark_text" id="BU_remark_text" cols="50"
+                                                    <textarea name="remark_text" id="remark_text" cols="50"
                                                         rows="10"></textarea>
                                                 </div>
                                                 <button type="submit" class="btn btn-primary">Add Comment</button>

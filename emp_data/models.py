@@ -135,7 +135,7 @@ class Cust_Remarks(models.Model):
         db_table = "Bu_remarks"
         
     def __str__(self):
-        return str(self.cust_id)
+        return str(self.cust_requirement_id)
 
 
 
