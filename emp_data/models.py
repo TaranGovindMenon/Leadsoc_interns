@@ -41,7 +41,7 @@ class Employee(models.Model):
     eExperience = models.IntegerField(default=0,null=True)
     eskills = models.CharField(max_length=100,null=True)
     eRole = models.ForeignKey(Role,on_delete=models.CASCADE) # designation
-    eMP_Type = models.CharField(max_length=30,null=True) # either sales,software engineer, account
+    #eMP_Type = models.CharField(max_length=30,null=True) # either sales,software engineer, account
     estatus = models.CharField(max_length=100,null=True) # either free or deployed
     leadsoc_joining_date = models.DateField(null=True)
     customer_start_date = models.DateField(null=True)
@@ -63,7 +63,6 @@ class Emp_Experience(models.Model):
         
 
 class Customer_Requirements(models.Model):
-
     customers = models.ForeignKey(Customer, on_delete = models.CASCADE)
     Customer_Requirement_id = models.IntegerField(primary_key=True)
     Required_skills = models.TextField()
@@ -75,7 +74,7 @@ class Customer_Requirements(models.Model):
     Sales_Incharge = models.CharField(max_length=50,null=True)# name of the person
     #Candidate_List = models.CharField(max_length=100,null=True) # need candidate list
     Bu_head=models.CharField(max_length=50,null=True)
-    Bu_remarks = models.CharField(max_length=1000,null=True, default="")
+    #Bu_remarks = models.CharField(max_length=1000,null=True, default="")
 
     class Meta:
         db_table = "customer_requirements"
@@ -117,7 +116,8 @@ class empRemarks(models.Model):
     refer_addemp = models.ForeignKey(addEmpToCustomer, on_delete = models.CASCADE)
     remark_date = models.DateField(null=True)
     remarks = models.CharField(max_length=1000,null=True, default="")
-    cname = models.CharField(max_length=100,null=True)
+    #cname = models.CharField(max_length=100,null=True)
+    remark_author = models.CharField(max_length=100,null=True)
     class Meta:
         db_table = "empRemarks"
         

@@ -36,7 +36,7 @@
         </div>
         <div class="form-group">
           <label for="Required_Experience">Required Experience:</label>
-          <input type="number" class="form-control" id="Required_Experience" name="Required_Experience"
+          <input type="number" class="form-control" id="Required_Experience" name="Required_Experience" min="0" max="100" step="0.1"
             placeholder="enter required experience">
         </div>
         <div class="form-group">
@@ -46,8 +46,7 @@
         </div>
         <div class="form-group">
           <label for="remain_positions"></label>
-          <input type="hidden" class="form-control" id="remain_positions" name="remain_positions"
-            placeholder="enter Remained positions">
+          <input type="hidden" class="form-control" id="remain_positions" name="remain_positions">
         </div>
         <div class="form-group">
           <label for="Position_Status">Position Status:</label>
@@ -76,11 +75,11 @@
       </select>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="Bu_remarks">Add Bu Remarks</label>
       <input type="text" class="form-control" id="Bu_remarks" name="Bu_remarks"
             placeholder="Enter remarks bu BU">
-    </div>
+    </div> -->
 
     <script>
       window.onload=function(){
