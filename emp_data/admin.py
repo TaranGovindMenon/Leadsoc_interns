@@ -16,7 +16,7 @@ class CustomerAdmin(ImportExportModelAdmin):
 
 @admin.register(models.Employee)
 class EmployeeAdmin(ImportExportModelAdmin):
-    list_display = ('e_id','eFname','eLname','refer_Customer','eEmail','ePhone','eExperience','eskills','eRole','eMP_Type','estatus','leadsoc_joining_date','customer_start_date')
+    list_display = ('e_id','eFname','eLname','refer_Customer','eEmail','ePhone','eExperience','eskills','eRole','estatus','leadsoc_joining_date','customer_start_date')
     search_fields = ['eFname','eLname','eEmail','ePhone','eMP_Type','eRole','estatus','eskills']
 
     filter_horizontal = ()
@@ -25,10 +25,8 @@ class EmployeeAdmin(ImportExportModelAdmin):
 
 @admin.register(models.Customer_Requirements)
 class Customer_RequirementsAdmin(ImportExportModelAdmin):
-    list_display = ('customers','Customer_Requirement_id','Required_skills','Job_Description','Required_Experience','Open_positions','remain_positions','Position_Status','Sales_Incharge','Bu_head')
+    list_display = ('customers','Customer_Requirement_id','Required_skills','Job_Description','Required_Experience','Open_positions','Position_Status','Sales_Incharge','Bu_head')
     search_fields = ['Position_Status','Required_skills','Sales_Incharge']
-
-
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()
@@ -49,7 +47,7 @@ class addEmpToCustomer(ImportExportModelAdmin):
     list_filter = ()
     fieldsets = ()
 
-admin.site.register(models.Buhead)
+#admin.site.register(models.Buhead)
 # class BuheadAdmin(ImportExportModelAdmin):
 #     list_display=('Bu_head_name',)
 #     search_fields=['Bu_head_name']
@@ -57,7 +55,7 @@ admin.site.register(models.Buhead)
 #     list_filter=()
 #     fieldsets=()
 
-admin.site.register(models.SalesIncharge)
+#admin.site.register(models.SalesIncharge)
     
 admin.site.register(models.Role)
 

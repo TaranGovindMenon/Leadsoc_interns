@@ -47,17 +47,17 @@
                         <div class="modal-dialog modal-dialog-scrollable" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="BURemarksModalLabel{{values.eFname}}">Remarks from BU: {{val.customers}}</h5>
+                                    <h5 class="modal-title" id="BURemarksModalLabel{{values.eFname}}">Remarks from BU: {{val.refer_addemp.eFname}}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
                                 {% for remark in remarks reversed%}
-                                    {% if remark.cust_id == values.eFname %}
+                                    {% if remark.refer_addemp.eFname == values.eFname %}
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="card-title">{{remark.refer_addemp.eFname}}</h5>
+                                                <h5 class="card-title">{{remark.remark_author}}</h5>
                                                 <h6 class="card-subtitle mb-2 text-body-secondary">Created on {{remark.remark_date}}</h6>
                                             </div>
                                             <div class="card-body">
@@ -94,11 +94,11 @@
                             <div class="modal-body"> 
                                     <!-- <nav class="navbar bg-body-tertiary"> -->
                                     <div class="container-fluid">
-                                        <form action="/Buremarks/{{values.eFname}}" method="POST">
+                                        <form action="/emp_remarks/{{values.eFname}}" method="POST">
                                             {% csrf_token %}
                                             <div class="form-group">
-                                                <label for="Job_Description">Edit BU remarks:</label>
-                                                <textarea name="BU_remark_text" id="BU_remark_text" cols="50" rows="10" ></textarea>
+                                                <label for="Job_Description">Edit remarks:</label>
+                                                <textarea name="remark_text" id="remark_text" cols="50" rows="10" ></textarea>
                                             </div>
                                         <button type="submit" class="btn btn-primary">Update</button>
                                         </form> 
