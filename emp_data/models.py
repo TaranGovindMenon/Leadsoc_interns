@@ -63,7 +63,6 @@ class Emp_Experience(models.Model):
         
 
 class Customer_Requirements(models.Model):
-
     customers = models.ForeignKey(Customer, on_delete = models.CASCADE)
     Customer_Requirement_id = models.IntegerField(primary_key=True)
     Required_skills = models.TextField()
