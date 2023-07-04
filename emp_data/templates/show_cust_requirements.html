@@ -255,12 +255,21 @@
                                                         name="Open_positions" placeholder="Enter opened positions"
                                                         value="{{val.Open_positions}}">
                                                 </div>
-                                                <div class="form-group">
-                                                    <label for="remain_positions">Updated Remaining positions:</label>
-                                                    <input type="number" class="form-control" id="remain_positions"
-                                                        name="remain_positions" placeholder="enter Remained positions"
-                                                        value="{{val.remain_positions}}">
-                                                </div>
+                                                <!-- <div class="form-group">
+                                                    <label for="remain_positions"></label>
+                                                    <input type="hidden" class="form-control" id="remain_positions" name="remain_positions" val
+                                                      placeholder="enter Remained positions">
+                                                      <script>
+                                                        window.onload=function(){
+                                                          var one=document.getElementById('Open_positions'),
+                                                              two= document.getElementById('remain_positions');
+                                                          one.addEventListener('input',function () {
+                                                          two.value=one.value;
+                                                          }) ;
+                                                        }; -->
+                                                      </script>
+                                                  </div>
+                                                  
                                                 <div class="form-group">
                                                     <label for="Position_Status">Updated Position Status:</label>
                                                     <input type="text" class="form-control" id="Position_Status"
@@ -278,6 +287,7 @@
                                             </select>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Update</button>
+                                      
                                         </form>
                                     </div>
                                 </div>
