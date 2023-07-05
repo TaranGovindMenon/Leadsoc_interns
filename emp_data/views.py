@@ -3,7 +3,7 @@ from pkgutil import get_data
 import queue
 import quopri
 from django.shortcuts import render,redirect,get_object_or_404
-from emp_data.models import Customer,Employee,Customer_Requirements, Bu_Remarks, empRemarks
+from emp_data.models import Customer,Employee,Customer_Requirements, Cust_Remarks, empRemarks
 from .resources import EmployeeResource
 from emp_data.forms import CustomerForm,EmployeeForm, addEmpToCustomerForm,loginForm,UploadFileForm,Customer_RequirementForm
 from django.contrib import messages
@@ -301,30 +301,29 @@ def show_cust_requirements(request):
     else :
         customer_requirements = Customer_Requirements.objects.all()
         #saleslist=SalesIncharge.objects.all()
-        all_remarks = Bu_Remarks.objects.all()
+        all_remarks = Cust_Remarks.objects.all()
+        sales_incharge = Employee.objects.filter(eRole="Sales Incharge")
         bu_head = Employee.objects.filter(eRole="Bu Head")
-        sales_incharge= Employee.objects.filter(eRole="Sales Incharge")
-        return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'remarks':all_remarks, 
-                                                             'sales_incharge': sales_incharge, 'bu_head': bu_head})
-
+        return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'remarks':all_remarks, 'sales_incharge': sales_incharge, 'bu_head': bu_head})
+      
 def filtered_cust_requirements(request,bu,sales,st):
     # buhead=request.GET.get('arg1')
     # salesincharge=request.GET.get('arg2')
     # status=request.GET.get('arg3')
     customer_requirements=Customer_Requirements.objects.filter(Bu_head=bu,Sales_Incharge=sales,Position_Status=st)
-    all_remarks = Bu_Remarks.objects.all()
+    all_remarks = Cust_Remarks.objects.all()
     bu_head = Employee.objects.filter(eRole="Bu Head")
     sales_incharge= Employee.objects.filter(eRole="Sales Incharge")
     return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'remarks':all_remarks, 
                                                         'sales_incharge': sales_incharge, 'bu_head': bu_head})
 
-def Buremarks(request, cust_id):
+def cust_remarks(request, cust_requirement_id):
     if request.method == 'POST':
         current_user = request.user.username.title()
-        remark_text = request.POST.get('BU_remark_text', '')
+        remark_text = request.POST.get('remark_text', '')
         today = date.today()
         emp = Employee.objects.get(eFname = current_user)
-        new_remark = Bu_Remarks(refer_emp = emp, remarks=remark_text, remark_date=today, cust_id=cust_id)
+        new_remark = Cust_Remarks(refer_emp = emp, remarks=remark_text, remark_date=today, cust_requirement_id=cust_requirement_id)
         new_remark.save()
         # model_instance = Customer_Requirements.objects.get(Customer_Requirement_id=cust_id)
         # model_instance.Bu_remarks = request.POST.get('BU_remark_text', '')
