@@ -20,11 +20,44 @@
         <h2 class="bg-info text-white">Customer Requirements</h2>
     </div>
 </center>
-<button class="btn-sm" onclick="location.href='/summary'">Summary</button>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
-
+<div class="form-inline">
+<div class="text-center mt-2 d-flex justify-content-left">
+<button class="btn-sm" onclick="location.href='/summary'">Summary</button>
+</div>
+<div class="text-center mt-2 d-flex justify-content-center">
+    <select name="buhead" id="buhead">
+        {% for val in bu_head %}
+        <option value="{{val.eFname}}">{{val.eFname}}</option>
+        {% endfor %}
+    </select>
+    <select name="saleslist" id="sales">
+        {% for val in sales_incharge %}
+        <option value="{{val.eFname}}">{{val.eFname}}</option>
+        {% endfor %}
+    </select>
+    <select name="statuslist" id="status">
+        <option value="Active">Active</option>
+        <option value="Non Active">Non Active</option>
+    </select>
+    <button class="go-btn" type="submit" onClick="window.location.href = getLink()">Submit</button>
+</div>
+<script>
+    function getLink(){
+        var buhead=document.querySelector("#buhead").value;
+        var salesincharge=document.querySelector("#sales").value;
+        var status=document.querySelector("#status").value;
+        var url = '/filter/' + encodeURIComponent(buhead) + '/' + encodeURIComponent(salesincharge) + '/' + encodeURIComponent(status);
+        return url;
+    }
+</script>
+<div class="text-center mt-2 d-flex justify-content-center">
+<button class="go-btn" type="submit" onclick="location.href='/show_cust_requirements'">Refresh</button>
+</div>
+</div>
 <table class="table" id="example">
     <thead class="badge-info text-white">
         <tr>
@@ -43,7 +76,6 @@
             <th>Remarks</th>
             <th>Candidate List</th>
             <th>Actions</th>
-            <th>Filter options</th>
         </tr>
         </tr>
     </thead>
@@ -327,53 +359,6 @@
                             </div>
                         </div>
                     </div>
-                <td>
-
-                    <div class="dropdown">
-                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Position status
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
-                            <a class="dropdown-item"
-                                href="/cust_req_dropdown/PA{{val.Customer_Requirement_id}}">Active</a>
-                            <a class="dropdown-item"
-                                href="/cust_req_dropdown/PH{{val.Customer_Requirement_id}}">Hold</a>
-                            <a class="dropdown-item"
-                                href="/cust_req_dropdown/PI{{val.Customer_Requirement_id}}">Inactive</a>
-                        </div>
-                    </div>
-
-                    <div class="dropdown">
-                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Sales Incharge
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
-                            {% for value in sales_incharge %}
-                            <a class="dropdown-item"
-                                href="/cust_req_dropdown/S{{val.Customer_Requirement_id}}{{value.eFname}}">{{
-                                value.eFname }}</a>
-                            {% endfor %}
-
-                        </div>
-                    </div>
-
-                    <div class="dropdown">
-                        <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="DropDown{{values.eFname}}"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            BU Head
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="menu{{values.eFname}}">
-                            {% for value in bu_head %}
-                            <a class="dropdown-item"
-                                href="/cust_req_dropdown/B{{val.Customer_Requirement_id}}{{value.eFname}}">{{
-                                value.eFname }}</a>
-                            {% endfor %}
-
-                        </div>
-                    </div>
-                </td>
         </tr>
         {% endfor %}
     </tbody>
