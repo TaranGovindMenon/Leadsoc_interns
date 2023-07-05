@@ -126,7 +126,7 @@ class empRemarks(models.Model):
     
     
 
-class Cust_Remarks(models.Model):
+class Remarks(models.Model):
     refer_emp = models.ForeignKey(Employee, on_delete = models.CASCADE)
     cust_requirement_id = models.IntegerField()
     remark_date = models.DateField(null=True)

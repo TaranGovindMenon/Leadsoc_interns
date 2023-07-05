@@ -44,9 +44,8 @@ urlpatterns = [
     
    # customer requirements details
     path("show_cust_requirements", views.show_cust_requirements),#, name='show_cust_requirements'),
+    path("remarks/<int:cust_requirement_id>", views.remarks),
     path('filter/<str:bu>/<str:sales>/<str:st>',views.filtered_cust_requirements),
-
-    path("cust_remarks/<int:cust_requirement_id>", views.cust_remarks),
 
     path("cust_req_dropdown/<str:ref>", views.cust_req_dropdown),
 
