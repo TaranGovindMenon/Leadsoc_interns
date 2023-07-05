@@ -152,10 +152,25 @@
                         </div>
 
                         <!--For the edit button-->
-                        <button type="button" class="btn-sm btn-success" data-toggle="modal"
-                            data-target="#BURemarksEdit{{val.Customer_Requirement_id}}">
-                            <i class="fa-regular fa-pen-to-square"></i>
-                        </button>
+                        {% if current_user == val.Sales_Incharge or current_user == val.Bu_head %}
+                            <button type="button" class="btn-sm btn-success" data-toggle="modal"
+                                data-target="#BURemarksEdit{{val.Customer_Requirement_id}}">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                        
+                        {% else %}
+                            <span class="d-inline-block" tabindex="0" data-bs-toggle="popover{{val.Customer_Requirement_id}}" data-bs-trigger="hover focus" data-bs-content="Authorized for {{val.Sales_Incharge}} and {{val.Bu_head}}" data-bs-placement="bottom">
+                                <button class="btn-sm btn-danger" type="button" disabled>
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </button>
+                            </span> 
+
+                            <script>
+                                $(function () {
+                                    $('[data-bs-toggle="popover{{val.Customer_Requirement_id}}"]').popover({ trigger: "hover focus" })
+                                })
+                            </script>
+                        {%  endif %}
                         <!-- Modal form -->
                         <div class="modal" id="BURemarksEdit{{val.Customer_Requirement_id}}" data-bs-backdrop="static"
                             data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
@@ -163,7 +178,7 @@
                             <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Update BU remarks</h1>
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Update remarks</h1>
                                         <button type="button" class="close" data-dismiss="modal"
                                             aria-label="Close">&times;</button>
                                     </div>
@@ -171,10 +186,10 @@
                                     <div class="modal-body">
                                         <!-- <nav class="navbar bg-body-tertiary"> -->
                                         <div class="container-fluid">
-                                            <form action="/cust_remarks/{{val.Customer_Requirement_id}}" method="POST">
+                                            <form action="/remarks/{{val.Customer_Requirement_id}}" method="POST">
                                                 {% csrf_token %}
                                                 <div class="form-group">
-                                                    <label for="Job_Description">Edit BU remarks:</label>
+                                                    <label for="Job_Description">Edit remarks:</label>
                                                     <textarea name="remark_text" id="remark_text" cols="50"
                                                         rows="10"></textarea>
                                                 </div>
