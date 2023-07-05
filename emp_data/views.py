@@ -314,9 +314,10 @@ def filtered_cust_requirements(request,bu,sales,st):
     customer_requirements=Customer_Requirements.objects.filter(Bu_head=bu,Sales_Incharge=sales,Position_Status=st)
     all_remarks = Remarks.objects.all()
     bu_head = Employee.objects.filter(eRole="Bu Head")
+    current_user = request.user.username.title()
     sales_incharge= Employee.objects.filter(eRole="Sales Incharge")
     return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'remarks':all_remarks, 
-                                                        'sales_incharge': sales_incharge, 'bu_head': bu_head})
+                                                        'sales_incharge': sales_incharge, 'bu_head': bu_head, 'current_user':current_user})
 
 def remarks(request, cust_requirement_id):
     if request.method == 'POST':
