@@ -23,7 +23,10 @@
       </div>
       <div class="form-group">
         <label for="id_customer_end_date_0">Customer End Date:</label>
-        <input type="date" name="customer_end_date[]" id="id_customer_end_date_0">
+        <input type="date" name="customer_end_date[]" id="id_customer_end_date_0" min = "{{ today }}">
+        <script>
+          document.getElementById("id_customer_end_date_0").min = "{{ today }}";
+        </script>
       </div>
     </div>
   

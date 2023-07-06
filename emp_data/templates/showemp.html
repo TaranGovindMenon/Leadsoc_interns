@@ -23,7 +23,7 @@
 </center>
 
 <div class="container-fluid">
-  <table class="table table-bordered table-hover" id="example">
+  <table class="table table-bordered table-hover" id="example" name="example">
     <thead class="bg-info text-white">
       <tr>
         <th>Employee ID.</th>
@@ -57,21 +57,36 @@
         <td>
 
           <button class="btn-danger btn-sm" onclick="location.href='/deleteEmp/{{employee.e_id}}'"><i
-              class="fa-solid fa-trash fa-beat"></i></button>
-          <button class="btn-success btn-sm" data-toggle="modal" data-target="#modalForm{{employee.ePhone}}"><i
-              class="fa-solid fa-pen-to-square fa-beat"></i></button>
+              class="fa-solid fa-trash"></i></button>
+          {% if current_emp.eRole.role_name == 'HR' or  current_emp.eRole.role_name == 'Bu Head' %}
+            <button class="btn-success btn-sm" data-toggle="modal" data-target="#modalForm{{employee.ePhone}}"><i
+                class="fa-solid fa-pen-to-square"></i>
+            </button>
+          {% else %}
+          <span class="d-inline-block" tabindex="0" data-bs-toggle="popover{{employee.e_id}}" data-bs-trigger="hover focus" data-bs-content="Authorized for HR or Bu-Head only" data-bs-placement="left">
+            <button class="btn-outline-secondary btn-success" disabled>
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+          </span>
+            
+            <script>
+              $(function () {
+                  $('[data-bs-toggle="popover{{employee.e_id}}"]').popover({ trigger: "hover focus" })
+              })
+          </script>
+          {% endif %}
           <!-- <button class="btn-success btn-sm" onclick="location.href='/editemp/{{employee.eFname}}'"><i
               class="fa-solid fa-pen-to-square"></i></button> -->
           <button class="btn-info btn-sm data" data-toggle="modal" data-target="#modalTable{{employee.ePhone}}">
-            <i class="fa-solid fa-eye fa-beat"></i>
+            <i class="fa-solid fa-eye"></i>
           </button>
           <button class="btn-sm" onclick="location.href='/experience/{{employee.e_id}}'">
-            <i class="fa-solid fa-user fa-beat" style="color: #e6db43;"></i>
+            <i class="fa-solid fa-user" style="color: #e6db43;"></i>
           </button>
 
           <div class="modal" id="modalTable{{employee.ePhone}}" data-bs-backdrop="static" data-bs-keyboard="false"
             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5>Experience</h5>
@@ -79,12 +94,13 @@
                 </div>
                 <div class="modal-body">
                   <h5>Employee Name: {{employee.eFname}} {{employee.eLname}} </h5>
-                  <table class="table table-striped">
+                  <table class="table table-striped" id="example1" name="example1">
                     <thead>
                       <tr>
                         <th>Company</th>
                         <th>Customer Start Date</th>
                         <th>Customer End Date</th>
+                        <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -94,12 +110,53 @@
                         <td>{{val.refer_customer}}</td>
                         <td>{{val.customer_start_date}}</td>
                         <td>{{val.customer_end_date}}</td>
+                        <td>
+                          <button class="btn-success btn-sm">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                          </button>
+                          <button onclick="location.href='/delete_experience/{{val.id}}'" class="btn-danger btn-sm">
+                            <i class="fa-solid fa-trash"></i>
+                          </button>
+                        </td>
                       </tr>
                       {% endif %}
                       {% endfor %}
                     </tbody>
-
                   </table>
+                  <button class="btn-info btn-sm" id="add-exp{{employee.e_id}}" name="add-exp{{employee.e_id}}" onclick='Add_exp()'>
+                    Add Experience 
+                  </button>
+
+                  <!-- <script>
+                    function Add_exp() {
+                      var my_row = "{% csrf_token %}<tr><td><input type='text' id='comp_input'></td><td><input type='date' id='start_date'></td><td><input type='date' id='end_date'></td><td><button class='btn-info btn-sm' onclick='submitForm()'>Submit</button></td></tr>";
+                      $("#example1 tbody").append(my_row);
+                    }
+                  
+                    function submitForm() {
+                      var form = document.getElementById("submit_exp");
+                      form.submit();
+                    }
+                  </script> -->
+                  
+                  <!-- <form id="submit_exp" action="/addexperience/1" method="GET">
+                    {% csrf_token %} 
+                  </form> -->
+              
+                  <script>
+                    function Add_exp() {
+                      var my_row = "<tr><td><input type='text' id='comp_input'></td><td><input type='date' id='start_date'></td><td><input type='date' id='end_date'></td><td><button class='btn-info btn-sm'  type='submit' form='form1'>Submit</button></td></tr>";
+                      $("#example1 tbody").append(my_row);
+                    }
+                  </script>
+                  
+                  <!-- <script>
+                    function Add_exp() {
+                      var my_row = "<tr><td><form action='/addexperience' id='form1' method='POST'>{% csrf_token %}<input type='text' id='comp_input'></td><td><input type='date' id='start_date'></td><td><input type='date' id='end_date'></td><td><button class='btn-info btn-sm'  type='submit' form='form1'>Submit</button></form></td></tr>";
+                      $("#example1 tbody").append(my_row);
+                    }
+                  </script> 
+                   -->
                 </div>
 
               </div>

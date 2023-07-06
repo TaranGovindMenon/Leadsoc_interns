@@ -148,33 +148,33 @@ def experience(request,e_id):
     last_name=instance.eLname
     name=first_name + " " + last_name
     custom=Customer.objects.all()
+    today = date.today().strftime("%Y-%m-%d")
     customerlist=[]
     for item in custom:
         customerlist.append(item.cName)
-    return render(request,'experience.html',{'e_id':e_id,'name':name,'customerlist':customerlist})
+    return render(request,'experience.html',{'e_id':e_id,'name':name,'customerlist':customerlist, 'today': today})
 
 
 
-def addexperience(request,e_id):
-    num_entries=len(request.POST.getlist('refer_customer[]'))
-    name=request.POST.getlist('refer_customer[]')
-    start=request.POST.getlist('customer_start_date[]')
-    end=request.POST.getlist('customer_end_date[]')
-    for i in range(num_entries):
-        c_name=name[i]
-        s_date=start[i]
-        e_date=end[i]
-        instance=Emp_Experience(e_id=e_id,refer_customer=c_name,customer_start_date=s_date,customer_end_date=e_date)
-        instance.save()
+def addexperience(request):
+    if request.method == "POST":
+        return HttpResponse("Testing")
+    # num_entries=len(request.POST.getlist('refer_customer[]'))
+    # name=request.POST.getlist('refer_customer[]')
+    # start=request.POST.getlist('customer_start_date[]')
+    # end=request.POST.getlist('customer_end_date[]')
+    # for i in range(num_entries):
+    #     c_name=name[i]
+    #     s_date=start[i]
+    #     e_date=end[i]
+    #     instance=Emp_Experience(e_id=e_id,refer_customer=c_name,customer_start_date=s_date,customer_end_date=e_date)
+    #     instance.save()
+    # return redirect('/showemp')
+
+def delete_experience(request, exp_id): 
+    exp_instance = Emp_Experience.objects.get(id=exp_id)
+    exp_instance.delete()
     return redirect('/showemp')
-
-
-    
-
-
-            
-
-
 
 
 def add_cust_requirements(request):
@@ -663,10 +663,12 @@ def showemp(request):
     if not request.user.is_authenticated:
         return redirect('home')
     employees = Employee.objects.all()
+    current_user = request.user.username.title()
+    current_emp = Employee.objects.get(eFname=current_user)
     customerlist=Customer.objects.all()
     experiencelist=Emp_Experience.objects.all()
     rolelist=Role.objects.all()
-    return render(request, "showemp.html", {'employees':employees,'customerlist':customerlist,'experiencelist':experiencelist,'rolelist':rolelist,'statuslist':['Free','Deployed','Support Team']})
+    return render(request, "showemp.html", {'employees':employees,'customerlist':customerlist,'experiencelist':experiencelist,'rolelist':rolelist,'statuslist':['Free','Deployed','Support Team'], 'current_emp': current_emp})
 
 # To delete employee details
 def deleteEmp(request, e_id):
