@@ -1,5 +1,10 @@
 {% extends 'basic.html' %}
 {% block extra %}
+{% load experience_filter %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
 
   $(document).ready(function () {
@@ -121,42 +126,84 @@
                       </tr>
                       {% endif %}
                       {% endfor %}
+                      <tr id="new_row">
+                        <form method="POST" action="/addexperience/{{employee.e_id}}">
+                          {% csrf_token %}
+                              <td>
+                                <select name="refer_customer" id="refer_customer">
+                                  {% for val in customerlist %}
+                                  <option value="{{val}}">{{val}}</option>
+                                  {% endfor %}
+                                </select>
+                              </td>
+                              <td>
+                                <input type='date' id='start_date' name="start_date">
+                              </td>
+                              <td>
+                                <input type='date' id='end_date' name="end_date">
+                              </td>
+                              <td>
+                                <button class='btn-info btn-sm' type='submit'>Submit</button>
+                              </td>  
+                        </form>                      
+                      </tr> 
+                      <!-- <script>
+                        $(document).ready(function() {
+                            $("add-exp{{employee.e_id}}").click(function() {
+                                $("#new_row").toggle();
+                            });
+                        });
+                      </script> -->
                     </tbody>
                   </table>
-                  <button class="btn-info btn-sm" id="add-exp{{employee.e_id}}" name="add-exp{{employee.e_id}}" onclick='Add_exp()'>
-                    Add Experience 
-                  </button>
+                  <!-- <button id="filterButton">Activate Filter</button>
 
+                  <p>Variable: <span id="variable">{{ variable_name }}</span></p>
+
+                  <script>
+                      // Get the button element
+                      var button = document.getElementById("filterButton");
+
+                      // Add a click event listener to the button
+                      button.addEventListener("click", function() {
+                          // Get the variable value from the Django context
+                          var variableValue = "{{ variable_name }}";
+
+                          // Toggle the variable value from false to true or vice versa
+                          variableValue = variableValue === 'true' ? 'false' : 'true';
+
+                          // Apply the custom filter
+                          var filteredValue = variableValue;
+
+                          // Update the variable element
+                          $('#variable').text(filteredValue);
+                      });
+                  </script> -->
+
+
+                  <!-- <button class="btn-info btn-sm" id="add-exp{{employee.e_id}}" name="add-exp{{employee.e_id}}" onclick="addRow()">
+                    Add Experience 
+                  </button> -->
+                
+              
+                  <!-- <button class="btn-info btn-sm" id="add-exp{{employee.e_id}}" name="add-exp{{employee.e_id}}">
+                    Add Experience 
+                  </button> -->
                   <!-- <script>
                     function Add_exp() {
-                      var my_row = "{% csrf_token %}<tr><td><input type='text' id='comp_input'></td><td><input type='date' id='start_date'></td><td><input type='date' id='end_date'></td><td><button class='btn-info btn-sm' onclick='submitForm()'>Submit</button></td></tr>";
+                      var my_row = ''
+                        
                       $("#example1 tbody").append(my_row);
-                    }
-                  
-                    function submitForm() {
-                      var form = document.getElementById("submit_exp");
-                      form.submit();
+                    };
+                  </script> -->
+                  <!--Version 1.0-->
+                  <!-- <script>
+                    function Add_exp() {
+                      var my_row = "<tr><form id='form1' action='http://127.0.0.1:8000/addexperience' method='GET'><td><select name=&quot;refer_customer[]&quot; id=&quot;refer_customer_0&quot;>{% for val in customerlist %}<option value=&quot;{{val}}&quot;>{{val}}</option>{% endfor %}</select></td><td><input type='date' id='start_date'></td><td><input type='date' id='end_date'></td><td><button class='btn-info btn-sm' type='submit' form='form1'>Submit</button></td></form></tr>";
+                      $("#example1 tbody").append(my_row);
                     }
                   </script> -->
                   
-                  <!-- <form id="submit_exp" action="/addexperience/1" method="GET">
-                    {% csrf_token %} 
-                  </form> -->
-              
-                  <script>
-                    function Add_exp() {
-                      var my_row = "<tr><td><input type='text' id='comp_input'></td><td><input type='date' id='start_date'></td><td><input type='date' id='end_date'></td><td><button class='btn-info btn-sm'  type='submit' form='form1'>Submit</button></td></tr>";
-                      $("#example1 tbody").append(my_row);
-                    }
-                  </script>
-                  
-                  <!-- <script>
-                    function Add_exp() {
-                      var my_row = "<tr><td><form action='/addexperience' id='form1' method='POST'>{% csrf_token %}<input type='text' id='comp_input'></td><td><input type='date' id='start_date'></td><td><input type='date' id='end_date'></td><td><button class='btn-info btn-sm'  type='submit' form='form1'>Submit</button></form></td></tr>";
-                      $("#example1 tbody").append(my_row);
-                    }
-                  </script> 
-                   -->
                 </div>
 
               </div>

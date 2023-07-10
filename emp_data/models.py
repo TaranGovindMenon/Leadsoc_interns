@@ -92,8 +92,8 @@ class CandidateList(models.Model):
     def __str__(self):
         return self.candidate_name
 
-class addEmpToCustomer(models.Model):
-    req_id=models.IntegerField()
+class addEmpToCustomer(models.Model):# add two more fields: source (leadsoc,TA,VM), source_id
+    req_id=models.IntegerField() #Model name change: Employee requirement 
     eFname = models.CharField(max_length=100,null=True)
     eLname = models.CharField(max_length=100, null=True)
     eskills = models.CharField(max_length=100,null=True)
