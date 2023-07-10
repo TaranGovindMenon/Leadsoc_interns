@@ -156,9 +156,16 @@ def experience(request,e_id):
 
 
 
-def addexperience(request):
-    if request.method == "POST":
-        return HttpResponse("Testing")
+def addexperience(request, e_id):
+    if request.method == 'POST':
+        c_name = request.POST.getlist('refer_customer')
+        start_date = request.POST.get('start_date')
+        end_date = request.POST.get('end_date')
+        instance=Emp_Experience(e_id=e_id,refer_customer=c_name[0],customer_start_date=start_date,customer_end_date=end_date)
+        instance.save()
+        return redirect('/showemp')
+    else:
+        return HttpResponse("Error")
     # num_entries=len(request.POST.getlist('refer_customer[]'))
     # name=request.POST.getlist('refer_customer[]')
     # start=request.POST.getlist('customer_start_date[]')
@@ -314,10 +321,10 @@ def filtered_cust_requirements(request,bu,sales,st):
     customer_requirements=Customer_Requirements.objects.filter(Bu_head=bu,Sales_Incharge=sales,Position_Status=st)
     all_remarks = Remarks.objects.all()
     bu_head = Employee.objects.filter(eRole="Bu Head")
-    current_user = request.user.username.title()
+    current_user = request.user.username.title() 
     sales_incharge= Employee.objects.filter(eRole="Sales Incharge")
     return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'remarks':all_remarks, 
-                                                        'sales_incharge': sales_incharge, 'bu_head': bu_head, 'current_user':current_user})
+                                                        'sales_incharge': sales_incharge, 'bu_head': bu_head, 'current_user':current_user,'bu_select': bu, "sales_select": sales, 'status_select': st})
 
 def remarks(request, cust_requirement_id):
     if request.method == 'POST':
@@ -668,7 +675,8 @@ def showemp(request):
     customerlist=Customer.objects.all()
     experiencelist=Emp_Experience.objects.all()
     rolelist=Role.objects.all()
-    return render(request, "showemp.html", {'employees':employees,'customerlist':customerlist,'experiencelist':experiencelist,'rolelist':rolelist,'statuslist':['Free','Deployed','Support Team'], 'current_emp': current_emp})
+    add_exp_btn = True
+    return render(request, "showemp.html", {'employees':employees,'customerlist':customerlist,'experiencelist':experiencelist,'rolelist':rolelist,'statuslist':['Free','Deployed','Support Team'], 'current_emp': current_emp, 'add_exp_btn': add_exp_btn})
 
 # To delete employee details
 def deleteEmp(request, e_id):

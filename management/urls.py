@@ -83,7 +83,7 @@ urlpatterns = [
 
     #For experience page 
     path('experience/<str:e_id>',views.experience),
-    path('addexperience',views.addexperience),
+    path('addexperience/<str:e_id>',views.addexperience),
     path('delete_experience/<int:exp_id>', views.delete_experience),
     
     # employee deleted from customer
