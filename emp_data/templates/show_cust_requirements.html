@@ -33,11 +33,13 @@
         {% for val in bu_head %}
         <option value="{{val.eFname}}">{{val.eFname}}</option>
         {% endfor %}
+        <option value="All">All</option>
     </select>
     <select name="saleslist" id="sales">
         {% for val in sales_incharge %}
         <option value="{{val.eFname}}">{{val.eFname}}</option>
         {% endfor %}
+        <option value="All">All</option>
     </select>
     <select name="statuslist" id="status">
         <option value="Active">Active</option>

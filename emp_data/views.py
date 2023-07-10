@@ -311,12 +311,18 @@ def filtered_cust_requirements(request,bu,sales,st):
     # buhead=request.GET.get('arg1')
     # salesincharge=request.GET.get('arg2')
     # status=request.GET.get('arg3')
-    customer_requirements=Customer_Requirements.objects.filter(Bu_head=bu,Sales_Incharge=sales,Position_Status=st)
+    if bu=='All':
+        customer_requirements=Customer_Requirements.objects.filter(Sales_Incharge=sales,Position_Status=st)
+    elif sales=='All':
+        customer_requirements=Customer_Requirements.objects.filter(Bu_head=bu,Position_Status=st)
+    else:
+        customer_requirements=Customer_Requirements.objects.filter(Bu_head=bu,Sales_Incharge=sales,Position_Status=st)
     all_remarks = Bu_Remarks.objects.all()
     bu_head = Employee.objects.filter(eRole="Bu Head")
     sales_incharge= Employee.objects.filter(eRole="Sales Incharge")
     return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'remarks':all_remarks, 
                                                         'sales_incharge': sales_incharge, 'bu_head': bu_head})
+    
 
 def Buremarks(request, cust_id):
     if request.method == 'POST':
