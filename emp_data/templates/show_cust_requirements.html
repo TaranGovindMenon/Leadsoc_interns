@@ -49,6 +49,7 @@
                         {% for val in sales_incharge %}
                         <option value="{{val.eFname}}">{{val.eFname}}</option>
                         {% endfor %}
+                        <option value="All">All</option>
                     </select>
                 </td>
                 <td>
@@ -57,6 +58,7 @@
                         {% for val in bu_head %}
                         <option value="{{val.eFname}}">{{val.eFname}}</option>
                         {% endfor %}
+                        <option value="All">All</option>
                     </select>
                 </td>
                 <td>
@@ -84,7 +86,8 @@
                 {% for val in bu_head %}
                 <option value="{{val.eFname}}">{{val.eFname}}</option>
                 {% endfor %}
-            </select>
+                <option value="All">All</option>
+    </select>
         </div>
         <div class="col">
             <label>Sales Inch</label>
@@ -92,7 +95,8 @@
                 {% for val in sales_incharge %}
                 <option value="{{val.eFname}}">{{val.eFname}}</option>
                 {% endfor %}
-            </select>
+                <option value="All">All</option>
+    </select>
         </div>
         <div class="col">
             <label>Status</label>
@@ -105,8 +109,6 @@
             <button class="go-btn" type="submit" onClick="window.location.href = getLink()">Search</button>
         </div>
     </div> -->
-    
-    
 </div>
 <script>
     function getLink(){
