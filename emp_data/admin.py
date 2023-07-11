@@ -68,4 +68,5 @@ admin.site.register(models.Remarks)
 
 admin.site.register(models.empRemarks)
 
+admin.site.register(models.VmResource)
 
