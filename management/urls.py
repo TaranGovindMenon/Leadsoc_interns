@@ -90,6 +90,10 @@ urlpatterns = [
     path('delete_Emp_Customer/<str:eFname>/<int:Customer_Requirement_id>', views.delete_Emp_Customer),
     path('summary',views.summary),
 
+    #For VM page
+    path("show_vm", views.show_vm),
+    path("add_vm", views.add_vm),
+    path("vm_data_upload", views.vm_data_upload),
     #Homepage path
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
 

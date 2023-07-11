@@ -1,0 +1,84 @@
+{% extends 'basic.html' %}
+{% block extra %}
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5'
+            ],
+        });
+    });
+</script>
+
+{% endblock %}
+{% block body %}
+<center>
+    <div>
+        <h2 class="bg-info text-white">VM Candidates</h2>
+    </div>
+</center>
+
+<table class="table relative-top" id="example">
+    <thead class="badge-info text-white">
+        <tr>
+            <th>Position Status</th>
+            <th>PR Date</th>
+            <th>Vendor Name</th>
+            <th>Candidate Source</th>
+            <th>Candidate Name</th>
+            <th>Skillset</th>
+            <th>Experience</th>
+            <th>Education</th>
+            <th>Billing Rate</th>
+            <th>BU Head</th>
+            <th>Location</th>
+            <th>Notice Period</th>
+            <th>Reviewer Name</th>
+            <th>Remarks Panel</th>
+            <th>VM Comment</th>
+            <th>Client Name</th>
+            <th>Interview Schedule</th>
+            <th>Interview Status</th>
+            <th>Comments</th>
+            <th>Remarks</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Mode</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for val in candidate_list %}
+            <tr>
+                <td>{{ val.position_status }}</td>
+                <td>{{ val.pr_date }}</td>
+                <td>{{ val.vendor_name }}</td>
+                <td>{{ val.candidate_source }}</td>
+                <td>{{ val.candidate_name }}</td>
+                <td>{{ val.skillset }}</td>
+                <td>{{ val.experience }}</td>
+                <td>{{ val.education }}</td>
+                <td>{{ val.billing_rate }}</td>
+                <td>{{ val.bu_head }}</td>
+                <td>{{ val.location }}</td>
+                <td>{{ val.notice_period }}</td>
+                <td>{{ val.reviewer_name }}</td>
+                <td>{{ val.remarks_panel }}</td>
+                <td>{{ val.vm_comment }}</td>
+                <td>{{ val.client_name }}</td>
+                <td>{{ val.interview_schedule }}</td>
+                <td>{{ val.interview_status }}</td>
+                <td>{{ val.comments }}</td>
+                <td>{{ val.remarks }}</td>
+                <td>{{ val.email }}</td>
+                <td>{{ val.phone_number }}</td>
+                <td>{{ val.mode }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'basic.html' %}
+{% block body %}
+<div class="container">
+    <h3 style="color: rgba(16, 4, 33, 0.926);padding-top: 5%;">Add VM candidate</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="position_status">Position Status</label>
+            <input type="text" id="position_status" name="position_status" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="pr_date">PR Date</label>
+            <input type="date" id="pr_date" name="pr_date" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="vendor_name">Vendor Name</label>
+            <input type="text" id="vendor_name" name="vendor_name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="candidate_source">Candidate Source</label>
+            <input type="text" id="candidate_source" name="candidate_source" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="candidate_name">Candidate Name</label>
+            <input type="text" id="candidate_name" name="candidate_name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="skillset">Skillset</label>
+            <input type="text" id="skillset" name="skillset" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="experience">Experience</label>
+            <input type="number" id="experience" name="experience" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="education">Education</label>
+            <input type="text" id="education" name="education" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="billing_rate">Billing Rate</label>
+            <input type="number" id="billing_rate" name="billing_rate" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="bu_head">BU Head</label>
+            <input type="text" id="bu_head" name="bu_head" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="notice_period">Notice Period</label>
+            <input type="number" id="notice_period" name="notice_period" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="reviewer_name">Reviewer Name</label>
+            <input type="text" id="reviewer_name" name="reviewer_name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="remarks_panel">Remarks Panel</label>
+            <input type="text" id="remarks_panel" name="remarks_panel" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="vm_comment">VM Comment</label>
+            <input type="text" id="vm_comment" name="vm_comment" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="client_name">Client Name</label>
+            <input type="text" id="client_name" name="client_name" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="interview_schedule">Interview Schedule</label>
+            <input type="date" id="interview_schedule" name="interview_schedule" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="interview_status">Interview Status</label>
+            <input type="text" id="interview_status" name="interview_status" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="comments">Comments</label>
+            <input type="text" id="comments" name="comments" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="remarks">Remarks</label>
+            <input type="text" id="remarks" name="remarks" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="phone_number">Phone Number</label>
+            <input type="number" id="phone_number" name="phone_number" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="mode">Mode</label>
+            <input type="text" id="mode" name="mode" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button><br><br><br>
+
+    </form>
+</div>
+
+
+{% endblock %}

@@ -137,6 +137,37 @@ class Remarks(models.Model):
     def __str__(self):
         return str(self.cust_requirement_id)
 
+# model for VM candidates 
+class VmResource(models.Model):
+    position_status = models.CharField(max_length=100) #whether active or closed
+    pr_date = models.DateField()
+    vendor_name = models.CharField(max_length=100)
+    candidate_source = models.CharField(max_length=100) #whether from bench or market
+    candidate_name = models.CharField(max_length=300)
+    skillset = models.CharField(max_length=500)
+    experience = models.FloatField()
+    education = models.CharField(max_length=500)
+    billing_rate = models.FloatField()
+    bu_head = models.CharField(max_length=100)
+    location = models.CharField(max_length=500)
+    notice_period = models.IntegerField()
+    reviewer_name = models.CharField(max_length=100)
+    remarks_panel = models.CharField(max_length=500)
+    vm_comment = models.CharField(max_length=1000)
+    client_name = models.CharField(max_length=100)  
+    interview_schedule = models.DateField()
+    interview_status = models.CharField(max_length=100) 
+    comments = models.CharField(max_length=1000)
+    remarks = models.CharField(max_length=1000)   
+    email = models.EmailField()
+    phone_number = models.IntegerField()
+    mode = models.CharField(max_length=500)
+
+    class Meta:
+        db_table = "VmResource"
+    def __str__(self):
+        return str(self.candidate_name)
+   
 
 
 

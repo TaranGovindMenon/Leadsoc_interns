@@ -4,6 +4,7 @@ from emp_data.models import Customer
 from emp_data.models import Login
 from emp_data.models import Customer_Requirements
 from emp_data.models import addEmpToCustomer
+from emp_data.models import VmResource
 # This is for employee
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -35,3 +36,8 @@ class loginForm(forms.ModelForm):
 class UploadFileForm(forms.Form):
     file = forms.FileField()
     
+# Form to save one VM candidate in /add_vm url
+class VmCandidateForm(forms.ModelForm):
+    class Meta: 
+        model = VmResource
+        fields = "__all__"
