@@ -24,12 +24,15 @@
 <table class="table relative-top" id="example">
     <thead class="badge-info text-white">
         <tr>
+            <th>Candidate Name</th>
             <th>Position Status</th>
             <th>PR Date</th>
             <th>Vendor Name</th>
             <th>Candidate Source</th>
-            <th>Candidate Name</th>
-            <th>Skillset</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Actions</th>
+            <!-- <th>Skillset</th>
             <th>Experience</th>
             <th>Education</th>
             <th>Billing Rate</th>
@@ -44,21 +47,256 @@
             <th>Interview Status</th>
             <th>Comments</th>
             <th>Remarks</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Mode</th>
+            <th>Mode</th> -->
         </tr>
     </thead>
 
     <tbody>
         {% for val in candidate_list %}
             <tr>
+                <td>{{ val.candidate_name }}</td>
                 <td>{{ val.position_status }}</td>
                 <td>{{ val.pr_date }}</td>
                 <td>{{ val.vendor_name }}</td>
                 <td>{{ val.candidate_source }}</td>
-                <td>{{ val.candidate_name }}</td>
-                <td>{{ val.skillset }}</td>
+                <td>{{ val.email }}</td>
+                <td>{{ val.phone_number }}</td>
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModalLong">
+                        <i class="fa-regular fa-eye"></i>
+                    </button>
+  
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Details for {{val.candidate_name}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <h5 for="position_status">Position Status:</h5> {{val.position_status}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="pr_date">PR Date:</h5> {{val.pr_date}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="vendor_name">Vendor Name:</h5> {{val.vendor_name}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="candidate_source">Candidate Source:</h5> {{val.candidate_source}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="candidate_name">Candidate Name:</h5> {{val.candidate_name}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="skillset">Skillset:</h5> {{val.skillset}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="experience">Experience:</h5> {{val.experience}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="education">Education:</h5> {{val.education}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="billing_rate">Billing Rate:</h5> {{val.billing_rate}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="bu_head">BU Head:</h5> {{val.bu_head}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="location">Location:</h5> {{val.location}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="notice_period">Notice Period:</h5> {{val.notice_period}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="reviewer_name">Reviewer Name:</h5> {{val.reviewer_name}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="remarks_panel">Remarks Panel:</h5> {{val.remarks_panel}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="vm_comment">VM Comment:</h5> {{val.vm_comment}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="client_name">Client Name:</h5> {{val.client_name}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="interview_schedule">Interview Schedule:</h5> {{val.interview_schedule}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="interview_status">Interview Status:</h5> {{val.interview_status}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="comments">Comments:</h5> {{val.comments}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="remarks">Remarks:</h5> {{val.remarks}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="email">Email:</h5> {{val.email}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="phone_number">Phone Number:</h5> {{val.phone_number}}
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <h5 for="mode">Mode:</h5> {{val.mode}}
+                                </div>
+                                <hr>                                                                                                                             
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModal1Label" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModal1Label">Edit details for: {{val.candidate_name}}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="/update_vm_candidates">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="position_status">Position Status:</label>
+                                        <input type="text" id="position_status" name="position_status" class="form-control" value="{{val.position_status}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="pr_date">PR Date:</label>
+                                        <input type="date" id="pr_date" name="pr_date" class="form-control" value="{{val.pr_date}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vendor_name">Vendor Name:</label>
+                                        <input type="text" id="vendor_name" name="vendor_name" class="form-control" value="{{val.vendor_name}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="candidate_source">Candidate Source:</label>
+                                        <input type="text" id="candidate_source" name="candidate_source" class="form-control" value="{{val.candidate_source}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="candidate_name">Candidate Name:</label>
+                                        <input type="text" id="candidate_name" name="candidate_name" class="form-control" value="{{val.candidate_name}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="skillset">Skillset:</label>
+                                        <input type="text" id="skillset" name="skillset" class="form-control" value="{{val.skillset}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="experience">Experience:</label>
+                                        <input type="number" id="experience" name="experience" class="form-control" value="{{val.experience}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="education">Education:</label>
+                                        <input type="text" id="education" name="education" class="form-control" value="{{val.education}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="billing_rate">Billing Rate:</label>
+                                        <input type="number" id="billing_rate" name="billing_rate" class="form-control" value="{{val.billing_rate}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bu_head">BU Head:</label>
+                                        <input type="text" id="bu_head" name="bu_head" class="form-control" value="{{val.bu_head}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="location">Location:</label>
+                                        <input type="text" id="location" name="location" class="form-control" value="{{val.location}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="notice_period">Notice Period:</label>
+                                        <input type="number" id="notice_period" name="notice_period" class="form-control" value="{{val.notice_period}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reviewer_name">Reviewer Name:</label>
+                                        <input type="text" id="reviewer_name" name="reviewer_name" class="form-control" value="{{val.reviewer_name}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="remarks_panel">Remarks Panel:</label>
+                                        <input type="text" id="remarks_panel" name="remarks_panel" class="form-control" value="{{val.remarks_panel}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="vm_comment">VM Comment:</label>
+                                        <input type="text" id="vm_comment" name="vm_comment" class="form-control" value="{{val.vm_comment}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="client_name">Client Name:</label>
+                                        <input type="text" id="client_name" name="client_name" class="form-control" value="{{val.client_name}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="interview_schedule">Interview Schedule:</label>
+                                        <input type="date" id="interview_schedule" name="interview_schedule" class="form-control" value="{{val.interview_schedule}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="interview_status">Interview Status:</label>
+                                        <input type="text" id="interview_status" name="interview_status" class="form-control" value="{{val.interview_status}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="comments">Comments:</label>
+                                        <input type="text" id="comments" name="comments" class="form-control" value="{{val.comments}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="remarks">Remarks:</label>
+                                        <input type="text" id="remarks" name="remarks" class="form-control" value="{{val.remarks}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" id="email" name="email" class="form-control" value="{{val.email}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone_number">Phone Number:</label>
+                                        <input type="number" id="phone_number" name="phone_number" class="form-control" value="{{val.phone_number}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mode">Mode:</label>
+                                        <input type="text" id="mode" name="mode" class="form-control" value="{{val.mode}}">
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Submit</button><br><br><br>
+                                </form>                                                                
+                            </div>
+                            <div class="modal-footer">
+                            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </td>
+                <!-- <td>{{ val.skillset }}</td>
                 <td>{{ val.experience }}</td>
                 <td>{{ val.education }}</td>
                 <td>{{ val.billing_rate }}</td>
@@ -73,9 +311,7 @@
                 <td>{{ val.interview_status }}</td>
                 <td>{{ val.comments }}</td>
                 <td>{{ val.remarks }}</td>
-                <td>{{ val.email }}</td>
-                <td>{{ val.phone_number }}</td>
-                <td>{{ val.mode }}</td>
+                <td>{{ val.mode }}</td> -->
             </tr>
         {% endfor %}
     </tbody>

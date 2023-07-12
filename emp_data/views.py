@@ -239,6 +239,7 @@ def update_cust_requirements(request,Customer_Requirement_id):
     model_instance.remain_positions=request.POST['Open_positions']
     model_instance.Position_Status=request.POST['Position_Status']
     model_instance.Sales_Incharge=request.POST['Sales_Incharge']
+    model_instance.Bu_head = request.POST['Bu_Head']
     model_instance.save()
     return redirect('/show_cust_requirements')  
     
@@ -613,6 +614,8 @@ def add_vm(request):
             return redirect("/show_vm")
     return render(request, "add_vm_candidates.html")
 
+def update_vm_candidates(request): 
+    pass
 
 # To upload data containing VM candidates
 def vm_data_upload(request): 
