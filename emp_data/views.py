@@ -5,7 +5,7 @@ import quopri
 from django.shortcuts import render,redirect,get_object_or_404
 from emp_data.models import Customer,Employee,Customer_Requirements, Remarks, empRemarks
 from .resources import EmployeeResource
-from emp_data.forms import CustomerForm,EmployeeForm, addEmpToCustomerForm,loginForm,UploadFileForm,Customer_RequirementForm, VmCandidateForm
+from emp_data.forms import CustomerForm,EmployeeForm, addEmpToCustomerForm,loginForm,UploadFileForm,Customer_RequirementForm,TA_Form, VmCandidateForm
 from django.contrib import messages
 from django.contrib.auth.models import auth
 from emp_data.models import *
@@ -313,7 +313,9 @@ def show_cust_requirements(request):
         current_user = request.user.username.title()
         sales_incharge = Employee.objects.filter(eRole="Sales Incharge")
         bu_head = Employee.objects.filter(eRole="Bu Head")
-        return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'remarks':all_remarks, 'sales_incharge': sales_incharge, 'bu_head': bu_head, 'current_user':current_user})
+        return render(request,'show_cust_requirements.html',{'customer_requirements':customer_requirements,'remarks':all_remarks, 
+                                                             'sales_incharge': sales_incharge, 'bu_head': bu_head, 'current_user':current_user,
+                                                             'bu_select':'Choose', "sales_select":'Choose', 'status_select':'Choose'})
 
 def filtered_cust_requirements(request,bu,sales,st):
     # buhead=request.GET.get('arg1')
@@ -375,25 +377,41 @@ def summary(request):
     for val in second:
         saleslist.append(val.eFname)
     final=[]
-    for val in bulist:
+    for val in saleslist:
         firstarray=[]
-        for newval in saleslist:
-            customercount=len(Customer_Requirements.objects.filter(Bu_head=str(val),Sales_Incharge=str(newval)))
+        for newval in bulist:
+            customercount=len(Customer_Requirements.objects.filter(Bu_head=str(newval),Sales_Incharge=str(val)))
             firstarray.append(customercount)
         firstarray.append(sum(firstarray))
         firstarray.insert(0,val)
         final.append(firstarray)
-    length=len(saleslist)
+    length=len(bulist)
     context={'final':final,
-             'saleslist':saleslist,
+             'bulist':bulist,
              'length':length}
     return render(request,'summary.html',context)
         
 
+def add_ta(request):
+    form=TA_Form()
+    if request.method=='POST':
+        form=TA_Form(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/show_ta')
+        else:
+            return HttpResponse(form.errors)
+    else:
+        return render(request,'addTA.html')
 
+def show_ta(request):
+    ta_instance=TA_Resource.objects.all()
+    return render(request,'showTa.html',{'ta_instance':ta_instance})
 
-
-
+def delete_ta(request,phone_number):
+    instance=TA_Resource.objects.get(pk=phone_number)
+    instance.delete()
+    return redirect('/show_ta')
 
 
 
@@ -915,6 +933,61 @@ def customer_requirement_file(request):
         return redirect("/show_cust_requirements")
         
     return render(request,'customer_requirement_data.html')
+
+#TA Upload Excel File Option
+def ta_upload(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    if request.method=='POST':
+        dataset=Dataset()
+        new_details=request.FILES['file']
+
+        if not new_details.name.endswith('xlsx'):
+            messages.info(request,'Wrong format of file')
+            return render(request,'showTA.html')
+        imported_data = dataset.load(new_details.read(), format='xlsx')
+        for data in imported_data:
+            value=TA_Resource(
+                data[0],
+                data[1],
+                data[2],
+                data[3],
+                data[4],
+                data[5],
+                data[6],
+                data[7],
+                data[8],
+                data[9],
+                data[10],
+                data[11],
+                data[12],
+                data[13],
+                data[14],
+                data[15],
+                data[16],
+                data[17],
+                data[18],
+                data[19],
+                data[20],
+                data[21],
+                data[22],
+                data[23],
+                data[24],
+                data[25],
+                data[26],
+                data[27],
+                data[28],
+                data[29],
+                data[30],
+                data[31],
+                # data[32],
+                )
+            value.save()
+        return redirect('/show_ta')
+    
+
+    return render(request,'TA_upload.html')
+
 
 
 

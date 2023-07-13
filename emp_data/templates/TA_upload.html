@@ -1,0 +1,14 @@
+{% extends 'basic.html' %}
+{% block extra %}    
+        <form method="post" action='/ta_upload' enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="file">
+        <button type="submit">Upload</button>
+    </form>
+{% endblock %}
+
+{% block body%}
+    <p>
+    <h4>Please Upload TA Excel File File</h4>
+    </p>
+{% endblock %}

@@ -68,5 +68,8 @@ admin.site.register(models.Remarks)
 
 admin.site.register(models.empRemarks)
 
-admin.site.register(models.VmResource)
+@admin.register(models.TA_Resource)
+class Ta_ResourceAdmin(ImportExportModelAdmin):
+    list_display=('ta_id','name','skillset','education','phone_number','email')
 
+admin.site.register(models.VmResource)

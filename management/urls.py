@@ -81,6 +81,14 @@ urlpatterns = [
     # path('editemp/<str:eFname>', views.editemp), 
     path('updateEmp/<str:e_id>', views.updateEmp),
 
+
+
+    #TA Path
+    path('add_ta',views.add_ta),
+    path('show_ta',views.show_ta),
+    path('ta_upload',views.ta_upload),
+    path('delete_ta/<int:phone_number>',views.delete_ta),
+
     #For experience page 
     path('experience/<str:e_id>',views.experience),
     path('addexperience/<str:e_id>',views.addexperience),
