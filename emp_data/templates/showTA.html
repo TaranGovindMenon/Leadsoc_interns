@@ -1,0 +1,282 @@
+{% extends 'basic.html' %}
+{% block extra %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $('#example').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ]
+        });
+    });
+</script>
+{% endblock %}
+
+{% block body %}
+<center>
+    <div>
+        <h2 class="bg-info text-white">List of TA</h2>
+    </div>
+</center>
+<div class="container">
+    <table class="table table-bordered table-hover" id="example" name="example">
+        <thead class="bg-info text-white">
+            <tr>
+                <th>TA ID.</th>
+                <th>Name</th>
+                <th>Archive Status</th>
+                <th>Position</th>
+                <th>Skill Set</th>
+                <th>Phone Number</th>
+                <th>Email Id</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for value in ta_instance %}
+            <tr>
+                <td>{{value.ta_id}}</td>
+                <td>{{value.name}}</td>
+                <td>{{value.archived}}</td>
+                <td>{{value.Position}}</td>
+                <td>{{value.skillset}}</td>
+                <td>{{value.phone_number}}</td>
+                <td>{{value.email}}</td>
+                <td>
+                    <button class="btn-success btn-sm" data-toggle="modal"
+                        data-target="#modalupdate{{value.phone_number}}"><i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                    <!-- <button class="btn-success btn-sm data" data-toggle="modal" data-target="#modalUpdate{{value.phone_number}}">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </button> -->
+                    <button class="btn-info btn-sm" data-toggle="modal" data-target="#modalMore{{value.phone_number}}">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                    <div class="modal" id="modalMore{{value.phone_number}}" data-bs-backdrop="static"
+                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title fs-5" id="staticBackdropLabel">More Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div>
+                                        Name : {{value.name}} <br>
+                                        TA ID : {{value.ta_id}} <br>
+                                        Archvied : {{value.archived}} <br>
+                                        Skillset : {{value.skillset}} <br>
+                                        Phone Number : {{value.phone_number}} <br>
+                                        Email ID : {{value.email}} <br>
+                                        Education : {{value.education}}<br>
+                                        Experience : {{value.experience}}<br>
+                                        Relevant Experience : {{value.relevant_exp}}<br>
+                                        Current Organization : {{value.current_org}}<br>
+                                        Current CTC : {{value.current_ctc}}<br>
+                                        Expected CTC : {{value.expected_ctc}}<br>
+                                        Current Location : {{value.current_loc}}<br>
+                                        Preferred Location : {{value.preferred_loc}}<br>
+                                        Status : {{value.status}}<br>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+</div>
+<div class="modal" id="modalupdate{{value.phone_number}}" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fs-5" id="staticBackdropLabel">Update Details</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="archived">Update Archived:</label>
+                        <br>
+                        <input type="text" name="archived" id="archived" placeholder="{{value.archived}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="date">Update Date:</label>
+                        <br>
+                        <input type="date" name="date" id="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Update Name:</label>
+                        <br>
+                        <input type="text" name="name" id="name" placeholder="{{value.name}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="BU">Update BU:</label>
+                        <br>
+                        <input type="text" name="BU" id="BU" placeholder="{{value.BU}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="Position">Update Position:</label>
+                        <br>
+                        <input type="text" name="Position" id="Position" placeholder="{{value.Position}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="skillset">Update Skillset:</label>
+                        <br>
+                        <input type="text" name="skillset" id="skillset" placeholder="{{value.skillset}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="education">Update Education:</label>
+                        <br>
+                        <input type="text" name="education" id="education" placeholder="{{value.education}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Update Experience:</label>
+                        <br>
+                        <input type="number" name="experience" id="experience" step="any"
+                            placeholder="{{value.experience}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="relevant_exp">Update Relevant Exp:</label>
+                        <br>
+                        <input type="number" name="relevant_exp" id="relevant_exp" step="any"
+                            placeholder="{{value.relevant_exp}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="current_org">Update Current Organization:</label>
+                        <br>
+                        <input type="text" name="current_org" id="current_org" placeholder="{{value.current_org}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="current_ctc">Update Current CTC:</label>
+                        <br>
+                        <input type="number" name="current_ctc" id="current_ctc" step="any"
+                            placeholder="{{value.current_ctc}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="expected_ctc">Update Expected CTC:</label>
+                        <br>
+                        <input type="number" name="expected_ctc" id="expected_ctc" step="any"
+                            placeholder="{{value.expected_ctc}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="actual_notice_period">Update Actual Notice Period:</label>
+                        <br>
+                        <input type="number" name="actual_notice_period" id="actual_notice_period"
+                            placeholder="{{value.actual_notice_period}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="notice_period">Update Notice Period:</label>
+                        <br>
+                        <input type="number" name="notice_period" id="notice_period"
+                            placeholder="{{value.notice_period}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="current_loc">Update Current Location:</label>
+                        <br>
+                        <input type="text" name="current_loc" id="current_loc" placeholder="{{value.current_loc}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="preferred_loc">Update preferred Location:</label>
+                        <br>
+                        <input type="text" name="preferred_loc" id="preferred_loc"
+                            placeholder="{{value.preferred_loc}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Update Email:</label>
+                        <br>
+                        <input type="email" name="email" id="email" placeholder="{{value.email}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Update Status:</label>
+                        <br>
+                        <input type="text" name="status" id="status" placeholder="{{value.status}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="BU_comments">Update BU Comments:</label>
+                        <br>
+                        <input type="text" name="BU_comments" id="BU_comments" placeholder="{{value.BU_comments}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="TA_comments">Update TA Comments:</label>
+                        <br>
+                        <input type="text" name="TA_comments" id="TA_comments" placeholder="{{value.TA_comments}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="comment_by_prerana">Update Comment By Prerana:</label>
+                        <br>
+                        <input type="text" name="comment_by_prerana" id="comment_by_prerana"
+                            placeholder="{{value.comment_by_prerana}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="T1_panel">Update T1 Panel:</label>
+                        <br>
+                        <input type="text" name="T1_panel" id="T1_panel" placeholder="{{value.T1_panel}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="T1_IW_date">Update T1 IW Date:</label>
+                        <br>
+                        <input type="date" name="T1_IW_date" id="T1_IW_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="T2_panel">Update T2 Panel:</label>
+                        <br>
+                        <input type="text" name="T2_panel" id="T2_panel" placeholder="{{value.T2_panel}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="T2_IW_date">Update T2 IW Date:</label>
+                        <br>
+                        <input type="date" name="T2_IW_date" id="T2_IW_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="source">Update Source:</label>
+                        <br>
+                        <input type="text" name="source" id="source" placeholder="{{value.source}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="Rec_prime">Update Rec Prime:</label>
+                        <br>
+                        <input type="text" name="Rec_prime" id="Rec_prime" placeholder="{{value.Rec_prime}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="Domain">Update Domain:</label>
+                        <br>
+                        <input type="text" name="Domain" id="Domain" placeholder="{{value.Domain}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="T1">Update T1:</label>
+                        <br>
+                        <input type="text" name="T1" id="T1" placeholder="{{value.T1}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="T2">Update T2:</label>
+                        <br>
+                        <input type="text" name="T2" id="T2" placeholder="{{value.T2}}">
+                    </div>
+                    <!-- <div class="form-group">
+                                    <label for="resume">Resume:</label>
+                                    <input type="file" name="resume" id="resume">
+                                </div> -->
+                    <br>
+                    <input type="submit" value="Submit">
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+
+</div>
+{% endblock %}

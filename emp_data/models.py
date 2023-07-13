@@ -52,6 +52,7 @@ class Employee(models.Model):
     def __str__(self):
         return str(self.eFname)
          
+from datetime import datetime
 
 class Emp_Experience(models.Model):
     # e_id=models.CharField(max_length=15,null=True)
@@ -59,6 +60,10 @@ class Emp_Experience(models.Model):
     refer_customer=models.CharField(max_length=100,null=True)
     customer_start_date=models.DateField(null=True)
     customer_end_date=models.DateField(null=True)
+    
+    @property
+    def duration(self):
+        return (self.customer_end_date-self.customer_start_date).days
 
         
 
@@ -95,7 +100,6 @@ class CandidateList(models.Model):
 class addEmpToCustomer(models.Model):# add two more fields: source (leadsoc,TA,VM), source_id
     req_id=models.IntegerField() #Model name change: Employee requirement 
     eFname = models.CharField(max_length=100,null=True)
-    eLname = models.CharField(max_length=100, null=True)
     eskills = models.CharField(max_length=100,null=True)
     refer_Customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
     estatus = models.CharField(max_length=100,null=True)
@@ -184,3 +188,37 @@ class Login(models.Model):
     class Meta:
         db_table = "login"
 
+class TA_Resource(models.Model):
+    ta_id = models.CharField(max_length=10,unique=True)
+    archived = models.CharField(max_length=100)
+    date = models.DateField()
+    name = models.CharField(max_length=300)
+    BU = models.CharField(max_length=100)
+    Position = models.CharField(max_length=100)
+    skillset = models.CharField(max_length=500)
+    education = models.CharField(max_length=500)
+    experience = models.FloatField()
+    relevant_exp = models.FloatField()
+    current_org = models.CharField(max_length=500)
+    current_ctc = models.FloatField()
+    expected_ctc = models.FloatField()
+    actual_notice_period = models.IntegerField()
+    notice_period = models.IntegerField()
+    current_loc = models.CharField(max_length=500)
+    preferred_loc = models.CharField(max_length=500)
+    phone_number = models.CharField(max_length=15,primary_key=True)
+    email = models.EmailField()
+    status = models.CharField(max_length=100)
+    BU_comments = models.CharField(max_length=1000)
+    TA_comments = models.CharField(max_length=1000)
+    comment_by_prerana = models.CharField(max_length=500)
+    T1_panel = models.CharField(max_length=100)
+    T1_IW_date = models.DateField()
+    T2_panel = models.CharField(max_length=100)
+    T2_IW_date = models.DateField()
+    source = models.CharField(max_length=500)
+    Rec_prime = models.CharField(max_length=500)
+    Domain = models.CharField(max_length=100)
+    T1 = models.CharField(max_length=100)
+    T2 = models.CharField(max_length=100)
+    # resume = models.FileField()
