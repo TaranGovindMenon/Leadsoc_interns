@@ -1,0 +1,11 @@
+{% extends 'basic.html' %}
+{% block body %}
+<p>
+    <h4>Please Upload file</h4>
+</p>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="myfile">
+    <button type="submit">Upload</button>
+</form>
+{% endblock %}

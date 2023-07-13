@@ -32,8 +32,7 @@
     <thead class="bg-info text-white">
       <tr>
         <th>Employee ID.</th>
-        <th>FirstName</th>
-        <th>LastName</th>
+        <th>Name</th>
         <th>Customer</th>
         <th>Email</th>
         <th>Phone</th>
@@ -49,8 +48,7 @@
       {% for employee in employees %}
       <tr>
         <td>{{employee.e_id}}</td>
-        <td>{{employee.eFname}}</td>
-        <td>{{employee.eLname}}</td>
+        <td>{{employee.eFname}} {{employee.eLname}}</td>
         <td>{{employee.refer_Customer}}</td>
         <td>{{employee.eEmail}}</td>
         <td>{{employee.ePhone}}</td>

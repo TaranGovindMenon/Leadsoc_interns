@@ -5,7 +5,7 @@ import quopri
 from django.shortcuts import render,redirect,get_object_or_404
 from emp_data.models import Customer,Employee,Customer_Requirements, Remarks, empRemarks
 from .resources import EmployeeResource
-from emp_data.forms import CustomerForm,EmployeeForm, addEmpToCustomerForm,loginForm,UploadFileForm,Customer_RequirementForm,TA_Form
+from emp_data.forms import CustomerForm,EmployeeForm, addEmpToCustomerForm,loginForm,UploadFileForm,Customer_RequirementForm,TA_Form, VmCandidateForm
 from django.contrib import messages
 from django.contrib.auth.models import auth
 from emp_data.models import *
@@ -239,6 +239,7 @@ def update_cust_requirements(request,Customer_Requirement_id):
     model_instance.remain_positions=request.POST['Open_positions']
     model_instance.Position_Status=request.POST['Position_Status']
     model_instance.Sales_Incharge=request.POST['Sales_Incharge']
+    model_instance.Bu_head = request.POST['Bu_Head']
     model_instance.save()
     return redirect('/show_cust_requirements')  
     
@@ -616,6 +617,63 @@ def selection_status(request, status,Customer_Requirement_id):
         model_instance.save()
     return redirect(f'/showEmpToCustomer/{cname}/{Customer_Requirement_id}')
 
+# To display all the VM candidates 
+def show_vm(request):
+    all_vm_candidates = VmResource.objects.all()
+    return render(request, "show_vm_candidates.html", {"candidate_list":all_vm_candidates})
+
+# Form to add only one VM candidate 
+def add_vm(request): 
+    if request.method == "POST":
+        form=VmCandidateForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"Details Saved !")
+            return redirect("/show_vm")
+    return render(request, "add_vm_candidates.html")
+
+def update_vm_candidates(request): 
+    pass
+
+# To upload data containing VM candidates
+def vm_data_upload(request): 
+    if request.method == "POST":
+        dataset = Dataset()
+        new_vm = request.FILES['myfile']
+        if not new_vm.name.endswith('xlsx'):
+            messages.info(request, 'Wrong format of file')
+            return render(request, 'upload_vm_candidates.html')
+        imported_data = dataset.load(new_vm.read(), format='xlsx')
+        for data in imported_data:
+            value = VmResource(
+                position_status=data[0],
+                pr_date=data[1],
+                vendor_name=data[2],
+                candidate_source=data[3],
+                candidate_name=data[4],
+                skillset=data[5],
+                experience=data[6],
+                education=data[7],
+                billing_rate=data[8],
+                bu_head=data[9],
+                location=data[10],
+                notice_period=data[11],
+                reviewer_name=data[12],
+                remarks_panel=data[13],
+                vm_comment=data[14],
+                client_name=data[15],
+                interview_schedule=data[16],
+                interview_status=data[17],
+                comments=data[18],
+                remarks=data[19],
+                email=data[20],
+                phone_number=data[21],
+                mode=data[22]
+            )
+            value.save()
+        return redirect("/show_vm")
+    return render(request, "upload_vm_candidates.html")
+
 
 
 #dropdown customer names
@@ -803,7 +861,6 @@ def simple_upload(request):
                 data[9],
                 data[10],
                 data[11],
-                #data[12],
                 )
             value.save()
             if data[9]=='Free':

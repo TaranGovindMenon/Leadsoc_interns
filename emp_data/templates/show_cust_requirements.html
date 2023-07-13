@@ -384,6 +384,14 @@
                                             {% endfor %}
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="Bu_Head">Bu Head:</label>
+                                        <select name="Bu_Head" id="Bu_Head">
+                                            {% for val in bu_head %}
+                                            <option value="{{val}}">{{val}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
 
                                     </form>
