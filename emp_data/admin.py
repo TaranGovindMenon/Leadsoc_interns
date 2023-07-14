@@ -41,7 +41,7 @@ class CandidateList(ImportExportModelAdmin):
 
 @admin.register(models.addEmpToCustomer)
 class addEmpToCustomer(ImportExportModelAdmin):
-    list_display = ('req_id','eFname','eLname','refer_Customer','eskills')
+    list_display = ('req_id','eFname','refer_Customer','eskills')
     search_fields = ['eFname','eLname','refer_Customer','eskills']
     filter_horizontal = ()
     list_filter = ()
@@ -73,3 +73,7 @@ class Ta_ResourceAdmin(ImportExportModelAdmin):
     list_display=('ta_id','name','skillset','education','phone_number','email')
 
 admin.site.register(models.VmResource)
+
+@admin.register(models.Ta_resume)
+class Ta_resumeadmin(ImportExportModelAdmin):
+    list_display=('number','resume')

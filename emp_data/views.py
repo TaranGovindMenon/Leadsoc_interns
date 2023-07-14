@@ -5,7 +5,7 @@ import quopri
 from django.shortcuts import render,redirect,get_object_or_404
 from emp_data.models import Customer,Employee,Customer_Requirements, Remarks, empRemarks
 from .resources import EmployeeResource
-from emp_data.forms import CustomerForm,EmployeeForm, addEmpToCustomerForm,loginForm,UploadFileForm,Customer_RequirementForm,TA_Form, VmCandidateForm
+from emp_data.forms import CustomerForm,EmployeeForm, addEmpToCustomerForm,loginForm,UploadFileForm,Customer_RequirementForm,TA_Form, VmCandidateForm,Ta_ResumeForm
 from django.contrib import messages
 from django.contrib.auth.models import auth
 from emp_data.models import *
@@ -406,7 +406,19 @@ def add_ta(request):
 
 def show_ta(request):
     ta_instance=TA_Resource.objects.all()
-    return render(request,'showTa.html',{'ta_instance':ta_instance})
+    resumevalues=Ta_resume.objects.all()
+    return render(request,'showTa.html',{'ta_instance':ta_instance,'resumevalues':resumevalues})
+
+def addresume(request):
+    form=Ta_ResumeForm()
+    if request.method=='POST':
+        form=Ta_ResumeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/show_ta')
+        else:
+            return HttpResponse(form.errors)
+        
 
 def delete_ta(request,phone_number):
     instance=TA_Resource.objects.get(pk=phone_number)
@@ -478,10 +490,28 @@ def show_candidate(request,customers,Customer_Requirement_id):
         #f = Employee.objects.values_list('eskills')
         if skills != None: 
         #if skills == free:
-            form = Employee.objects.filter(eskills__icontains= skills)
+            form = Employee.objects.filter(eskills__icontains= skills,estatus='Free')
             #above eskills form column name with double underscore icontain inbuilt attribute
+    choice=1
+    return render(request,'show_candidate.html',{'form':form , 'customer_name':customers,'Customer_Requirement_id':Customer_Requirement_id,'choice':choice})
 
-    return render(request,'show_candidate.html',{'form':form , 'customer_name':customers,'Customer_Requirement_id':Customer_Requirement_id})
+def show_talist(request,customer_name,Customer_Requirement_id):
+    form=TA_Resource.objects.filter(status='Selected').values()
+    if request.method=='GET':
+        skills=request.GET.get('searchskill')
+        if skills != None:
+            form=TA_Resource.objects.filter(skillset__icontains=skills)
+    choice=2
+    return render(request,'show_ta_candidate.html',{'form':form,"customer_name":customer_name,"Customer_Requirement_id":Customer_Requirement_id,'choice':choice})
+
+def show_vmlist(request,customer_name,Customer_Requirement_id):
+    form=VmResource.objects.filter(interview_status='Selected').values()
+    if request.method=='GET':
+        skills=request.GET.get('searchskill')
+        if skills!=None:
+            form=VmResource.objects.filter(skillset__icontains=skills)
+    choice=3
+    return render(request,'show_vm_candidate.html',{'form':form,'customer_name':customer_name,'Customer_Requirement_id':Customer_Requirement_id,'choice':choice})
 
 def checkbox(request):
     if not request.user.is_authenticated:
@@ -518,23 +548,56 @@ from .forms import addEmpToCustomerForm
 #     return render(request, 'showEmpToCustomer.html', context)
 
 
-def savedvalues(request,customer_name,Customer_Requirement_id):
+def savedvalues(request,customer_name,Customer_Requirement_id,choice):
 
     
     if request.method == 'POST':
-        emp = request.POST.getlist('eFname')
-        print(emp)
-        savedata1 = addEmpToCustomer()
-        emp1=[]
-        today = date.today()
-        for i in emp:
-            newval=Employee.objects.get(eFname=i)
-            newval.estatus='Deployed'
-            newval.save()
-            final=addEmpToCustomer(req_id=Customer_Requirement_id,eFname=newval.eFname,eLname=newval.eLname,eskills=newval.eskills,refer_Customer=Customer(cName=customer_name),estatus='Deployed', comp_name= customer_name, added_date=today)
-            final.save()
-            newval2=addEmpToCustomer.objects.filter(eFname=i)
-            emp1.append(newval2)
+        if choice==1:
+            emp = request.POST.getlist('eFname')
+            print(emp)
+            savedata1 = addEmpToCustomer()
+            emp1=[]
+            today = date.today()
+            for i in emp:
+               newval=Employee.objects.get(eFname=i)
+               final=addEmpToCustomer(req_id=Customer_Requirement_id,eFname=newval.eFname + " " + newval.eLname,eskills=newval.eskills,refer_Customer=Customer(cName=customer_name),estatus='Free', comp_name= customer_name, added_date=today)
+               final.save()
+               newval2=addEmpToCustomer.objects.filter(eFname=i)
+               emp1.append(newval2)
+        elif choice==2:
+            emp = request.POST.getlist('name')
+            print(emp)
+            savedata1 = addEmpToCustomer()
+            emp1=[]
+            today = date.today()
+            for i in emp:
+               newval=TA_Resource.objects.get(name=i)
+               newval.estatus='Deployed'
+               newval.save()
+               final=addEmpToCustomer(req_id=Customer_Requirement_id,eFname=newval.name,eskills=newval.skillset,refer_Customer=Customer(cName=customer_name),estatus='Deployed',empstatus='Selected',comp_name= customer_name, added_date=today)
+               final.save()
+               requirement_instance=Customer_Requirements.objects.get(pk=Customer_Requirement_id)
+               requirement_instance.remain_positions-=1
+               requirement_instance.save()
+               newval2=addEmpToCustomer.objects.filter(eFname=i)
+               emp1.append(newval2)
+        elif choice==3:
+            emp = request.POST.getlist('candidate_name')
+            print(emp)
+            savedata1 = addEmpToCustomer()
+            emp1=[]
+            today = date.today()
+            for i in emp:
+               newval=VmResource.objects.get(candidate_name=i)
+               final=addEmpToCustomer(req_id=Customer_Requirement_id,eFname=newval.candidate_name,eskills=newval.skillset,refer_Customer=Customer(cName=customer_name),estatus='Deployed',empstatus='Selected', comp_name= customer_name, added_date=today)
+               final.save()
+               requirement_instance=Customer_Requirements.objects.get(pk=Customer_Requirement_id)
+               requirement_instance.remain_positions-=1
+               requirement_instance.save()
+               newval2=addEmpToCustomer.objects.filter(eFname=i)
+               emp1.append(newval2)
+
+        
         # return HttpResponse(emp1)
     #         savedata2=Employee.objects.get(eFname=val)
     #         savedata1=addEmpToCustomer(eFname=savedata2.eFname,eLname=savedata2.eLname,eskills=savedata2.eskills,refer_Customer=10,estatus='deployed')
@@ -542,7 +605,8 @@ def savedvalues(request,customer_name,Customer_Requirement_id):
     #         # emp.append(savedata2)
     #     # savedata.eFname=request.POST.getlist('eFname')
     #     # savedata.save()
-            
+        else:
+            return HttpResponse("Sorry Buddy")  
     return redirect(f'/showEmpToCustomer/{customer_name}/{Customer_Requirement_id}')
 
 #show added employe to customer
@@ -584,14 +648,22 @@ def selection_status(request, status,Customer_Requirement_id):
     model_instance = addEmpToCustomer.objects.get(eFname=status[2:])
     requirement_instance=Customer_Requirements.objects.get(pk=Customer_Requirement_id)
     cname = model_instance.comp_name
+    employee_name=status[2:]
+    final=employee_name.split(" ")
     #if request.method == 'POST':
         #model_instance = addEmpToCustomer.objects.get(eFname=status[2:])
     if status[:2] == 'SL':
+        model_instance.estatus='Deployed'
         model_instance.empstatus = 'Selected'
-
         requirement_instance.remain_positions-=1
         model_instance.save()
         requirement_instance.save()
+        candidate_status=CandidateList.objects.get(candidate_name=final[0])
+        candidate_status.interview_status='Selected'
+        candidate_status.save()
+        employee_instance=Employee.objects.get(eFname=final[0],eLname=final[1])
+        employee_instance.estatus='Deployed'
+        employee_instance.save()
 
         #return HttpResponse('something in it')
     elif status[:2] == 'RJ': 
@@ -735,12 +807,14 @@ def delete_Emp_Customer(request,eFname,Customer_Requirement_id):
         return redirect('home') 
     try:
         emp = addEmpToCustomer.objects.get(eFname=eFname)
-        status_instance=Employee.objects.get(eFname=eFname)
-        status_instance.estatus='Free'
-        status_instance.save()
+        if len(eFname.split(" ")) > 1:
+             employee_instance=eFname.split(" ")
+             status_instance=Employee.objects.get(eFname=employee_instance[0],eLname=employee_instance[1])
+             status_instance.estatus='Free'
+             status_instance.save()
         emp.delete()
         req.remain_positions+=1
-        req.save()
+        req.save()       
     except addEmpToCustomer.MultipleObjectsReturned:
         emp = addEmpToCustomer.objects.filter(eFname=eFname)[0]
         emp.delete()

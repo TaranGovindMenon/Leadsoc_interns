@@ -54,7 +54,9 @@ urlpatterns = [
     path('job_description',views.job_description),  
     path('add_candidate',views.add_candidate),
     path('show_candidate/<str:customers>/<int:Customer_Requirement_id>',views.show_candidate),
-    path('savedvalues/<str:customer_name>/<int:Customer_Requirement_id>',views.savedvalues),
+    path('show_talist/<str:customer_name>/<int:Customer_Requirement_id>',views.show_talist),
+    path('show_vmlist/<str:customer_name>/<int:Customer_Requirement_id>',views.show_vmlist),
+    path('savedvalues/<str:customer_name>/<int:Customer_Requirement_id>/<int:choice>',views.savedvalues),
     path('showEmpToCustomer/<str:cust_name>/<int:Customer_Requirement_id>',views.showEmpToCustomer),
     path('emp_remarks/<str:eFname>', views.emp_remarks),
 
@@ -86,6 +88,7 @@ urlpatterns = [
     #TA Path
     path('add_ta',views.add_ta),
     path('show_ta',views.show_ta),
+    path('addresume',views.addresume),
     path('ta_upload',views.ta_upload),
     path('delete_ta/<int:phone_number>',views.delete_ta),
 

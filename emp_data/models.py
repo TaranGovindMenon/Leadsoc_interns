@@ -63,7 +63,8 @@ class Emp_Experience(models.Model):
     
     @property
     def duration(self):
-        return (self.customer_end_date-self.customer_start_date).days
+
+        return (self.customer_end_date-self.customer_start_date).days/30
 
         
 
@@ -100,7 +101,6 @@ class CandidateList(models.Model):
 class addEmpToCustomer(models.Model):# add two more fields: source (leadsoc,TA,VM), source_id
     req_id=models.IntegerField() #Model name change: Employee requirement 
     eFname = models.CharField(max_length=100,null=True)
-    eLname = models.CharField(max_length=100, null=True)
     eskills = models.CharField(max_length=100,null=True)
     refer_Customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
     estatus = models.CharField(max_length=100,null=True)
@@ -224,4 +224,7 @@ class TA_Resource(models.Model):
     Domain = models.CharField(max_length=100)
     T1 = models.CharField(max_length=100)
     T2 = models.CharField(max_length=100)
-    # resume = models.FileField()
+
+class Ta_resume(models.Model):
+    number=models.OneToOneField(TA_Resource,on_delete=models.CASCADE,primary_key=True)
+    resume=models.FileField()

@@ -1,0 +1,101 @@
+{% extends 'basic.html' %}
+{% block body %}
+<table>
+    <tr>
+        <td style="padding : 15px; margin-top: 30px;">
+            <div class="container text-white">
+                <div class="col-xl-12">
+                    <form action="" method="get" class="form-inline">
+                        {% csrf_token %}
+                        <input type="text" class="form-control" placeholder="Search candidate skills.."
+                            name="searchskill">
+                        <button type="submit" class="btn btn-success" value="Search">Search</button>
+
+                    </form>
+                </div>
+            </div>
+        </td>
+        <div>
+
+            <td style="padding : 15px; margin-top: 30px;">
+                <div onclick="location.href='/show_candidate/{{customer_name}}/{{Customer_Requirement_id}}';">
+                    <input type="radio">
+                    <p>Leadsoc Employee List</p>
+                </div>
+            </td>
+            <td style="padding : 15px; margin-top: 30px;">
+                <div onclick="location.href='';">
+                    <input type="radio">
+                    <p>TA Resources</p>
+                </div>
+            </td>
+
+            <td style="padding : 15px; margin-top: 30px;">
+                <div onclick="location.href='/show_vmlist/{{customer_name}}/{{Customer_Requirement_id}}';">
+                    <input type="radio">
+                    <p>VM Resources</p>
+                </div>
+            </td>
+    </tr>
+</table>
+</div>
+<div class="container text-white" style="margin-top: 30px;">
+
+    <div class="col-xl-12">
+
+    </div>
+</div>
+
+<center>
+    <div>
+        <h3 class="bg-info text-white">Candidate List</h3>
+
+    </div>
+</center>
+<form action="/savedvalues/{{customer_name}}/{{Customer_Requirement_id}}/{{choice}}" method="POST" class="form-inline">
+
+    {% csrf_token %}
+
+    <table class="table">
+        <thead class="badge-info text-white">
+            <tr>
+                <th>No.</th>
+                <th>select</th>
+                <th>Candidate name</th>
+                <th>Candidate Skills</th>
+                <th>Selection Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for candidate_list in form %}
+            <tr>
+                <!--<td>{{customer_requirement.Requirement_Id}}</td>-->
+                <td>{{forloop.counter}}</td>
+                <td><input type="checkbox" name="name" id="name" value="{{candidate_list.name}}">
+                    <label for="name"></label>
+                </td>
+                <td>{{candidate_list.name}}</td>
+                <td>{{candidate_list.skillset}}</td>
+                <td>{{candidate_list.status}}</td>
+                <!-- <td>{{candidate_list.eskills}}</td>
+            <td>{{candidate_list.estatus}}</td> -->
+
+
+                <!-- <td> -->
+                <!--<button class="btn-danger btn-sm"
+                    onclick="location.href='/deleteEmp/{{employee.eFname}}'">Delete</button>
+                <button class="btn-success btn-sm"
+                    onclick="location.href='/editemp/{{employee.eFname}}'">Update</button>-->
+                <!-- </td> -->
+
+            </tr>
+            {% empty %}
+            <span class="text-center text-danger">No record found</span>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-success" value="submit" style="float:right">Add TA Resource</button>
+
+</form>
+{% endblock %}
