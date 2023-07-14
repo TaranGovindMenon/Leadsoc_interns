@@ -554,7 +554,7 @@ def savedvalues(request,customer_name,Customer_Requirement_id,choice):
                final.save()
                newval2=addEmpToCustomer.objects.filter(eFname=i)
                emp1.append(newval2)
-        if choice==2:
+        elif choice==2:
             emp = request.POST.getlist('name')
             print(emp)
             savedata1 = addEmpToCustomer()
@@ -571,16 +571,14 @@ def savedvalues(request,customer_name,Customer_Requirement_id,choice):
                requirement_instance.save()
                newval2=addEmpToCustomer.objects.filter(eFname=i)
                emp1.append(newval2)
-        if choice==3:
-            emp = request.POST.getlist('name')
+        elif choice==3:
+            emp = request.POST.getlist('candidate_name')
             print(emp)
             savedata1 = addEmpToCustomer()
             emp1=[]
             today = date.today()
             for i in emp:
                newval=VmResource.objects.get(candidate_name=i)
-            #    newval.estatus='Deployed'
-            #    newval.save()
                final=addEmpToCustomer(req_id=Customer_Requirement_id,eFname=newval.candidate_name,eskills=newval.skillset,refer_Customer=Customer(cName=customer_name),estatus='Deployed',empstatus='Selected', comp_name= customer_name, added_date=today)
                final.save()
                requirement_instance=Customer_Requirements.objects.get(pk=Customer_Requirement_id)
@@ -597,7 +595,8 @@ def savedvalues(request,customer_name,Customer_Requirement_id,choice):
     #         # emp.append(savedata2)
     #     # savedata.eFname=request.POST.getlist('eFname')
     #     # savedata.save()
-            
+        else:
+            return HttpResponse("Sorry Buddy")  
     return redirect(f'/showEmpToCustomer/{customer_name}/{Customer_Requirement_id}')
 
 #show added employe to customer
