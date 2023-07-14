@@ -36,6 +36,7 @@
                 <th>Skill Set</th>
                 <th>Phone Number</th>
                 <th>Email Id</th>
+                <th>Resume Actions</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -49,6 +50,73 @@
                 <td>{{value.skillset}}</td>
                 <td>{{value.phone_number}}</td>
                 <td>{{value.email}}</td>
+                    <style>
+                        /* CSS styles for the PDF container */
+                        .pdf-container {
+                            position: relative;
+                        }
+                        /* CSS styles for the hover preview */
+                        .pdf-preview {
+                            position: absolute;
+                            top: 100%;
+                            left: 0;
+                            display: none;
+                            width: 300px;
+                            height: 400px;
+                            background-color: white;
+                            border: 1px solid black;
+                            z-index: 999;
+                        }
+                    </style>
+                    <script>
+                        function showPDF(containerId) {
+                            var container = document.getElementById(containerId);
+                            var preview = container.getElementsByClassName('pdf-preview')[0];
+                            preview.style.display = 'block';
+                        }
+                        function hidePDF(containerId) {
+                            var container = document.getElementById(containerId);
+                            var preview = container.getElementsByClassName('pdf-preview')[0];
+                            preview.style.display = 'none';
+                        }
+                    </script>
+                    <td class="pdf-container" onmouseover="showPDF('container{{ forloop.counter }}')" onmouseout="hidePDF('container{{ forloop.counter }}')">
+                    <button>Show PDF</button>
+                    <div class="pdf-preview">
+                        {% for val in resumevalues %}
+                        {%  if val.number == value.phone_number %}
+                        <iframe src="{{ val }}" width="300" height="400"></iframe>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                        <button class="bg-info btn-sm" data-toggle="modal" data-target="#modalTable{{value.phone_number}}">
+                         <i class="fa-regular fa-plus"></i>
+                        </button>
+                        <div class="modal" id="modalTable{{value.phone_number}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Resume</h1>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-label="Close">&times;</button>
+                                    </div>
+                                <div class="modal-body">
+                                         <form action="/addresume" method="POST">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                            <input type="hidden" name="number" id="number" value="{{value.phone_number}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="resume">Add Resume</label>
+                                                <input type="file" name="resume" id="resume">
+                                            </div>
+                                            <button type="submit">Submit</button>
+                                         </form>
+                                </div>
+
+                        </div>
+                </td>
                 <td>
                     <button class="btn-success btn-sm" data-toggle="modal"
                         data-target="#modalupdate{{value.phone_number}}"><i class="fa-solid fa-pen-to-square"></i>

@@ -73,3 +73,7 @@ class Ta_ResourceAdmin(ImportExportModelAdmin):
     list_display=('ta_id','name','skillset','education','phone_number','email')
 
 admin.site.register(models.VmResource)
+
+@admin.register(models.Ta_resume)
+class Ta_resumeadmin(ImportExportModelAdmin):
+    list_display=('number','resume')

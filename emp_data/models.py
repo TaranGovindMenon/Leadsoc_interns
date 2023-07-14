@@ -63,7 +63,7 @@ class Emp_Experience(models.Model):
     
     @property
     def duration(self):
-        return (self.customer_end_date-self.customer_start_date).days
+        return (self.customer_end_date-self.customer_start_date).days/30
 
         
 
@@ -188,6 +188,7 @@ class Login(models.Model):
     class Meta:
         db_table = "login"
 
+
 class TA_Resource(models.Model):
     ta_id = models.CharField(max_length=10,unique=True)
     archived = models.CharField(max_length=100)
@@ -222,3 +223,7 @@ class TA_Resource(models.Model):
     T1 = models.CharField(max_length=100)
     T2 = models.CharField(max_length=100)
     # resume = models.FileField()
+
+class Ta_resume(models.Model):
+    number=models.OneToOneField(TA_Resource,on_delete=models.CASCADE,primary_key=True)
+    resume=models.FileField()

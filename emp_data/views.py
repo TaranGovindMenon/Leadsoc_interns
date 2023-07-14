@@ -5,7 +5,7 @@ import quopri
 from django.shortcuts import render,redirect,get_object_or_404
 from emp_data.models import Customer,Employee,Customer_Requirements, Remarks, empRemarks
 from .resources import EmployeeResource
-from emp_data.forms import CustomerForm,EmployeeForm, addEmpToCustomerForm,loginForm,UploadFileForm,Customer_RequirementForm,TA_Form, VmCandidateForm
+from emp_data.forms import CustomerForm,EmployeeForm, addEmpToCustomerForm,loginForm,UploadFileForm,Customer_RequirementForm,TA_Form, VmCandidateForm,Ta_ResumeForm
 from django.contrib import messages
 from django.contrib.auth.models import auth
 from emp_data.models import *
@@ -406,7 +406,19 @@ def add_ta(request):
 
 def show_ta(request):
     ta_instance=TA_Resource.objects.all()
-    return render(request,'showTa.html',{'ta_instance':ta_instance})
+    resumevalues=Ta_resume.objects.all()
+    return render(request,'showTa.html',{'ta_instance':ta_instance,'resumevalues':resumevalues})
+
+def addresume(request):
+    form=Ta_ResumeForm()
+    if request.method=='POST':
+        form=Ta_ResumeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/show_ta')
+        else:
+            return HttpResponse(form.errors)
+        
 
 def delete_ta(request,phone_number):
     instance=TA_Resource.objects.get(pk=phone_number)
@@ -548,9 +560,7 @@ def savedvalues(request,customer_name,Customer_Requirement_id,choice):
             today = date.today()
             for i in emp:
                newval=Employee.objects.get(eFname=i)
-               newval.estatus='Deployed'
-               newval.save()
-               final=addEmpToCustomer(req_id=Customer_Requirement_id,eFname=newval.eFname + " " + newval.eLname,eskills=newval.eskills,refer_Customer=Customer(cName=customer_name),estatus='Deployed', comp_name= customer_name, added_date=today)
+               final=addEmpToCustomer(req_id=Customer_Requirement_id,eFname=newval.eFname + " " + newval.eLname,eskills=newval.eskills,refer_Customer=Customer(cName=customer_name),estatus='Free', comp_name= customer_name, added_date=today)
                final.save()
                newval2=addEmpToCustomer.objects.filter(eFname=i)
                emp1.append(newval2)
@@ -638,14 +648,22 @@ def selection_status(request, status,Customer_Requirement_id):
     model_instance = addEmpToCustomer.objects.get(eFname=status[2:])
     requirement_instance=Customer_Requirements.objects.get(pk=Customer_Requirement_id)
     cname = model_instance.comp_name
+    employee_name=status[2:]
+    final=employee_name.split(" ")
     #if request.method == 'POST':
         #model_instance = addEmpToCustomer.objects.get(eFname=status[2:])
     if status[:2] == 'SL':
+        model_instance.estatus='Deployed'
         model_instance.empstatus = 'Selected'
-
         requirement_instance.remain_positions-=1
         model_instance.save()
         requirement_instance.save()
+        candidate_status=CandidateList.objects.get(candidate_name=final[0])
+        candidate_status.interview_status='Selected'
+        candidate_status.save()
+        employee_instance=Employee.objects.get(eFname=final[0],eLname=final[1])
+        employee_instance.estatus='Deployed'
+        employee_instance.save()
 
         #return HttpResponse('something in it')
     elif status[:2] == 'RJ': 
@@ -756,15 +774,14 @@ def delete_Emp_Customer(request,eFname,Customer_Requirement_id):
         return redirect('home') 
     try:
         emp = addEmpToCustomer.objects.get(eFname=eFname)
-        try:
-            status_instance=Employee.objects.get(eFname=eFname)
-            status_instance.estatus='Free'
-            status_instance.save()
-        except:
-            pass
+        if len(eFname.split(" ")) > 1:
+             employee_instance=eFname.split(" ")
+             status_instance=Employee.objects.get(eFname=employee_instance[0],eLname=employee_instance[1])
+             status_instance.estatus='Free'
+             status_instance.save()
         emp.delete()
         req.remain_positions+=1
-        req.save()
+        req.save()       
     except addEmpToCustomer.MultipleObjectsReturned:
         emp = addEmpToCustomer.objects.filter(eFname=eFname)[0]
         emp.delete()

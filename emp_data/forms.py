@@ -6,6 +6,7 @@ from emp_data.models import Customer_Requirements
 from emp_data.models import addEmpToCustomer
 from emp_data.models import TA_Resource
 from emp_data.models import VmResource
+from emp_data.models import Ta_resume
 # This is for employee
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -48,3 +49,8 @@ class VmCandidateForm(forms.ModelForm):
     class Meta: 
         model = VmResource
         fields = "__all__"
+
+class Ta_ResumeForm(forms.ModelForm):
+    class Meta:
+        model=Ta_resume
+        fields="__all__"
