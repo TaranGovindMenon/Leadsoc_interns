@@ -620,10 +620,25 @@ def selection_status(request, status,Customer_Requirement_id):
 # To display all the VM candidates 
 def show_vm(request):
     all_vm_candidates = VmResource.objects.all()
-    return render(request, "show_vm_candidates.html", {"candidate_list":all_vm_candidates})
+    all_remarks = []
+    vm_comments = []
+    remarks_panel = []
+    # For retreiving and splitting the string within the remarks field
+    for candidate in all_vm_candidates: 
+        all_remarks.append(candidate.remarks)
+        vm_comments.append(candidate.vm_comment)
+        remarks_panel.append(candidate.remarks_panel)
+    all_remarks_dict = {}
+    all_vmcomments_dict = {}
+    remarks_panel_dict = {}
+    for i in range(len(all_remarks)): 
+        all_remarks_dict[all_vm_candidates[i].phone_number] = all_remarks[i].split("^")
+        all_vmcomments_dict[all_vm_candidates[i].phone_number] = vm_comments[i].split("^")
+        remarks_panel_dict[all_vm_candidates[i].phone_number] = remarks_panel[i].split("^")
+    return render(request, "show_vm_candidates.html", {"candidate_list":all_vm_candidates, "all_remarks":all_remarks_dict, 'vm_comments': all_vmcomments_dict, 'remarks_panel': remarks_panel_dict})
 
 # Form to add only one VM candidate 
-def add_vm(request): 
+def add_vm(request):  
     if request.method == "POST":
         form=VmCandidateForm(request.POST)
         if form.is_valid():
@@ -668,12 +683,30 @@ def vm_data_upload(request):
                 remarks=data[19],
                 email=data[20],
                 phone_number=data[21],
-                mode=data[22]
+                mode=data[22], 
+                resume = data[23], 
+                vm_name = data[24],
+                vm_role=data[25]
             )
             value.save()
         return redirect("/show_vm")
     return render(request, "upload_vm_candidates.html")
 
+#Saves all the remarks and comments from the show_vm page: remarks panel, vm_comments and remarks
+def vm_remarks(request, ph_no):
+    if request.method == 'POST':
+        instance = VmResource.objects.get(phone_number = int(ph_no[2:]))
+        if ph_no[:2] == 'RK':
+            remark_text = request.POST.get('remark_text', '')
+            instance.remarks += '^' + remark_text  
+        elif ph_no[:2] == 'VC':
+            comment_text = request.POST.get('VC_text', '')
+            instance.vm_comment += '^' + comment_text 
+        elif ph_no[:2] == 'RP':
+            remark_text = request.POST.get('RPremark_text', '')
+            instance.remarks_panel += '^' + remark_text 
+        instance.save()
+    return redirect('/show_vm')
 
 
 #dropdown customer names

@@ -2,11 +2,15 @@
 {% block body %}
 <div class="container">
     <h3 style="color: rgba(16, 4, 33, 0.926);padding-top: 5%;">Add VM candidate</h3>
+    <br>
     <form method="POST">
         {% csrf_token %}
         <div class="form-group">
-            <label for="position_status">Position Status</label>
-            <input type="text" id="position_status" name="position_status" class="form-control">
+            <label for="position_status">Position Status: </label>
+            <select name="position_status" id="position_status">
+                <option value="Active">Active</option>
+                <option value="Closed">Closed</option>
+              </select>
         </div>
         <div class="form-group">
             <label for="pr_date">PR Date</label>
@@ -73,8 +77,11 @@
             <input type="date" id="interview_schedule" name="interview_schedule" class="form-control">
         </div>
         <div class="form-group">
-            <label for="interview_status">Interview Status</label>
-            <input type="text" id="interview_status" name="interview_status" class="form-control">
+            <label for="interview_status">Interview Status: </label>
+            <select name="interview_status" id="interview_status">
+                <option value="Screen Selected">Screen Selected</option>
+                <option value="Screen Rejected">Screen Rejected</option>
+              </select>
         </div>
         <div class="form-group">
             <label for="comments">Comments</label>
@@ -97,7 +104,14 @@
             <input type="text" id="mode" name="mode" class="form-control">
         </div>
         <button type="submit" class="btn btn-success">Submit</button><br><br><br>
-
+        <!-- <div class="form-group">
+            <label for="vm_name">VM Name: </label>
+            <select name="vm_name" id="vm_name">
+                {% for name in vm_names%}
+                <option value="{{name}}">{{name}}</option>
+                {% endfor %}
+            </select>
+        </div> -->
     </form>
 </div>
 
