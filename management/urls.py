@@ -106,6 +106,7 @@ urlpatterns = [
     path("add_vm", views.add_vm),
     path("vm_data_upload", views.vm_data_upload),
     path("update_vm_candidates", views.update_vm_candidates),
+    path("vm_remarks/<str:ph_no>", views.vm_remarks),
     #Homepage path
     path('', TemplateView.as_view(template_name='home.html'), name='home'),
 

@@ -24,15 +24,18 @@
 <table class="table relative-top" id="example">
     <thead class="badge-info text-white">
         <tr>
-            <th>Candidate Name</th>
-            <th>Position Status</th>
-            <th>PR Date</th>
-            <th>Vendor Name</th>
-            <th>Candidate Source</th>
-            <th>Email</th>
-            <th>Phone Number</th>
+            <th>Name</th>
+            <th>Archive or not</th>
+            <th>BU Head</th>
+            <th>Skillset</th>
+            <th>Remarks Panel</th>
+            <th>VM Comment</th>
+            <th>Remarks</th>
+            <th>VM name</th>
+            <th>VM Role</th>
             <th>Actions</th>
-            <!-- <th>Skillset</th>
+            
+            <!-- 
             <th>Experience</th>
             <th>Education</th>
             <th>Billing Rate</th>
@@ -40,35 +43,242 @@
             <th>Location</th>
             <th>Notice Period</th>
             <th>Reviewer Name</th>
-            <th>Remarks Panel</th>
-            <th>VM Comment</th>
             <th>Client Name</th>
             <th>Interview Schedule</th>
             <th>Interview Status</th>
             <th>Comments</th>
-            <th>Remarks</th>
             <th>Mode</th> -->
         </tr>
     </thead>
 
     <tbody>
-        {% for val in candidate_list %}
+    {% for val in candidate_list %}
             <tr>
                 <td>{{ val.candidate_name }}</td>
                 <td>{{ val.position_status }}</td>
-                <td>{{ val.pr_date }}</td>
-                <td>{{ val.vendor_name }}</td>
-                <td>{{ val.candidate_source }}</td>
-                <td>{{ val.email }}</td>
-                <td>{{ val.phone_number }}</td>
+                <td>{{val.bu_head}}</td>
+                <td>{{val.skillset}}</td>
+
+                <!--Remarks Panel column-->
                 <td>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModalLong">
+                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#RPModal{{val.phone_number}}">
+                        <i class="fa-regular fa-eye"></i>   
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="RPModal{{val.phone_number}}" tabindex="-1" aria-labelledby="RPModalLabel{{val.phone_number}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="RPModalLabel{{val.phone_number}}">All remark panels for {{val.candidate_name}}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% for key, remarks in remarks_panel.items %} 
+                                    {% if key == val.phone_number %}
+                                    {% for remark in remarks reversed%}
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">Remark:</h5>                                        
+                                        </div>
+                                        <div class="card-body">
+                                            <p>{{remark}}</p>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div> 
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#RPEdit{{val.phone_number}}">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="RPEdit{{val.phone_number}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="RPLabel{{val.phone_number}}">Edit remarks panel</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <form action="/vm_remarks/RP{{val.phone_number}}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <textarea name="RPremark_text" id="RPremark_text" cols="50"
+                                                rows="10"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Add Comment</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">                        
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <!--Vm comments column-->
+                <td>
+                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#VmCommentsModal{{val.phone_number}}">
+                        <i class="fa-regular fa-eye"></i>   
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="VmCommentsModal{{val.phone_number}}" tabindex="-1" aria-labelledby="VmCommentsModalLabel{{val.phone_number}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="VmCommentsModal{{val.phone_number}}">All Vm Comments for {{val.candidate_name}}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% for key, comments in vm_comments.items %} 
+                                    {% if key == val.phone_number %}
+                                    {% for comment in comments reversed%}
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">Vm Comment:</h5>                                        
+                                        </div>
+                                        <div class="card-body">
+                                            <p>{{comment}}</p>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div> 
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#VmCommentsEditModal{{val.phone_number}}">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="VmCommentsEditModal{{val.phone_number}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="VmCommentsEditLabelModal{{val.phone_number}}">Edit remarks</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <form action="/vm_remarks/VC{{val.phone_number}}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <textarea name="VC_text" id="VC_text" cols="50"
+                                                rows="10"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Add Comment</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">                        
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+                <!--Remarks column-->
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleRemarkModal{{val.phone_number}}">
+                        <i class="fa-regular fa-eye"></i>   
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleRemarkModal{{val.phone_number}}" tabindex="-1" aria-labelledby="exampleRemarkModalLabel{{val.phone_number}}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleRemarkModalLabel{{val.phone_number}}">All remarks for {{val.candidate_name}}</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% for key, remarks in all_remarks.items %} 
+                                    {% if key == val.phone_number %}
+                                    {% for remark in remarks reversed%}
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">Remark:</h5>                                        
+                                        </div>
+                                        <div class="card-body">
+                                            <p>{{remark}}</p>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div> 
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#RemarkEdit{{val.phone_number}}">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="RemarkEdit{{val.phone_number}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="RemarkEditLabel{{val.phone_number}}">Edit remarks</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <form action="/vm_remarks/RK{{val.phone_number}}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="form-group">
+                                            <textarea name="remark_text" id="remark_text" cols="50"
+                                                rows="10"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Add Comment</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">                        
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {{val.vm_name}}
+                </td>
+                <td>
+                    {{val.vm_role}}
+                </td>
+                <!--FOr actions column-->
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#exampleModalLong{{val.phone_number}}">
                         <i class="fa-regular fa-eye"></i>
                     </button>
   
                     <!-- Modal -->
-                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal fade" id="exampleModalLong{{val.phone_number}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle{{val.phone_number}}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-scrollable" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -78,6 +288,13 @@
                             </button>
                             </div>
                             <div class="modal-body">
+                                <div class="form-group">
+                                    <h5 for="position_status">Resume:</h5>
+                                    <a class="btn btn-secondary" href="{{val.resume}}" target="_blank">
+                                        <i class="fa-solid fa-paperclip"></i>
+                                    </a>
+                                </div>
+                                <hr>
                                 <div class="form-group">
                                     <h5 for="position_status">Position Status:</h5> {{val.position_status}}
                                 </div>
@@ -131,14 +348,6 @@
                                 </div>
                                 <hr>
                                 <div class="form-group">
-                                    <h5 for="remarks_panel">Remarks Panel:</h5> {{val.remarks_panel}}
-                                </div>
-                                <hr>
-                                <div class="form-group">
-                                    <h5 for="vm_comment">VM Comment:</h5> {{val.vm_comment}}
-                                </div>
-                                <hr>
-                                <div class="form-group">
                                     <h5 for="client_name">Client Name:</h5> {{val.client_name}}
                                 </div>
                                 <hr>
@@ -152,10 +361,6 @@
                                 <hr>
                                 <div class="form-group">
                                     <h5 for="comments">Comments:</h5> {{val.comments}}
-                                </div>
-                                <hr>
-                                <div class="form-group">
-                                    <h5 for="remarks">Remarks:</h5> {{val.remarks}}
                                 </div>
                                 <hr>
                                 <div class="form-group">
@@ -247,14 +452,6 @@
                                         <input type="text" id="reviewer_name" name="reviewer_name" class="form-control" value="{{val.reviewer_name}}">
                                     </div>
                                     <div class="form-group">
-                                        <label for="remarks_panel">Remarks Panel:</label>
-                                        <input type="text" id="remarks_panel" name="remarks_panel" class="form-control" value="{{val.remarks_panel}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="vm_comment">VM Comment:</label>
-                                        <input type="text" id="vm_comment" name="vm_comment" class="form-control" value="{{val.vm_comment}}">
-                                    </div>
-                                    <div class="form-group">
                                         <label for="client_name">Client Name:</label>
                                         <input type="text" id="client_name" name="client_name" class="form-control" value="{{val.client_name}}">
                                     </div>
@@ -269,10 +466,6 @@
                                     <div class="form-group">
                                         <label for="comments">Comments:</label>
                                         <input type="text" id="comments" name="comments" class="form-control" value="{{val.comments}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="remarks">Remarks:</label>
-                                        <input type="text" id="remarks" name="remarks" class="form-control" value="{{val.remarks}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email:</label>
@@ -296,24 +489,8 @@
                         </div>
                     </div>
                 </td>
-                <!-- <td>{{ val.skillset }}</td>
-                <td>{{ val.experience }}</td>
-                <td>{{ val.education }}</td>
-                <td>{{ val.billing_rate }}</td>
-                <td>{{ val.bu_head }}</td>
-                <td>{{ val.location }}</td>
-                <td>{{ val.notice_period }}</td>
-                <td>{{ val.reviewer_name }}</td>
-                <td>{{ val.remarks_panel }}</td>
-                <td>{{ val.vm_comment }}</td>
-                <td>{{ val.client_name }}</td>
-                <td>{{ val.interview_schedule }}</td>
-                <td>{{ val.interview_status }}</td>
-                <td>{{ val.comments }}</td>
-                <td>{{ val.remarks }}</td>
-                <td>{{ val.mode }}</td> -->
             </tr>
-        {% endfor %}
+    {% endfor %}
     </tbody>
 </table>
 

@@ -63,6 +63,7 @@ class Emp_Experience(models.Model):
     
     @property
     def duration(self):
+
         return (self.customer_end_date-self.customer_start_date).days/30
 
         
@@ -156,17 +157,19 @@ class VmResource(models.Model):
     location = models.CharField(max_length=500)
     notice_period = models.IntegerField()
     reviewer_name = models.CharField(max_length=100)
-    remarks_panel = models.CharField(max_length=500)
-    vm_comment = models.CharField(max_length=1000)
+    remarks_panel = models.TextField()
+    vm_comment = models.TextField()
     client_name = models.CharField(max_length=100)  
     interview_schedule = models.DateField()
     interview_status = models.CharField(max_length=100) 
     comments = models.CharField(max_length=1000)
-    remarks = models.CharField(max_length=1000)   
+    remarks = models.TextField() 
     email = models.EmailField()
     phone_number = models.IntegerField()
     mode = models.CharField(max_length=500)
-
+    resume = models.URLField()
+    vm_name = models.CharField(max_length=100)
+    vm_role = models.CharField(max_length=100)
     class Meta:
         db_table = "VmResource"
     def __str__(self):
@@ -187,7 +190,6 @@ class Login(models.Model):
     
     class Meta:
         db_table = "login"
-
 
 class TA_Resource(models.Model):
     ta_id = models.CharField(max_length=10,unique=True)
@@ -222,7 +224,6 @@ class TA_Resource(models.Model):
     Domain = models.CharField(max_length=100)
     T1 = models.CharField(max_length=100)
     T2 = models.CharField(max_length=100)
-    # resume = models.FileField()
 
 class Ta_resume(models.Model):
     number=models.OneToOneField(TA_Resource,on_delete=models.CASCADE,primary_key=True)
